@@ -1,10 +1,13 @@
-﻿using System.Collections.Generic;
+using System;
+using System.Collections.Generic;
 using Ink.Runtime;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class DialogueManager : Singleton<DialogueManager>
 {
+    private const string PlayerPrefix = "ME: ";
+
     [SerializeField]
     private Dialogue currentDialogue;
 
@@ -23,28 +26,42 @@ public class DialogueManager : Singleton<DialogueManager>
 
     private float offset;
 
-    private void ResetCanvas()
+    private void Start()
     {
-        var childCount = canvas.transform.childCount;
-        for (var i = childCount - 1; i >= 0; --i)
+        if (currentDialogue != null)
         {
-            Destroy(canvas.transform.GetChild(i).gameObject);
+            ShowDialogue(currentDialogue);
         }
-
-        offset = 0;
     }
 
-    public void UpdateDialogueCanvas(List<string> storyLines, List<Choice> choices)
+    public void ShowDialogue(Dialogue dialogue)
+    {
+        currentDialogue = dialogue;
+        canvas.enabled = true;
+    }
+
+    public void DisableDialogue()
+    {
+        currentDialogue.enabled = false;
+        canvas.enabled = false;
+    }
+
+    public void UpdateDialogueCanvas(IReadOnlyList<string> storyLines, IReadOnlyList<Choice> choices)
     {
         ResetCanvas();
         UpdateStory(storyLines);
         UpdateChoices(choices);
     }
 
-    public void UpdateStory(List<string> storyLines)
+    public void UpdateStory(IReadOnlyList<string> storyLines)
     {
         foreach (var storyLine in storyLines)
         {
+            if (storyLine.StartsWith(PlayerPrefix))
+            {
+                continue;
+            }
+
             var storyText = Instantiate(text);
             storyText.text = storyLine;
             storyText.transform.SetParent(canvas.transform, false);
@@ -53,7 +70,7 @@ public class DialogueManager : Singleton<DialogueManager>
         }
     }
 
-    public void UpdateChoices(List<Choice> choices)
+    public void UpdateChoices(IReadOnlyList<Choice> choices)
     {
         foreach (var choice in choices)
         {
@@ -62,13 +79,61 @@ public class DialogueManager : Singleton<DialogueManager>
             choiceButton.transform.Translate(new Vector2(0, offset));
 
             var choiceText = choiceButton.GetComponentInChildren<Text>();
-            choiceText.text = choice.text;
+            choiceText.text = choice.text.Substring(PlayerPrefix.Length);
 
             var layoutGroup = choiceButton.GetComponent<HorizontalLayoutGroup>();
 
-            choiceButton.onClick.AddListener(() => currentDialogue.ChoiceSelected(choice.index));
+            choiceButton.onClick.AddListener(() => currentDialogue.ChooseSelected(choice.index));
 
             offset -= choiceText.fontSize + layoutGroup.padding.top + layoutGroup.padding.bottom + elementPadding;
         }
+    }
+
+    private void ResetCanvas()
+    {
+        var childCount = canvas.transform.childCount;
+        for (var i = childCount - 1; i >= 0; --i)
+        {
+            Destroy(canvas.transform.GetChild(i).gameObject);
+        }
+
+        canvas.enabled = true;
+        offset = 0;
+    }
+
+    private void HidingButton()
+    {
+        var endButton = Instantiate(button);
+        endButton.transform.SetParent(canvas.transform, false);
+        endButton.transform.Translate(new Vector2(0, offset));
+
+        var endText = endButton.GetComponentInChildren<Text>();
+        endText.text = "[End conversation]";
+
+        var layoutGroup = endButton.GetComponent<HorizontalLayoutGroup>();
+        endButton.onClick.AddListener(DisableDialogue);
+        offset -= endText.fontSize + layoutGroup.padding.top + layoutGroup.padding.bottom + elementPadding;
+    }
+
+    public void ParseTags(IReadOnlyList<string> tags)
+    {
+        foreach (var inkTag in tags)
+        {
+            if (inkTag == "terminate")
+            {
+                EndConversation();
+            }
+        }
+    }
+
+    public void EndConversation()
+    {
+        // Stop parsing further the story
+        currentDialogue.StoryNeeded = false;
+        // Show current buffer
+        ResetCanvas();
+        UpdateStory(currentDialogue.StoryLines);
+        // Show [End] button
+        HidingButton();
     }
 }

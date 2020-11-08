@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Ink.Runtime;
 using UnityEngine;
 
@@ -7,8 +9,12 @@ public class Dialogue : MonoBehaviour
     [SerializeField]
     private TextAsset inkAsset;
 
-    private Story inkStory;
-    private bool  storyNeeded;
+    public Story inkStory; // TODO: Make private
+    public bool StoryNeeded { get; set; }
+
+    public List<string> StoryLines { get; private set; } = new List<string>();
+    public List<string> Tags       { get; private set; } = new List<string>();
+    public List<Choice> Choices    { get; private set; } = new List<Choice>();
 
     private void Awake()
     {
@@ -17,34 +23,52 @@ public class Dialogue : MonoBehaviour
 
     private void OnEnable()
     {
-        storyNeeded = true;
+        StoryNeeded = true;
+        DialogueManager.Instance.ShowDialogue(this);
     }
 
-    // Update is called once per frame
+    private void OnDisable()
+    {
+        StoryNeeded = false;
+    }
+
     private void Update()
     {
-        if (storyNeeded)
+        if (StoryNeeded)
         {
-            var storyLines = GetNewStoryLines();
-            DialogueManager.Instance.UpdateDialogueCanvas(storyLines, inkStory.currentChoices);
-            storyNeeded = false;
+            StoryLines = new List<string>();
+            Tags = new List<string>();
+
+            while (StoryNeeded && inkStory.canContinue)
+            {
+                inkStory.Continue();
+                ProcessNextLine();
+            }
+
+            if (!StoryNeeded)
+            {
+                return;;
+            }
+
+            Choices    = inkStory.currentChoices;
+            DialogueManager.Instance.UpdateDialogueCanvas(StoryLines, Choices);
+            StoryNeeded = false;
         }
     }
 
-    private List<string> GetNewStoryLines()
+    private void ProcessNextLine()
     {
-        var storyLines = new List<string>();
-        while (inkStory.canContinue)
-        {
-            storyLines.Add(inkStory.Continue());
-        }
-
-        return storyLines;
+        // Process story
+        StoryLines.Add(inkStory.currentText);
+        // Process tags
+        Tags.AddRange(inkStory.currentTags);
+        // Tags have to be parsed instantly, as they may have special effects on the display
+        DialogueManager.Instance.ParseTags(inkStory.currentTags);
     }
 
-    public void ChoiceSelected(int id)
+    public void ChooseSelected(int id)
     {
         inkStory.ChooseChoiceIndex(id);
-        storyNeeded = true;
+        StoryNeeded = true;
     }
 }
