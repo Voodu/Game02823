@@ -6,14 +6,14 @@ VAR completed = false
 
 === start ===
 - Hey, youuu! Yes, you!
-  * What's the problem?
+  * ME: What's the problem?
 - Do you like flowers?
-  * Of course
-  * Let's say so
-  * I prefer trees.[] But what's with flowers?
+  * ME: Of course
+  * ME: Let's say so
+  * ME: I prefer trees.[] But what's with flowers?
 - I need some for a present for my mom, but I can't find some of them!
-  * (accept) I can help you with that.
-  * (refuse) Maybe another time, I'm quite busy
+  * (accept)ME: I can help you with that.
+  * (refuse)ME: Maybe another time, I'm quite busy
 - {accept: 
     Yaay! Soo... I need one blue, two red and one violet flower. They should be spread around the hill #terminate
     -> progress
@@ -25,15 +25,15 @@ VAR completed = false
 
 === undecided ===
 Sooo? Will you help me?
-  * Yes[.], <>
+  * ME: Yes[.], <>
     -> start.accept
-  + No[.], -> start.refuse
+  + ME: No[.], -> start.refuse
 
 === progress ===
 Hey, hey! Do you have all the flowers?
-+ Not yet. #terminate
++ ME: Not yet. #terminate
 -> progress
-* {completed}Yes, here they are.
+* {completed}ME: Yes, here they are.
 -> finished
 
 === finished ===
