@@ -207,7 +207,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 337144269}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fa614585fad42b24cb04f2e72f0f4220, type: 3}
+  m_Script: {fileID: 11500000, guid: 724bc65b894a9f44083cbccaacff6227, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   npc1: {fileID: 0}
@@ -227,6 +227,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inkTextAsset: {fileID: 4900000, guid: d47bbc7a532819a4789d0f96d284508b, type: 3}
+  id: 
+  title: 
+  journalEntries: []
+  objectives: []
+  status: 0
 --- !u!4 &337144272
 Transform:
   m_ObjectHideFlags: 0
@@ -333,7 +338,7 @@ RectTransform:
   m_Children:
   - {fileID: 1335540160}
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -367,7 +372,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 368913737}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fa614585fad42b24cb04f2e72f0f4220, type: 3}
+  m_Script: {fileID: 11500000, guid: 724bc65b894a9f44083cbccaacff6227, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   npc1: {fileID: 0}
@@ -386,10 +391,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 695bed8da57f404b909599b2744952a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ObjectiveType: 6
-  ConnectedQuestId: bear_killing
-  ConnectedObjectiveId: inform_man
-  Metadata: 
+  objectiveType: 6
+  connectedQuestId: bear_killing
+  connectedObjectiveId: inform_man
+  data: 
 --- !u!4 &368913740
 Transform:
   m_ObjectHideFlags: 0
@@ -431,7 +436,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 553361397}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fa614585fad42b24cb04f2e72f0f4220, type: 3}
+  m_Script: {fileID: 11500000, guid: 724bc65b894a9f44083cbccaacff6227, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   npc1: {fileID: 0}
@@ -450,10 +455,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 695bed8da57f404b909599b2744952a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ObjectiveType: 1
-  ConnectedQuestId: bear_killing
-  ConnectedObjectiveId: kill_bear
-  Metadata: 
+  objectiveType: 1
+  connectedQuestId: bear_killing
+  connectedObjectiveId: kill_bear
+  data: 
 --- !u!4 &553361400
 Transform:
   m_ObjectHideFlags: 0
@@ -511,7 +516,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1197981461}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &845535848
 MonoBehaviour:
@@ -571,7 +576,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1197981461}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1197981460
 GameObject:
@@ -582,6 +587,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1197981461}
+  - component: {fileID: 1197981462}
   m_Layer: 0
   m_Name: Dialogues
   m_TagString: Untagged
@@ -600,13 +606,26 @@ Transform:
   m_LocalPosition: {x: 265.7103, y: 79.59943, z: -71.853485}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 100437487}
   - {fileID: 966234454}
   - {fileID: 845535847}
-  - {fileID: 7110660}
+  - {fileID: 1485863619}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1197981462
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1197981460}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa614585fad42b24cb04f2e72f0f4220, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  npc1: {fileID: 1485863617}
+  npc2: {fileID: 845535848}
 --- !u!1 &1280448070
 GameObject:
   m_ObjectHideFlags: 0
@@ -687,7 +706,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1352129544}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fa614585fad42b24cb04f2e72f0f4220, type: 3}
+  m_Script: {fileID: 11500000, guid: 724bc65b894a9f44083cbccaacff6227, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   npc1: {fileID: 0}
@@ -706,10 +725,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 695bed8da57f404b909599b2744952a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ObjectiveType: 5
-  ConnectedQuestId: bear_killing
-  ConnectedObjectiveId: visit_cave
-  Metadata: 
+  objectiveType: 5
+  connectedQuestId: bear_killing
+  connectedObjectiveId: visit_cave
+  data: 
 --- !u!4 &1352129547
 Transform:
   m_ObjectHideFlags: 0
@@ -807,6 +826,63 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1485863616
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1485863619}
+  - component: {fileID: 1485863618}
+  - component: {fileID: 1485863617}
+  m_Layer: 0
+  m_Name: NPC#1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1485863617
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1485863616}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71d5eebbdfcb63e4cbd0d5cdd35566b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1485863618
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1485863616}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b51a79f21abd5844b2ddfbb701a12f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inkAsset: {fileID: 4900000, guid: 5f6fc8f2a2ef7184ba28ced1751a748c, type: 3}
+--- !u!4 &1485863619
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1485863616}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1197981461}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1663429122
 GameObject:
   m_ObjectHideFlags: 0
@@ -836,6 +912,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df94e9b829064bb682cbba218385e9ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  quests: []
 --- !u!4 &1663429124
 Transform:
   m_ObjectHideFlags: 0
@@ -914,7 +991,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1878401916
 GameObject:
@@ -950,7 +1027,7 @@ Transform:
   - {fileID: 368913740}
   - {fileID: 1280448072}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1905573980 stripped
 GameObject:
