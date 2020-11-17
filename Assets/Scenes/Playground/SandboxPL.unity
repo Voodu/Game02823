@@ -488,7 +488,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objectiveType: 2
   connectedQuestId: flower_collecting
-  connectedObjectiveId: find_tulip
+  connectedObjectiveId: find_tulips
   data: 
 --- !u!1 &553361397
 GameObject:
@@ -870,7 +870,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 695bed8da57f404b909599b2744952a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objectiveType: 0
+  objectiveType: 5
   connectedQuestId: bear_killing
   connectedObjectiveId: visit_cave
   data: 
