@@ -9,6 +9,7 @@ namespace Quests
     {
         [SerializeField]
         private List<Quest> quests = new List<Quest>();
+
         public Quest this[string questId] => quests.First(x => x.id == questId);
 
         public List<Quest> VisibleQuests =>

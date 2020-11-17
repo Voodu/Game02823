@@ -180,7 +180,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &337144269
+--- !u!1 &284773890
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -188,23 +188,37 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 337144272}
-  - component: {fileID: 337144271}
-  - component: {fileID: 337144270}
+  - component: {fileID: 284773891}
+  - component: {fileID: 284773893}
+  - component: {fileID: 284773892}
   m_Layer: 0
-  m_Name: QuestTrigger
+  m_Name: Roses
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &337144270
+--- !u!4 &284773891
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 284773890}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1878401917}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &284773892
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 337144269}
+  m_GameObject: {fileID: 284773890}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 724bc65b894a9f44083cbccaacff6227, type: 3}
@@ -214,38 +228,22 @@ MonoBehaviour:
   npc2: {fileID: 0}
   quest: {fileID: 0}
   item: {fileID: 0}
---- !u!114 &337144271
+--- !u!114 &284773893
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 337144269}
+  m_GameObject: {fileID: 284773890}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7551f8b5c6204576bbacade3d8a03584, type: 3}
+  m_Script: {fileID: 11500000, guid: 695bed8da57f404b909599b2744952a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inkTextAsset: {fileID: 4900000, guid: d47bbc7a532819a4789d0f96d284508b, type: 3}
-  id: 
-  title: 
-  journalEntries: []
-  objectives: []
-  status: 0
---- !u!4 &337144272
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 337144269}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1878401917}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  objectiveType: 2
+  connectedQuestId: flower_collecting
+  connectedObjectiveId: find_roses
+  data: 
 --- !u!1 &365172047
 GameObject:
   m_ObjectHideFlags: 0
@@ -356,6 +354,7 @@ GameObject:
   - component: {fileID: 368913740}
   - component: {fileID: 368913739}
   - component: {fileID: 368913738}
+  - component: {fileID: 368913741}
   m_Layer: 0
   m_Name: OldMan
   m_TagString: Untagged
@@ -407,8 +406,90 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1878401917}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &368913741
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 368913737}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7551f8b5c6204576bbacade3d8a03584, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inkTextAsset: {fileID: 4900000, guid: d47bbc7a532819a4789d0f96d284508b, type: 3}
+  id: 
+  title: 
+  journalEntries: []
+  objectives: []
+  status: 0
+--- !u!1 &455613474
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 455613475}
+  - component: {fileID: 455613477}
+  - component: {fileID: 455613476}
+  m_Layer: 0
+  m_Name: Tulip
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &455613475
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 455613474}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1878401917}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &455613476
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 455613474}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 724bc65b894a9f44083cbccaacff6227, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  npc1: {fileID: 0}
+  npc2: {fileID: 0}
+  quest: {fileID: 0}
+  item: {fileID: 0}
+--- !u!114 &455613477
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 455613474}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 695bed8da57f404b909599b2744952a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectiveType: 2
+  connectedQuestId: flower_collecting
+  connectedObjectiveId: find_tulip
+  data: 
 --- !u!1 &553361397
 GameObject:
   m_ObjectHideFlags: 0
@@ -471,7 +552,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1878401917}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &845535845
 GameObject:
@@ -503,7 +584,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b51a79f21abd5844b2ddfbb701a12f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inkAsset: {fileID: 4900000, guid: 31041287f15f6874eb3bc542112dcb11, type: 3}
+  inkAsset: {fileID: 4900000, guid: 45d0c1c2539c1794084fcab76d4a336c, type: 3}
 --- !u!4 &845535847
 Transform:
   m_ObjectHideFlags: 0
@@ -578,6 +659,70 @@ Transform:
   m_Father: {fileID: 1197981461}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1192932690
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1192932691}
+  - component: {fileID: 1192932693}
+  - component: {fileID: 1192932692}
+  m_Layer: 0
+  m_Name: Dandelion
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1192932691
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1192932690}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1878401917}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1192932692
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1192932690}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 724bc65b894a9f44083cbccaacff6227, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  npc1: {fileID: 0}
+  npc2: {fileID: 0}
+  quest: {fileID: 0}
+  item: {fileID: 0}
+--- !u!114 &1192932693
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1192932690}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 695bed8da57f404b909599b2744952a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectiveType: 2
+  connectedQuestId: flower_collecting
+  connectedObjectiveId: find_dandelions
+  data: 
 --- !u!1 &1197981460
 GameObject:
   m_ObjectHideFlags: 0
@@ -667,7 +812,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1878401917}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1335540159 stripped
 GameObject:
@@ -725,7 +870,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 695bed8da57f404b909599b2744952a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objectiveType: 5
+  objectiveType: 0
   connectedQuestId: bear_killing
   connectedObjectiveId: visit_cave
   data: 
@@ -741,7 +886,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1878401917}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1437684717
 GameObject:
@@ -925,8 +1070,91 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1878401917}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1672888516
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1672888517}
+  - component: {fileID: 1672888519}
+  - component: {fileID: 1672888518}
+  - component: {fileID: 1672888520}
+  m_Layer: 0
+  m_Name: Girl
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1672888517
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1672888516}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1878401917}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1672888518
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1672888516}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 724bc65b894a9f44083cbccaacff6227, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  npc1: {fileID: 0}
+  npc2: {fileID: 0}
+  quest: {fileID: 0}
+  item: {fileID: 0}
+--- !u!114 &1672888519
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1672888516}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7551f8b5c6204576bbacade3d8a03584, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inkTextAsset: {fileID: 4900000, guid: 88189d4b08e19124b89ba9d5e1762c69, type: 3}
+  id: 
+  title: 
+  journalEntries: []
+  objectives: []
+  status: 0
+--- !u!114 &1672888520
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1672888516}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 695bed8da57f404b909599b2744952a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectiveType: 6
+  connectedQuestId: flower_collecting
+  connectedObjectiveId: inform_girl
+  data: 
 --- !u!1 &1827950261
 GameObject:
   m_ObjectHideFlags: 0
@@ -1020,12 +1248,15 @@ Transform:
   m_LocalPosition: {x: 265.7103, y: 79.59943, z: -71.853485}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 337144272}
   - {fileID: 1663429124}
   - {fileID: 553361400}
   - {fileID: 1352129547}
   - {fileID: 368913740}
   - {fileID: 1280448072}
+  - {fileID: 1672888517}
+  - {fileID: 455613475}
+  - {fileID: 1192932691}
+  - {fileID: 284773891}
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

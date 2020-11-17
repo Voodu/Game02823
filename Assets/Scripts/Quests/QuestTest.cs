@@ -22,7 +22,12 @@ namespace Quests
         {
             if (quest != null)
             {
-                if (Input.GetKeyDown(KeyCode.S))
+                if ((quest.id == "bear_killing") && Input.GetKeyDown(KeyCode.S))
+                {
+                    QuestManager.Instance.Begin(quest.id);
+                }
+
+                if ((quest.id == "flower_collecting") && Input.GetKeyDown(KeyCode.F))
                 {
                     QuestManager.Instance.Begin(quest.id);
                 }
@@ -30,6 +35,7 @@ namespace Quests
 
             if (item != null)
             {
+                // Bear
                 if ((item.connectedObjectiveId == "kill_bear") && Input.GetKeyDown(KeyCode.K))
                 {
                     item.Activate();
@@ -41,6 +47,27 @@ namespace Quests
                 }
 
                 if ((item.connectedObjectiveId == "inform_man") && Input.GetKeyDown(KeyCode.I))
+                {
+                    item.Activate();
+                }
+
+                // Flowers
+                if ((item.connectedObjectiveId == "find_roses") && Input.GetKeyDown(KeyCode.R))
+                {
+                    item.Activate();
+                }
+
+                if ((item.connectedObjectiveId == "find_dandelions") && Input.GetKeyDown(KeyCode.D))
+                {
+                    item.Activate();
+                }
+
+                if ((item.connectedObjectiveId == "find_tulips") && Input.GetKeyDown(KeyCode.T))
+                {
+                    item.Activate();
+                }
+
+                if ((item.connectedObjectiveId == "inform_girl") && Input.GetKeyDown(KeyCode.G))
                 {
                     item.Activate();
                 }

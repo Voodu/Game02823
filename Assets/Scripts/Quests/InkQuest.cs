@@ -25,6 +25,9 @@ namespace Quests
                                 };
         }
 
+        public event EventHandler<ObjectiveEventArgs> NewObjective;
+        public event EventHandler                     QuestFinished;
+
         public object Variables(string key)
         {
             return inkQuest.variablesState[key];
@@ -48,12 +51,9 @@ namespace Quests
             throw new Exception("Cannot continue. Story probably finished.");
         }
 
-        public event EventHandler<NewObjectiveEventArgs> NewObjective;
-        public event EventHandler                        QuestFinished;
-
         private void OnNewObjective(Objective objective)
         {
-            NewObjective?.Invoke(this, new NewObjectiveEventArgs(objective));
+            NewObjective?.Invoke(this, new ObjectiveEventArgs(objective));
         }
 
         private void OnQuestFinished()

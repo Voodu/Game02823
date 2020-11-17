@@ -1,5 +1,6 @@
 ﻿using System;
 using Quests.Enums;
+using Quests.EventArgs;
 using UnityEngine;
 
 namespace Quests
@@ -7,37 +8,43 @@ namespace Quests
     [Serializable]
     public class Objective
     {
-        public string                  id;
-        public string                  connectedQuestId;
-        public string                  description;
-        public ObjectiveType           type   = ObjectiveType.None;
-        public ObjectiveStatus         status = ObjectiveStatus.NotStarted;
-        public (int current, int full) progress;
+        public string                                 id;
+        public string                                 connectedQuestId;
+        public string                                 description;
+        public ObjectiveType                          type   = ObjectiveType.None;
+        public ObjectiveStatus                        status = ObjectiveStatus.NotStarted;
+        public int                                    currentProgress, fullProgress;
+        public event EventHandler<ObjectiveEventArgs> Completed;
+
+        private void OnCompleted(Objective objective)
+        {
+            Completed?.Invoke(this, new ObjectiveEventArgs(objective));
+        }
 
         public void RecordProgress(ObjectiveItem item)
         {
             switch (item.objectiveType)
             {
                 case ObjectiveType.Kill:
-                    progress = (progress.current + 1, progress.full);
+                    currentProgress++;
                     break;
                 case ObjectiveType.Gather:
-                    progress = (progress.current + 1, progress.full);
+                    currentProgress++;
                     break;
                 case ObjectiveType.Deliver:
-                    progress = (progress.current + 1, progress.full);
+                    currentProgress++;
                     break;
                 case ObjectiveType.Escort:
-                    progress = (progress.current + 1, progress.full);
+                    currentProgress++;
                     break;
                 case ObjectiveType.Visit:
-                    progress = (progress.current + 1, progress.full);
+                    currentProgress++;
                     break;
                 case ObjectiveType.Talk:
-                    progress = (progress.current + 1, progress.full);
+                    currentProgress++;
                     break;
                 case ObjectiveType.Other:
-                    progress = (progress.current + 1, progress.full);
+                    currentProgress++;
                     break;
                 case ObjectiveType.None:
                     Debug.LogWarning($"No objective type set on {item.gameObject.name}");
@@ -46,10 +53,11 @@ namespace Quests
                     throw new ArgumentOutOfRangeException();
             }
 
-            if (progress.current == progress.full)
+            if (currentProgress == fullProgress)
             {
                 status = ObjectiveStatus.Completed;
-                QuestManager.Instance[connectedQuestId].Continue();
+                OnCompleted(this);
+                // BE - QuestManager.Instance[connectedQuestId].Continue();
             }
         }
 
@@ -58,11 +66,11 @@ namespace Quests
             return new Objective
                    {
                        // Set ConnectedQuestId in Quest!
-                       id          = id,
-                       description = description,
-                       type        = GetObjectiveType(type),
-                       status      = ObjectiveStatus.NotCompleted,
-                       progress    = (0, int.Parse(count))
+                       id           = id,
+                       description  = description,
+                       type         = GetObjectiveType(type),
+                       status       = ObjectiveStatus.NotCompleted,
+                       fullProgress = int.Parse(count)
                    };
         }
 

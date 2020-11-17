@@ -46,11 +46,21 @@ namespace Quests
             QuestManager.Instance.Complete(id);
         }
 
-        private void OnNewObjective(object sender, NewObjectiveEventArgs args)
+        private void OnNewObjective(object sender, ObjectiveEventArgs e)
         {
-            args.Objective.connectedQuestId = id;
-            objectives.AddWithId(args.Objective);
-            print($"New objective! Quest: {title}. Objective: {args.Objective.description}");
+            e.Objective.connectedQuestId =  id;
+            e.Objective.Completed        += OnObjectiveCompleted;
+            objectives.AddWithId(e.Objective);
+            print($"New objective! Quest: {title}. Objective: {e.Objective.description}");
+        }
+
+        private void OnObjectiveCompleted(object sender, ObjectiveEventArgs e)
+        {
+            print($"Objective completed! Quest: {title}. Objective: {e.Objective.description}");
+            if (objectives.All(x => x.status == ObjectiveStatus.Completed))
+            {
+                Continue();
+            }
         }
 
         public void Continue()
