@@ -1,54 +1,94 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using Quests;
 using Quests.Enums;
-using Quests.Items;
+using UnityEngine;
 
-public class Objective
+namespace Quests
 {
-    public string Id { get; set; }
-    public string ConnectedQuestId { get; set; }
-    public string Description { get; set; }
-    public ObjectiveType Type { get; set; } = ObjectiveType.None;
-    public ObjectiveStatus Status { get; set; } = ObjectiveStatus.NotStarted;
-    public (int current, int full) Progress { get; set; }
-
-    public void RecordProgress(ObjectiveItem item)
+    [Serializable]
+    public class Objective
     {
-        switch (item.ObjectiveType)
+        public string                  id;
+        public string                  connectedQuestId;
+        public string                  description;
+        public ObjectiveType           type   = ObjectiveType.None;
+        public ObjectiveStatus         status = ObjectiveStatus.NotStarted;
+        public (int current, int full) progress;
+
+        public void RecordProgress(ObjectiveItem item)
         {
-            case ObjectiveType.Kill:
-                Progress = (Progress.current + 1, Progress.full);
-                break;
-            case ObjectiveType.Gather:
-                Progress = (Progress.current + 1, Progress.full);
-                break;
-            case ObjectiveType.Deliver:
-                Progress = (Progress.current + 1, Progress.full);
-                break;
-            case ObjectiveType.Escort:
-                Progress = (Progress.current + 1, Progress.full);
-                break;
-            case ObjectiveType.Visit:
-                Progress = (Progress.current + 1, Progress.full);
-                break;
-            case ObjectiveType.Talk:
-                Progress = (Progress.current + 1, Progress.full);
-                break;
-            case ObjectiveType.Other:
-                Progress = (Progress.current + 1, Progress.full);
-                break;
-            case ObjectiveType.None:
-                break;
-            default:
-                throw new ArgumentOutOfRangeException();
+            switch (item.objectiveType)
+            {
+                case ObjectiveType.Kill:
+                    progress = (progress.current + 1, progress.full);
+                    break;
+                case ObjectiveType.Gather:
+                    progress = (progress.current + 1, progress.full);
+                    break;
+                case ObjectiveType.Deliver:
+                    progress = (progress.current + 1, progress.full);
+                    break;
+                case ObjectiveType.Escort:
+                    progress = (progress.current + 1, progress.full);
+                    break;
+                case ObjectiveType.Visit:
+                    progress = (progress.current + 1, progress.full);
+                    break;
+                case ObjectiveType.Talk:
+                    progress = (progress.current + 1, progress.full);
+                    break;
+                case ObjectiveType.Other:
+                    progress = (progress.current + 1, progress.full);
+                    break;
+                case ObjectiveType.None:
+                    Debug.LogWarning($"No objective type set on {item.gameObject.name}");
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+
+            if (progress.current == progress.full)
+            {
+                status = ObjectiveStatus.Completed;
+                QuestManager.Instance[connectedQuestId].Continue();
+            }
         }
 
-        if (Progress.current == Progress.full)
+        public static Objective CreateObjective(string id, string description, string type, string count)
         {
-            Status = ObjectiveStatus.Completed;
-            QuestManager.Instance[ConnectedQuestId].Continue();
+            return new Objective
+                   {
+                       // Set ConnectedQuestId in Quest!
+                       id          = id,
+                       description = description,
+                       type        = GetObjectiveType(type),
+                       status      = ObjectiveStatus.NotCompleted,
+                       progress    = (0, int.Parse(count))
+                   };
+        }
+
+        private static ObjectiveType GetObjectiveType(string typeName)
+        {
+            switch (typeName)
+            {
+                case "none":
+                    return ObjectiveType.None;
+                case "kill":
+                    return ObjectiveType.Kill;
+                case "gather":
+                    return ObjectiveType.Gather;
+                case "deliver":
+                    return ObjectiveType.Deliver;
+                case "escort":
+                    return ObjectiveType.Escort;
+                case "visit":
+                    return ObjectiveType.Visit;
+                case "talk":
+                    return ObjectiveType.Talk;
+                case "other":
+                    return ObjectiveType.Other;
+                default:
+                    return ObjectiveType.None;
+            }
         }
     }
 }

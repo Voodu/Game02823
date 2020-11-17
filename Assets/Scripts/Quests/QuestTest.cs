@@ -1,57 +1,55 @@
-﻿using System;
-using Dialogues;
-using Ink.Runtime;
-using Quests;
-using Quests.Items;
+﻿using Dialogues;
 using UnityEngine;
 
-public class QuestTest : MonoBehaviour
+namespace Quests
 {
-    public TalkingNPC npc1;
-    public TalkingNPC npc2;
-    public Quest quest;
-
-    public ObjectiveItem item;
-
-    private void Awake()
+    public class QuestTest : MonoBehaviour
     {
-        quest = GetComponent<Quest>();
-        item = GetComponent<ObjectiveItem>();
-    }
+        public TalkingNPC npc1;
+        public TalkingNPC npc2;
+        public Quest      quest;
 
+        public ObjectiveItem item;
 
-    // Update is called once per frame
-    private void Update()
-    {
-        if (quest != null)
+        private void Awake()
         {
-            if (Input.GetKeyDown(KeyCode.S))
+            quest = GetComponent<Quest>();
+            item  = GetComponent<ObjectiveItem>();
+        }
+
+        // Update is called once per frame
+        private void Update()
+        {
+            if (quest != null)
             {
-                QuestManager.Instance.Begin(quest.Id);
+                if (Input.GetKeyDown(KeyCode.S))
+                {
+                    QuestManager.Instance.Begin(quest.id);
+                }
+            }
+
+            if (item != null)
+            {
+                if ((item.connectedObjectiveId == "kill_bear") && Input.GetKeyDown(KeyCode.K))
+                {
+                    item.Activate();
+                }
+
+                if ((item.connectedObjectiveId == "visit_cave") && Input.GetKeyDown(KeyCode.C))
+                {
+                    item.Activate();
+                }
+
+                if ((item.connectedObjectiveId == "inform_man") && Input.GetKeyDown(KeyCode.I))
+                {
+                    item.Activate();
+                }
             }
         }
 
-        if (item != null)
+        public void Print(string message)
         {
-            if (item.ConnectedObjectiveId == "kill_bear" && Input.GetKeyDown(KeyCode.K))
-            {
-                item.Activate();
-            }
-
-            if (item.ConnectedObjectiveId == "visit_cave" && Input.GetKeyDown(KeyCode.C))
-            {
-                item.Activate();
-            }
-
-            if (item.ConnectedObjectiveId == "inform_man" && Input.GetKeyDown(KeyCode.I))
-            {
-                item.Activate();
-            }
+            print(message);
         }
-    }
-
-    public void Print(string message)
-    {
-        print(message);
     }
 }

@@ -1,41 +1,54 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Quests.Enums;
-using Quests.Items;
+using UnityEngine;
 
 namespace Quests
 {
     public class QuestManager : Singleton<QuestManager>
     {
-        public SortedDictionary<string, Quest> Quests { get; set; } = new SortedDictionary<string, Quest>();
-        public readonly Dictionary<string, ObjectiveItem> objectiveItems = new Dictionary<string, ObjectiveItem>();
-        public List<Quest> VisibleQuests => Quests
-                                            .Where(q => q.Value.Status != QuestStatus.NotStarted)
-                                            .Select(x => x.Value)
-                                            .ToList();
+        [SerializeField]
+        private List<Quest> quests = new List<Quest>();
+        public Quest this[string questId] => quests.First(x => x.id == questId);
 
-        public Quest this[string questId] => Quests[questId];
+        public List<Quest> VisibleQuests =>
+            quests
+                .Where(q => q.status != QuestStatus.NotStarted)
+                .ToList();
 
         public void Register(Quest quest)
         {
-            Quests.Add(quest.Id, quest);
+            quests.AddWithId(quest);
         }
 
         public void Begin(string questId)
         {
-            Quests[questId].Status = QuestStatus.NotCompleted;
-            Quests[questId].Continue();
+            var quest = this[questId];
+            if (quest.status == QuestStatus.NotStarted)
+            {
+                quest.status = QuestStatus.NotCompleted;
+                quest.Continue();
+            }
         }
-        
+
         public void Complete(string questId)
         {
-            Quests[questId].Status = QuestStatus.Completed;
-            print($"Quest {Quests[questId].Title} completed");
+            var quest = this[questId];
+            if (quest.status == QuestStatus.NotCompleted)
+            {
+                quest.status = QuestStatus.Completed;
+                print($"Quest {quest.title} completed");
+            }
         }
 
         public void Fail(string questId)
         {
-            Quests[questId].Status = QuestStatus.Failed;
+            var quest = this[questId];
+            if (quest.status == QuestStatus.NotCompleted)
+            {
+                quest.status = QuestStatus.Failed;
+                print($"Quest {quest.title} failed");
+            }
         }
     }
 }

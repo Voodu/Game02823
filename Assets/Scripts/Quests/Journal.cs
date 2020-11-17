@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 namespace Quests
@@ -18,8 +17,8 @@ namespace Quests
         {
             foreach (var quest in quests)
             {
-                print(quest.Title);
-                print(string.Join(string.Empty, quest.JournalEntries));
+                print(quest.title);
+                print(string.Join(string.Empty, quest.journalEntries));
             }
         }
     }

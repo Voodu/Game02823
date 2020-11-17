@@ -1,18 +1,18 @@
 ﻿using Quests.Enums;
 using UnityEngine;
 
-namespace Quests.Items
+namespace Quests
 {
     public class ObjectiveItem : MonoBehaviour
     {
-        public ObjectiveType ObjectiveType;
-        public string ConnectedQuestId;
-        public string ConnectedObjectiveId;
-        public string Metadata;
+        public ObjectiveType objectiveType;
+        public string        connectedQuestId;
+        public string        connectedObjectiveId;
+        public string        data;
 
         public virtual void Activate()
         {
-            QuestManager.Instance[ConnectedQuestId][ConnectedObjectiveId].RecordProgress(this);
+            QuestManager.Instance[connectedQuestId][connectedObjectiveId].RecordProgress(this);
         }
     }
 }
