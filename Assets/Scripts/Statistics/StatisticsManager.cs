@@ -1,4 +1,6 @@
-﻿namespace Statistics {
+﻿using Common;
+
+namespace Statistics {
     public class StatisticsManager : Singleton<StatisticsManager>
     {
         private int currentLevel = 1;
