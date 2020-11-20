@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 
-namespace HeroKnight {
+namespace HeroKnight
+{
     public class DestroyEvent_HeroKnight : MonoBehaviour
     {
         // Destroy particles when animation has finished playing. 

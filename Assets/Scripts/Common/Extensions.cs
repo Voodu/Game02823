@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using Quests;
 
-namespace Common {
+namespace Common
+{
     public static class Extensions
     {
         public static void AddWithId(this List<Objective> objectives, Objective objective)

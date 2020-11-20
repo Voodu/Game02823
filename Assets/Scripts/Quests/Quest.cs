@@ -22,12 +22,12 @@ namespace Quests
         public List<Objective> objectives     = new List<Objective>();
         public QuestStatus     status         = QuestStatus.NotStarted;
 
+        public Objective this[string objectiveId] => objectives.First(x => x.id == objectiveId);
+
         public List<Objective> ActiveObjectives =>
             objectives
                 .Where(o => o.status == ObjectiveStatus.NotCompleted)
                 .ToList();
-
-        public Objective this[string objectiveId] => objectives.First(x => x.id == objectiveId);
 
         public void Awake()
         {

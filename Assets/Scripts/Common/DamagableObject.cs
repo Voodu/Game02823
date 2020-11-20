@@ -2,7 +2,8 @@
 using UnityEngine;
 using Weapons;
 
-namespace Common {
+namespace Common
+{
     [RequireComponent(typeof(Collider2D))]
     public class DamagableObject : MonoBehaviour
     {

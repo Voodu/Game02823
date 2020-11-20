@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 
-namespace Common {
+namespace Common
+{
     [RequireComponent(typeof(Collider2D))]
     public class DamagingObject : MonoBehaviour
     {
@@ -24,6 +25,5 @@ namespace Common {
                 heroKnight.DealDamage(damageAmount);
             }
         }
-
     }
 }

@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 
-namespace Common {
+namespace Common
+{
     [RequireComponent(typeof(Collider2D))]
     public class CollectableObject : MonoBehaviour
     {

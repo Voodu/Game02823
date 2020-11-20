@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 
-namespace Common {
+namespace Common
+{
     public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
     {
         protected static T instance;

@@ -1,9 +1,10 @@
 ﻿using UnityEngine;
 
-namespace HeroKnight {
-    public class Sensor_HeroKnight : MonoBehaviour {
-
-        private int m_ColCount = 0;
+namespace HeroKnight
+{
+    public class Sensor_HeroKnight : MonoBehaviour
+    {
+        private int m_ColCount;
 
         private float m_DisableTimer;
 
@@ -15,21 +16,24 @@ namespace HeroKnight {
         public bool State()
         {
             if (m_DisableTimer > 0)
+            {
                 return false;
+            }
+
             return m_ColCount > 0;
         }
 
-        void OnTriggerEnter2D(Collider2D other)
+        private void OnTriggerEnter2D(Collider2D other)
         {
             m_ColCount++;
         }
 
-        void OnTriggerExit2D(Collider2D other)
+        private void OnTriggerExit2D(Collider2D other)
         {
             m_ColCount--;
         }
 
-        void Update()
+        private void Update()
         {
             m_DisableTimer -= Time.deltaTime;
         }

@@ -4,7 +4,8 @@ using Common;
 using Statistics;
 using UnityEngine;
 
-namespace HeroKnight {
+namespace HeroKnight
+{
     public class HeroKnight : MonoBehaviour
     {
         private static readonly int HurtHash      = Animator.StringToHash("Hurt");

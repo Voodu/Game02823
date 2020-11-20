@@ -1,10 +1,11 @@
 ﻿using UnityEngine;
 
-namespace HeroKnight {
-    public class Sensor_Attack : MonoBehaviour {
-
-        private bool       in_range = false;
-        public  Collider2D enemy;    
+namespace HeroKnight
+{
+    public class Sensor_Attack : MonoBehaviour
+    {
+        private bool       in_range;
+        public  Collider2D enemy;
 
         private float m_DisableTimer;
 
@@ -15,12 +16,15 @@ namespace HeroKnight {
 
         public Collider2D State()
         {
-            if (m_DisableTimer > 0 & in_range == true)
+            if ((m_DisableTimer > 0) & in_range)
+            {
                 return enemy;
+            }
+
             return null;
         }
 
-        void OnTriggerEnter2D(Collider2D other)
+        private void OnTriggerEnter2D(Collider2D other)
         {
             if (other.gameObject.tag == "Enemy")
             {
@@ -29,14 +33,15 @@ namespace HeroKnight {
             }
         }
 
-        void OnTriggerExit2D(Collider2D other)
+        private void OnTriggerExit2D(Collider2D other)
         {
-            if (other.gameObject.tag == "Enemy"){
+            if (other.gameObject.tag == "Enemy")
+            {
                 in_range = false;
             }
         }
 
-        void Update()
+        private void Update()
         {
             m_DisableTimer -= Time.deltaTime;
         }
@@ -47,4 +52,3 @@ namespace HeroKnight {
         }
     }
 }
-

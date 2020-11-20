@@ -2,7 +2,8 @@
 using Ink.Runtime;
 using UnityEngine;
 
-namespace Dialogues {
+namespace Dialogues
+{
     public class Dialogue : MonoBehaviour
     {
         [SerializeField]

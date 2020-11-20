@@ -1,11 +1,12 @@
 ﻿using Common;
 
-namespace Statistics {
+namespace Statistics
+{
     public class StatisticsManager : Singleton<StatisticsManager>
     {
         private int currentLevel = 1;
 
-        private int currentExperience = 0;
+        private int currentExperience;
         // TODO: Some skills 
 
         public void AddExperience(int amount)

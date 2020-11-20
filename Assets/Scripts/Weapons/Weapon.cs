@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 
-namespace Weapons {
+namespace Weapons
+{
     public class Weapon : MonoBehaviour
     {
         [SerializeField]
