@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 2259725971059207911}
   - component: {fileID: 2259725971059207910}
   - component: {fileID: 2259725971059207905}
+  - component: {fileID: 4514033102068903386}
+  - component: {fileID: 819316394116804936}
   m_Layer: 0
   m_Name: Frog
   m_TagString: Enemy
@@ -131,3 +133,30 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &4514033102068903386
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2259725971059207904}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f68a29ff5f300c41a3fef0b9935b568, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damageAmount: 1
+--- !u!114 &819316394116804936
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2259725971059207904}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b7df1fdda0eb76343aef4c1ace9d515a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 1
+  killExperience: 1

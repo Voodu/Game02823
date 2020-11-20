@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class HeroKnight : MonoBehaviour {
@@ -178,57 +178,54 @@ public class HeroKnight : MonoBehaviour {
         attackHitBox.SetActive(false);
     }
 
-    void OnTriggerEnter2D(Collider2D collision)
+    public bool IsAttacking()
     {
-        if (collision.tag == "Collectable")
-        {
-            Destroy(collision.gameObject);
-            items += "helm,";
-        }
+        return isAttacking;
+    }
 
-        if (collision.tag == "Coin")
+    public void CollectItem(CollectableObject item)
+    {
+        if (item.CompareTag("Coin"))
         {
-            Destroy(collision.gameObject);
-            coins++;
+            coins++; // TODO: Coins shouldn't have separate case. They are normal collectables.
         }
+        else
+        {
+            items.Add(item.name); // TODO: use inventory system
+        }
+    }
 
-        if (collision.tag == "Enemy" & isAttacking == true)
-        {
-            Destroy(collision.gameObject);
-            xp++;
-        }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        // Will we have something like "End" in RPG?
         if (collision.tag == "End")
         {
             Destroy(collision.gameObject);
-            m_body2d.velocity = new Vector2(0, 0);
-            xp+=5;
-            alive = false;
+            m_body2d.velocity =  new Vector2(0, 0);
+            StatisticsManager.Instance.AddExperience(5);
+            alive             =  false;
             m_animator.SetTrigger("Block");
             m_animator.SetBool("IdleBlock", true);
         }
     }
 
-    void OnCollisionEnter2D(Collision2D other)
+    public void DealDamage(int damage)
     {
-        if (other.gameObject.tag == "Enemy"){
-            lives--;
-            
-            if (lives == 0){
-                m_animator.SetBool("noBlood", m_noBlood);
-                m_animator.SetTrigger("Death");
-                alive = false;
-                Destroy(heart1.gameObject);
-                m_body2d.velocity = new Vector2(0, 0);
-            }
-            else
-            {
-                m_animator.SetTrigger("Hurt");
-                Destroy(heart2.gameObject);
-            }
+        lives -= damage;
 
+        if (lives == 0)
+        {
+            m_animator.SetTrigger("Death");
+            alive = false;
+            Destroy(heart1.gameObject);
+            m_body2d.velocity = new Vector2(0, 0);
+        }
+        else
+        {
+            m_animator.SetTrigger("Hurt");
+            Destroy(heart2.gameObject);
         }
     }
-
 
     // Animation Events
     // Called in end of roll animation.
