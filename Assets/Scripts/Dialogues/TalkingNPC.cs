@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 
-namespace Dialogues {
+namespace Dialogues
+{
     [RequireComponent(typeof(Dialogue))]
     public class TalkingNPC : MonoBehaviour
     {

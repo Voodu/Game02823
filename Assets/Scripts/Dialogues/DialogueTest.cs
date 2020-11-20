@@ -1,13 +1,14 @@
 ﻿using UnityEngine;
 
-namespace Dialogues {
+namespace Dialogues
+{
     public class DialogueTest : MonoBehaviour
     {
         public TalkingNPC npc1;
         public TalkingNPC npc2;
 
         // Update is called once per frame
-        void Update()
+        private void Update()
         {
             if (Input.GetKeyDown(KeyCode.Alpha1))
             {
