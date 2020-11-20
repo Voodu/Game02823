@@ -1,19 +1,19 @@
-﻿using UnityEngine;
-
-public class StatisticsManager : Singleton<StatisticsManager>
-{
-    private int currentLevel = 1;
-
-    private int currentExperience = 0;
-    // TODO: Some skills 
-
-    public void AddExperience(int amount)
+﻿namespace Statistics {
+    public class StatisticsManager : Singleton<StatisticsManager>
     {
-        currentExperience += amount;
-    }
+        private int currentLevel = 1;
 
-    public int GetExperience()
-    {
-        return currentExperience;
+        private int currentExperience = 0;
+        // TODO: Some skills 
+
+        public void AddExperience(int amount)
+        {
+            currentExperience += amount;
+        }
+
+        public int GetExperience()
+        {
+            return currentExperience;
+        }
     }
 }
