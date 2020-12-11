@@ -91,7 +91,7 @@ namespace Dialogues
                         {
                             QuestManager.instance.Begin(questId);
                         }
-                        else if (words[2].Trim() == "continue")
+                        else if (words[2].Trim() == "progress")
                         {
                             var objectiveId = words[4].Trim();
                             QuestManager.instance[questId][objectiveId].RecordProgress(new ObjectiveItemData()
