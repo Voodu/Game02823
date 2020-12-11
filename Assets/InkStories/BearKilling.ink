@@ -2,7 +2,7 @@ VAR name = "bear_killing"
 VAR accepted = false
 VAR prize = 0
 VAR exp = 50
-VAR completed = true
+VAR completed = false
 -> start
 
 === start ===

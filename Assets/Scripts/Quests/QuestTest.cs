@@ -46,11 +46,6 @@ namespace Quests
                     item.Activate();
                 }
 
-                if ((item.data.connectedObjectiveId == "inform_man") && Input.GetKeyDown(KeyCode.I))
-                {
-                    item.Activate();
-                }
-
                 // Flowers
                 if ((item.data.connectedObjectiveId == "find_roses") && Input.GetKeyDown(KeyCode.R))
                 {

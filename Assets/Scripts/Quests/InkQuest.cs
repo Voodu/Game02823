@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Dialogues;
 using Ink.Runtime;
 using Quests.EventArgs;
 using UnityEngine;
@@ -75,6 +76,9 @@ namespace Quests
                         continue;
                     case "finish":
                         OnQuestFinished();
+                        continue;
+                    case "dialogue":
+                        DialogueManager.Instance[tags[++i]].Continue();
                         continue;
                     case "dummy": // Workaround for "out of content" problem
                         continue;

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Dialogues;
 using Quests;
 
 namespace Common
@@ -27,6 +28,18 @@ namespace Common
             else
             {
                 throw new ArgumentException($"Quest with id {quest.id} already exists in the list.");
+            }
+        }
+
+        public static void AddWithId(this List<Dialogue> dialogues, Dialogue dialogue)
+        {
+            if (!dialogues.Exists(x => x.id == dialogue.id))
+            {
+                dialogues.Add(dialogue);
+            }
+            else
+            {
+                throw new ArgumentException($"Dialogue with id {dialogue.id} already exists in the list.");
             }
         }
     }

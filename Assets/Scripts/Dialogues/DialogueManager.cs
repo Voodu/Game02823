@@ -14,9 +14,14 @@ namespace Dialogues
     {
         [SerializeField]
         private string playerPrefix = "ME: ";
+        
+        [SerializeField]
         private string extensionLinePrefix = "EXT";
 
         private Dialogue dialogue;
+        [SerializeField]
+        private List<Dialogue> dialogues = new List<Dialogue>();
+        public Dialogue this[string dialogueId] => dialogues.First(x => x.id == dialogueId);
 
         /* UI Prefabs */
         [SerializeField]
@@ -30,6 +35,11 @@ namespace Dialogues
 
         [SerializeField]
         private GameObject choiceMenu;
+
+        public void Register(Dialogue dialogue)
+        {
+            dialogues.AddWithId(dialogue);
+        }
 
         public void ShowDialogue(Dialogue dialogue)
         {

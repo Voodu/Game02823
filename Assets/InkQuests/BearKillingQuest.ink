@@ -1,5 +1,5 @@
 # quest # bear_killing # Bear killing
-VAR continue = false
+VAR continue = true
 -> start
 
 === start ===
@@ -17,10 +17,10 @@ The bear was bad. I had to kill it.
 {continue: -> inform}
 
 === inform ===
-# objective # inform_man # Inform the old man # talk # 1
+# objective # inform_man # Inform the old man # talk # 1 # dialogue # bear_killing
 ~continue = false
-The bear is dead. I should inform the old man. 
-# dummy
+The bear is dead. I should inform the old man.
+# dummy 
 {continue: -> finish}
 
 === finish ===
