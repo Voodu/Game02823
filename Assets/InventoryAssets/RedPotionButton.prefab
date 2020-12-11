@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 1996523291885872636}
   - component: {fileID: 705646863905865488}
   m_Layer: 5
-  m_Name: CoinButton
+  m_Name: RedPotionButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -67,7 +67,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 394899dbf2938874ca7d1025f7598406, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 117b17facff65dc42b1b57deb7c21551, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -144,4 +144,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b121c8856ca121489050fa8a5f2be31, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  item: {fileID: 6198350435307299136, guid: 8b8a2eea8a59bf441aae70389b7b91bd, type: 3}
+  item: {fileID: 6198350435307299136, guid: 59a44d7072dd2fd46a59194b0945c445, type: 3}
