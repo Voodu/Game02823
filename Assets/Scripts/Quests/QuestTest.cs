@@ -36,38 +36,38 @@ namespace Quests
             if (item != null)
             {
                 // Bear
-                if ((item.connectedObjectiveId == "kill_bear") && Input.GetKeyDown(KeyCode.K))
+                if ((item.data.connectedObjectiveId == "kill_bear") && Input.GetKeyDown(KeyCode.K))
                 {
                     item.Activate();
                 }
 
-                if ((item.connectedObjectiveId == "visit_cave") && Input.GetKeyDown(KeyCode.C))
+                if ((item.data.connectedObjectiveId == "visit_cave") && Input.GetKeyDown(KeyCode.C))
                 {
                     item.Activate();
                 }
 
-                if ((item.connectedObjectiveId == "inform_man") && Input.GetKeyDown(KeyCode.I))
+                if ((item.data.connectedObjectiveId == "inform_man") && Input.GetKeyDown(KeyCode.I))
                 {
                     item.Activate();
                 }
 
                 // Flowers
-                if ((item.connectedObjectiveId == "find_roses") && Input.GetKeyDown(KeyCode.R))
+                if ((item.data.connectedObjectiveId == "find_roses") && Input.GetKeyDown(KeyCode.R))
                 {
                     item.Activate();
                 }
 
-                if ((item.connectedObjectiveId == "find_dandelions") && Input.GetKeyDown(KeyCode.D))
+                if ((item.data.connectedObjectiveId == "find_dandelions") && Input.GetKeyDown(KeyCode.D))
                 {
                     item.Activate();
                 }
 
-                if ((item.connectedObjectiveId == "find_tulips") && Input.GetKeyDown(KeyCode.T))
+                if ((item.data.connectedObjectiveId == "find_tulips") && Input.GetKeyDown(KeyCode.T))
                 {
                     item.Activate();
                 }
 
-                if ((item.connectedObjectiveId == "inform_girl") && Input.GetKeyDown(KeyCode.G))
+                if ((item.data.connectedObjectiveId == "inform_girl") && Input.GetKeyDown(KeyCode.G))
                 {
                     item.Activate();
                 }

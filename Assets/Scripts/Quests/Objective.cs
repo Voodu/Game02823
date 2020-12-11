@@ -21,7 +21,7 @@ namespace Quests
             Completed?.Invoke(this, new ObjectiveEventArgs(objective));
         }
 
-        public void RecordProgress(ObjectiveItem item)
+        public void RecordProgress(ObjectiveItemData item)
         {
             switch (item.objectiveType)
             {
@@ -47,7 +47,7 @@ namespace Quests
                     currentProgress++;
                     break;
                 case ObjectiveType.None:
-                    Debug.LogWarning($"No objective type set on {item.gameObject.name}");
+                    Debug.LogWarning($"No objective type set on item for {item.connectedQuestId}.{item.connectedObjectiveId}");
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
