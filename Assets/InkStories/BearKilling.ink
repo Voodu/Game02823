@@ -1,7 +1,8 @@
 VAR name = "bear_killing"
 VAR accepted = false
 VAR prize = 0
-VAR completed = false
+VAR exp = 50
+VAR completed = true
 -> start
 
 === start ===
@@ -16,7 +17,7 @@ It killed three people from our village already and everone is afraid of going i
 * ME: Sure, no problem.
   - - (accept)
   ~ accepted = true
-  Thank you! You'll find that beast somewhere around the Red Cave. Good luck! #terminate
+  Thank you! You'll find that beast somewhere around the Red Cave. Good luck! #quest #start #bear_killing #terminate
   -> progress 
 * (money)ME: What will I have from that?
   ~ prize = 100
@@ -42,9 +43,10 @@ How is it with the bear? Have you killed it?
 -> finished
 
 === finished ===
+EXT FINISH {exp} {prize}
 Thank you so much! <>
 {prize > 0: Here's your {prize} gold. <> }
-You are always welcome here! #terminate
+You are always welcome here! #quest #end #bear_killing #terminate
 -> end_loop
 
 === end_loop ===

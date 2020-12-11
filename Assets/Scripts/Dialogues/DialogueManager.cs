@@ -12,6 +12,7 @@ namespace Dialogues
     {
         [SerializeField]
         private string playerPrefix = "ME: ";
+        private string extensionLinePrefix = "EXT";
 
         private Dialogue dialogue;
 
@@ -42,18 +43,40 @@ namespace Dialogues
 
         public void UpdateDialogueCanvas(IEnumerable<string> storyLines, IEnumerable<Choice> choices)
         {
-            ShowStory(storyLines);
+            var lines = storyLines as string[] ?? storyLines.ToArray();
+            ParseExtensionLines(lines.Where(sl => sl.StartsWith(extensionLinePrefix)));
+            ShowStory(lines.Where(sl => !sl.StartsWith(extensionLinePrefix)));
             ClearChoiceMenu();
             ShowChoices(choices);
         }
 
         public void ParseTags(IEnumerable<string> tags)
         {
+            // TODO: Resign from tags and move everything to use extension lines
             foreach (var inkTag in tags)
             {
                 if (inkTag == "terminate")
                 {
                     EndConversation();
+                }
+            }
+        }
+
+        public void ParseExtensionLines(IEnumerable<string> lines)
+        {
+            // Extension lines are in format: EXT <keyword> <data1> <data2> <...>
+            // Ex. EXT FINISH 50 100
+            foreach (var line in lines)
+            {
+                var words = line.Split(' ');
+                switch (words[1])
+                {
+                    case "FINISH":
+                        print($"Exp: {words[2]}, gold: {words[3]}");
+                        break;
+                    default:
+                        print($"Unknown EXT: {words[1]}");
+                        break;
                 }
             }
         }
