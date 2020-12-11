@@ -194,10 +194,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 695bed8da57f404b909599b2744952a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objectiveType: 2
-  connectedQuestId: flower_collecting
-  connectedObjectiveId: find_roses
-  data: 
+  data:
+    objectiveType: 2
+    connectedQuestId: flower_collecting
+    connectedObjectiveId: find_roses
+    data: 
 --- !u!1 &365172047
 GameObject:
   m_ObjectHideFlags: 0
@@ -307,7 +308,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 368913740}
-  - component: {fileID: 368913739}
   - component: {fileID: 368913738}
   - component: {fileID: 368913741}
   m_Layer: 0
@@ -333,22 +333,6 @@ MonoBehaviour:
   npc2: {fileID: 0}
   quest: {fileID: 0}
   item: {fileID: 0}
---- !u!114 &368913739
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 368913737}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 695bed8da57f404b909599b2744952a0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  objectiveType: 6
-  connectedQuestId: bear_killing
-  connectedObjectiveId: inform_man
-  data: 
 --- !u!4 &368913740
 Transform:
   m_ObjectHideFlags: 0
@@ -441,10 +425,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 695bed8da57f404b909599b2744952a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objectiveType: 2
-  connectedQuestId: flower_collecting
-  connectedObjectiveId: find_tulips
-  data: 
+  data:
+    objectiveType: 2
+    connectedQuestId: flower_collecting
+    connectedObjectiveId: find_tulips
+    data: 
 --- !u!1 &553361397
 GameObject:
   m_ObjectHideFlags: 0
@@ -491,10 +476,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 695bed8da57f404b909599b2744952a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objectiveType: 1
-  connectedQuestId: bear_killing
-  connectedObjectiveId: kill_bear
-  data: 
+  data:
+    objectiveType: 1
+    connectedQuestId: bear_killing
+    connectedObjectiveId: kill_bear
+    data: 
 --- !u!4 &553361400
 Transform:
   m_ObjectHideFlags: 0
@@ -679,10 +665,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 695bed8da57f404b909599b2744952a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objectiveType: 2
-  connectedQuestId: flower_collecting
-  connectedObjectiveId: find_dandelions
-  data: 
+  data:
+    objectiveType: 2
+    connectedQuestId: flower_collecting
+    connectedObjectiveId: find_dandelions
+    data: 
 --- !u!1 &1197981460
 GameObject:
   m_ObjectHideFlags: 0
@@ -846,10 +833,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 695bed8da57f404b909599b2744952a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objectiveType: 5
-  connectedQuestId: bear_killing
-  connectedObjectiveId: visit_cave
-  data: 
+  data:
+    objectiveType: 5
+    connectedQuestId: bear_killing
+    connectedObjectiveId: visit_cave
+    data: 
 --- !u!4 &1352129547
 Transform:
   m_ObjectHideFlags: 0
@@ -1137,10 +1125,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 695bed8da57f404b909599b2744952a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objectiveType: 6
-  connectedQuestId: flower_collecting
-  connectedObjectiveId: inform_girl
-  data: 
+  data:
+    objectiveType: 6
+    connectedQuestId: flower_collecting
+    connectedObjectiveId: inform_girl
+    data: 
 --- !u!1 &1827950261
 GameObject:
   m_ObjectHideFlags: 0

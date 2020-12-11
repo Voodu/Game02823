@@ -2,6 +2,8 @@ using System.Collections.Generic;
 using System.Linq;
 using Common;
 using Ink.Runtime;
+using Quests;
+using Quests.Enums;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -12,8 +14,14 @@ namespace Dialogues
     {
         [SerializeField]
         private string playerPrefix = "ME: ";
+        
+        [SerializeField]
+        private string extensionLinePrefix = "EXT";
 
         private Dialogue dialogue;
+        [SerializeField]
+        private List<Dialogue> dialogues = new List<Dialogue>();
+        public Dialogue this[string dialogueId] => dialogues.First(x => x.id == dialogueId);
 
         /* UI Prefabs */
         [SerializeField]
@@ -27,6 +35,11 @@ namespace Dialogues
 
         [SerializeField]
         private GameObject choiceMenu;
+
+        public void Register(Dialogue dialogue)
+        {
+            dialogues.AddWithId(dialogue);
+        }
 
         public void ShowDialogue(Dialogue dialogue)
         {
@@ -49,6 +62,7 @@ namespace Dialogues
 
         public void ParseTags(IEnumerable<string> tags)
         {
+            // TODO: Resign from tags and move everything to use extension lines
             foreach (var inkTag in tags)
             {
                 if (inkTag == "terminate")
@@ -58,9 +72,49 @@ namespace Dialogues
             }
         }
 
+        public void ParseExtensionLines(IEnumerable<string> lines)
+        {
+            // Extension lines are in format: EXT <keyword> <data1> <data2> <...>
+            // Ex. EXT FINISH 50 100
+            // Ex. EXT QUEST start bear_killing
+            foreach (var line in lines)
+            {
+                var words = line.Split(' ');
+                switch (words[1].Trim())
+                {
+                    case "FINISH":
+                        print($"Exp: {words[2].Trim()}, gold: {words[3].Trim()}");
+                        break;
+                    case "QUEST":
+                        var questId = words[3].Trim();
+                        if (words[2].Trim() == "start")
+                        {
+                            QuestManager.instance.Begin(questId);
+                        }
+                        else if (words[2].Trim() == "progress")
+                        {
+                            var objectiveId = words[4].Trim();
+                            QuestManager.instance[questId][objectiveId].RecordProgress(new ObjectiveItemData()
+                                                                                       {
+                                                                                           connectedQuestId = questId,
+                                                                                           connectedObjectiveId = objectiveId,
+                                                                                           objectiveType = ObjectiveType.Talk
+                                                                                       });
+                        }
+
+                        break;
+                    default:
+                        print($"Unknown EXT: {words[1].Trim()}");
+                        break;
+                }
+            }
+        }
+
         private void ShowStory(IEnumerable<string> storyLines)
         {
-            var npcLines = storyLines.Where(storyLine => !storyLine.StartsWith(playerPrefix));
+            var lines = storyLines as string[] ?? storyLines.ToArray();
+            ParseExtensionLines(lines.Where(sl => sl.StartsWith(extensionLinePrefix)));
+            var npcLines = lines.Where(line => !line.StartsWith(playerPrefix) && !line.StartsWith(extensionLinePrefix));
             var npcStory = string.Join(string.Empty, npcLines);
             npcText.SetText(npcStory);
         }

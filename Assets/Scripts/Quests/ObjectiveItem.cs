@@ -5,14 +5,11 @@ namespace Quests
 {
     public class ObjectiveItem : MonoBehaviour
     {
-        public ObjectiveType objectiveType;
-        public string        connectedQuestId;
-        public string        connectedObjectiveId;
-        public string        data;
+        public ObjectiveItemData data;
 
         public virtual void Activate()
         {
-            QuestManager.Instance[connectedQuestId][connectedObjectiveId].RecordProgress(this);
+            QuestManager.Instance[data.connectedQuestId][data.connectedObjectiveId].RecordProgress(data);
         }
     }
 }

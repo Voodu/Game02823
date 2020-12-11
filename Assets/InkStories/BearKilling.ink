@@ -1,6 +1,7 @@
 VAR name = "bear_killing"
 VAR accepted = false
 VAR prize = 0
+VAR exp = 50
 VAR completed = false
 -> start
 
@@ -16,6 +17,7 @@ It killed three people from our village already and everone is afraid of going i
 * ME: Sure, no problem.
   - - (accept)
   ~ accepted = true
+  EXT QUEST start bear_killing
   Thank you! You'll find that beast somewhere around the Red Cave. Good luck! #terminate
   -> progress 
 * (money)ME: What will I have from that?
@@ -42,6 +44,8 @@ How is it with the bear? Have you killed it?
 -> finished
 
 === finished ===
+EXT QUEST progress bear_killing inform_man 
+EXT FINISH {exp} {prize}
 Thank you so much! <>
 {prize > 0: Here's your {prize} gold. <> }
 You are always welcome here! #terminate

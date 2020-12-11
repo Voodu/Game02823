@@ -9,7 +9,11 @@ namespace Dialogues
         [SerializeField]
         private TextAsset inkAsset;
 
+        [SerializeField]
+        public string id;
+
         private Story inkStory;
+
 
         public bool         StoryNeeded { get; set; }
         public List<string> StoryLines  { get; private set; } = new List<string>();
@@ -19,6 +23,8 @@ namespace Dialogues
         private void Awake()
         {
             inkStory = new Story(inkAsset.text);
+            id = (string)inkStory.variablesState["name"];
+            DialogueManager.Instance.Register(this);
         }
 
         private void OnEnable()
@@ -70,6 +76,11 @@ namespace Dialogues
         {
             inkStory.ChooseChoiceIndex(id);
             StoryNeeded = true;
+        }
+
+        public void Continue()
+        {
+            inkStory.variablesState["completed"] = true;
         }
     }
 }

@@ -12,7 +12,7 @@ After talking with a girl she asked me to find several flowers for her mom.
 {continue: -> inform}
 
 === inform ===
-# objective # inform_girl # Bring the flowers to the girl # talk # 1
+# objective # inform_girl # Bring the flowers to the girl # talk # 1 # dialogue # flower_collecting
 ~continue = false
 I have the flowers. I should bring them to the girl. 
 # dummy
