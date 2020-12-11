@@ -17,8 +17,8 @@ It killed three people from our village already and everone is afraid of going i
 * ME: Sure, no problem.
   - - (accept)
   ~ accepted = true
-  Thank you! You'll find that beast somewhere around the Red Cave. Good luck! 
-  EXT QUEST start bear_killing #terminate
+  EXT QUEST start bear_killing
+  Thank you! You'll find that beast somewhere around the Red Cave. Good luck! #terminate
   -> progress 
 * (money)ME: What will I have from that?
   ~ prize = 100
@@ -44,11 +44,11 @@ How is it with the bear? Have you killed it?
 -> finished
 
 === finished ===
+EXT QUEST progress bear_killing inform_man 
 EXT FINISH {exp} {prize}
 Thank you so much! <>
 {prize > 0: Here's your {prize} gold. <> }
-You are always welcome here!
-EXT QUEST progress bear_killing inform_man #terminate
+You are always welcome here! #terminate
 -> end_loop
 
 === end_loop ===
