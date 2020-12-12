@@ -1,4 +1,5 @@
-﻿using Statistics;
+﻿using Inventory;
+using Statistics;
 using UnityEngine;
 
 namespace Common
@@ -24,7 +25,7 @@ namespace Common
                 var item = gameObject.GetComponent<Item>();
                 if (item != null)
                 {
-                    if (heroKnight.characterData.Inventory.AddItem(item))
+                    if (heroKnight.characterData.inventory.AddItem(item))
                     {
                         InventoryManager.Instance.AddInventoryItemUi(item);
                         gameObject.SetActive(false);

@@ -1,6 +1,7 @@
 ﻿using System;
+using Statistics;
 
-namespace Statistics
+namespace Inventory
 {
     public enum BonusScaler
     {
@@ -21,36 +22,36 @@ namespace Statistics
     [Serializable]
     public class ItemBonus
     {
-        public BonusType Type;
+        public BonusType type;
 
-        public BonusScaler Scaler;
+        public BonusScaler scaler;
 
-        public float Value;
+        public float value;
 
         public ItemBonus(BonusType type, BonusScaler scaler, float value)
         {
-            Type   = type;
-            Scaler = scaler;
-            Value  = value;
+            this.type   = type;
+            this.scaler = scaler;
+            this.value  = value;
         }
 
         public void Apply(Character c, GearItem item)
         {
             if (item.bonus != null)
             {
-                switch (item.bonus.Type)
+                switch (item.bonus.type)
                 {
                     case BonusType.Health:
-                        c.Health.Add(new AttributeModifier(item.bonus.Value, item.bonus.Scaler, item));
+                        c.health.Add(new AttributeModifier(item.bonus.value, item.bonus.scaler, item));
                         break;
                     case BonusType.Stamina:
-                        c.Stamina.Add(new AttributeModifier(item.bonus.Value, item.bonus.Scaler, item));
+                        c.stamina.Add(new AttributeModifier(item.bonus.value, item.bonus.scaler, item));
                         break;
                     case BonusType.Strength:
-                        c.Strength.Add(new AttributeModifier(item.bonus.Value, item.bonus.Scaler, item));
+                        c.strength.Add(new AttributeModifier(item.bonus.value, item.bonus.scaler, item));
                         break;
                     case BonusType.Speed:
-                        c.Speed.Add(new AttributeModifier(item.bonus.Value, item.bonus.Scaler, item));
+                        c.speed.Add(new AttributeModifier(item.bonus.value, item.bonus.scaler, item));
                         break;
                 }
             }
@@ -58,10 +59,10 @@ namespace Statistics
 
         public void Remove(Character c, GearItem item)
         {
-            c.Strength.RemoveAllFromSource(item);
-            c.Health.RemoveAllFromSource(item);
-            c.Stamina.RemoveAllFromSource(item);
-            c.Speed.RemoveAllFromSource(item);
+            c.strength.RemoveAllFromSource(item);
+            c.health.RemoveAllFromSource(item);
+            c.stamina.RemoveAllFromSource(item);
+            c.speed.RemoveAllFromSource(item);
         }
     }
 }

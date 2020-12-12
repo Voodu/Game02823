@@ -1,38 +1,32 @@
 ﻿using System;
+using System.Linq;
+using Inventory;
 
 namespace Statistics
 {
     [Serializable]
     public class Character
     {
-        public string    Name;
-        public Attribute Health;
-        public Attribute Stamina;
-        public Attribute Strength;
-        public Attribute Speed;
-        public Inventory Inventory;
+        public string    name;
+        public Attribute health;
+        public Attribute stamina;
+        public Attribute strength;
+        public Attribute speed;
+        public Inventory.Inventory inventory;
 
         public Character(string name)
         {
-            Name      = name;
-            Health    = new Attribute(100);
-            Stamina   = new Attribute(100);
-            Strength  = new Attribute(1);
-            Speed     = new Attribute(1);
-            Inventory = new Inventory();
+            this.name = name;
+            health    = new Attribute(100);
+            stamina   = new Attribute(100);
+            strength  = new Attribute(1);
+            speed     = new Attribute(1);
+            inventory = new Inventory.Inventory();
         }
 
         public GearItem GetItemFromInventory(GearType type)
         {
-            foreach (GearItem item in Inventory.Items)
-            {
-                if (item.type == type)
-                {
-                    return item;
-                }
-            }
-
-            return null;
+            return inventory.items.Where(x => x is GearItem).Cast<GearItem>().FirstOrDefault(item => item.type == type);
         }
 
         public bool EquipItem(GearItem item)
@@ -40,39 +34,39 @@ namespace Statistics
             switch (item.type)
             {
                 case GearType.Helmet:
-                    if (!Inventory.Helmet.Occupied)
+                    if (!inventory.helmet.Occupied)
                     {
                         item.bonus.Apply(this, item);
-                        Inventory.Helmet.Occupied = true;
+                        inventory.helmet.Occupied = true;
                         return true;
                     }
 
                     break;
                 case GearType.Armor:
-                    if (!Inventory.Chest.Occupied)
+                    if (!inventory.chest.Occupied)
                     {
                         item.bonus.Apply(this, item);
-                        Inventory.Chest.Occupied = true;
+                        inventory.chest.Occupied = true;
                         return true;
                     }
 
                     ;
                     break;
                 case GearType.Gloves:
-                    if (!Inventory.Gloves.Occupied)
+                    if (!inventory.gloves.Occupied)
                     {
                         item.bonus.Apply(this, item);
-                        Inventory.Gloves.Occupied = true;
+                        inventory.gloves.Occupied = true;
                         return true;
                     }
 
                     ;
                     break;
                 case GearType.Boots:
-                    if (!Inventory.Boots.Occupied)
+                    if (!inventory.boots.Occupied)
                     {
                         item.bonus.Apply(this, item);
-                        Inventory.Boots.Occupied = true;
+                        inventory.boots.Occupied = true;
                         return true;
                     }
 
@@ -80,30 +74,30 @@ namespace Statistics
                     break;
 
                 case GearType.Weapon:
-                    if (!Inventory.Weapon.Occupied)
+                    if (!inventory.weapon.Occupied)
                     {
                         item.bonus.Apply(this, item);
-                        Inventory.Weapon.Occupied = true;
+                        inventory.weapon.Occupied = true;
                         return true;
                     }
 
                     ;
                     break;
                 case GearType.Accessory:
-                    if (!Inventory.Accessory.Occupied)
+                    if (!inventory.accessory.Occupied)
                     {
                         item.bonus.Apply(this, item);
-                        Inventory.Accessory.Occupied = true;
+                        inventory.accessory.Occupied = true;
                         return true;
                     }
 
                     ;
                     break;
                 case GearType.Bag:
-                    if (!Inventory.Bag.Occupied)
+                    if (!inventory.bag.Occupied)
                     {
                         item.bonus.Apply(this, item);
-                        Inventory.Bag.Occupied = true;
+                        inventory.bag.Occupied = true;
                         return true;
                     }
 
@@ -120,31 +114,31 @@ namespace Statistics
             {
                 case GearType.Helmet:
                     item.bonus.Remove(this, item);
-                    Inventory.Helmet.Occupied = false;
+                    inventory.helmet.Occupied = false;
                     break;
                 case GearType.Armor:
                     item.bonus.Remove(this, item);
-                    Inventory.Chest.Occupied = false;
+                    inventory.chest.Occupied = false;
                     break;
                 case GearType.Gloves:
                     item.bonus.Remove(this, item);
-                    Inventory.Gloves.Occupied = false;
+                    inventory.gloves.Occupied = false;
                     break;
                 case GearType.Boots:
                     item.bonus.Remove(this, item);
-                    Inventory.Boots.Occupied = false;
+                    inventory.boots.Occupied = false;
                     break;
                 case GearType.Weapon:
                     item.bonus.Remove(this, item);
-                    Inventory.Weapon.Occupied = false;
+                    inventory.weapon.Occupied = false;
                     break;
                 case GearType.Accessory:
                     item.bonus.Remove(this, item);
-                    Inventory.Accessory.Occupied = false;
+                    inventory.accessory.Occupied = false;
                     break;
                 case GearType.Bag:
                     item.bonus.Remove(this, item);
-                    Inventory.Bag.Occupied = false;
+                    inventory.bag.Occupied = false;
                     break;
             }
         }

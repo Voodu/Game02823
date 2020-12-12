@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace Statistics
+namespace Inventory
 {
     public enum Tier
     {
@@ -16,16 +16,16 @@ namespace Statistics
     [Serializable]
     public class Item : MonoBehaviour
     {
-        public string Name;
-        public Tier   Tier;
+        public string itemName;
+        public Tier   tier;
 
-        public Item(string name, Tier tier)
+        public Item(string itemName, Tier tier)
         {
-            Name = name;
-            Tier = tier;
+            this.itemName = itemName;
+            this.tier     = tier;
         }
 
-        public Item(string name) : this(name, Tier.Poor) { }
+        public Item(string itemName) : this(itemName, Tier.Poor) { }
         public Item() : this("", Tier.Poor) { }
 
         public string TierToColor(Tier tier)

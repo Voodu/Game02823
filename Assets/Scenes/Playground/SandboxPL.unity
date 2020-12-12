@@ -300,13 +300,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7be0a34650da6334bb56679a927a3669, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Name: 
-  Tier: 0
+  itemName: 
+  tier: 0
   type: 0
   bonus:
-    Type: 0
-    Scaler: 100
-    Value: 20
+    type: 0
+    scaler: 100
+    value: 20
 --- !u!212 &108314776
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -463,13 +463,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7be0a34650da6334bb56679a927a3669, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Name: 
-  Tier: 0
+  itemName: 
+  tier: 0
   type: 1
   bonus:
-    Type: 0
-    Scaler: 100
-    Value: 50
+    type: 0
+    scaler: 100
+    value: 50
 --- !u!212 &204935934
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1293,6 +1293,38 @@ PrefabInstance:
       propertyPath: healthBar
       value: 
       objectReference: {fileID: 1069934012}
+    - target: {fileID: 176906888660995596, guid: 838467b854fe723449fcbb668f92467f, type: 3}
+      propertyPath: characterData.speed.baseValue
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 176906888660995596, guid: 838467b854fe723449fcbb668f92467f, type: 3}
+      propertyPath: characterData.inventory.helmet
+      value: 
+      objectReference: {fileID: 220435277}
+    - target: {fileID: 176906888660995596, guid: 838467b854fe723449fcbb668f92467f, type: 3}
+      propertyPath: characterData.inventory.chest
+      value: 
+      objectReference: {fileID: 162061902}
+    - target: {fileID: 176906888660995596, guid: 838467b854fe723449fcbb668f92467f, type: 3}
+      propertyPath: characterData.inventory.gloves
+      value: 
+      objectReference: {fileID: 1269914676}
+    - target: {fileID: 176906888660995596, guid: 838467b854fe723449fcbb668f92467f, type: 3}
+      propertyPath: characterData.inventory.boots
+      value: 
+      objectReference: {fileID: 1296292695}
+    - target: {fileID: 176906888660995596, guid: 838467b854fe723449fcbb668f92467f, type: 3}
+      propertyPath: characterData.inventory.weapon
+      value: 
+      objectReference: {fileID: 823077284}
+    - target: {fileID: 176906888660995596, guid: 838467b854fe723449fcbb668f92467f, type: 3}
+      propertyPath: characterData.inventory.accessory
+      value: 
+      objectReference: {fileID: 2082647339}
+    - target: {fileID: 176906888660995596, guid: 838467b854fe723449fcbb668f92467f, type: 3}
+      propertyPath: characterData.inventory.bag
+      value: 
+      objectReference: {fileID: 1757839680}
     - target: {fileID: 807506582278820301, guid: 838467b854fe723449fcbb668f92467f, type: 3}
       propertyPath: m_LocalPosition.x
       value: -2.036
@@ -1729,13 +1761,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7be0a34650da6334bb56679a927a3669, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Name: 
-  Tier: 0
+  itemName: 
+  tier: 0
   type: 0
   bonus:
-    Type: 0
-    Scaler: 100
-    Value: 30
+    type: 0
+    scaler: 100
+    value: 30
 --- !u!212 &792563225
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -4104,13 +4136,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7be0a34650da6334bb56679a927a3669, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Name: 
-  Tier: 0
+  itemName: 
+  tier: 0
   type: 3
   bonus:
-    Type: 3
-    Scaler: 300
-    Value: 2
+    type: 3
+    scaler: 100
+    value: 2
 --- !u!212 &1495353779
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -4365,13 +4397,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7be0a34650da6334bb56679a927a3669, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Name: 
-  Tier: 0
+  itemName: 
+  tier: 0
   type: 4
   bonus:
-    Type: 2
-    Scaler: 100
-    Value: 30
+    type: 2
+    scaler: 100
+    value: 20
 --- !u!212 &1648874022
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -4661,13 +4693,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7be0a34650da6334bb56679a927a3669, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Name: 
-  Tier: 0
+  itemName: 
+  tier: 0
   type: 5
   bonus:
-    Type: 4
-    Scaler: 0
-    Value: 0
+    type: 4
+    scaler: 100
+    value: 0
 --- !u!212 &1821895142
 SpriteRenderer:
   m_ObjectHideFlags: 0

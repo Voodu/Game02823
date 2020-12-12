@@ -55,15 +55,15 @@ namespace HeroKnight
         // Use this for initialization
         private void Start()
         {
-            health = characterData.Health.BaseValue;
-            characterData.Health.ValueChanged += (sender, args) =>
+            health = characterData.health.baseValue;
+            characterData.health.ValueChanged += (sender, args) =>
                                                  {
                                                      health = Mathf.Min(health, args.newValue);
                                                      UpdateHeartsUi();
                                                  };
             UpdateHeartsUi();
-            speed                            =  characterData.Speed.BaseValue;
-            characterData.Speed.ValueChanged += (sender, args) => speed = args.newValue;
+            speed                            =  characterData.speed.baseValue;
+            characterData.speed.ValueChanged += (sender, args) => speed = args.newValue;
             animator                         =  GetComponent<Animator>();
             body2d                           =  GetComponent<Rigidbody2D>();
             groundSensor                     =  transform.Find("GroundSensor").GetComponent<Sensor_HeroKnight>();
@@ -76,12 +76,6 @@ namespace HeroKnight
         {
             if (alive)
             {
-                if (Input.GetKeyDown(KeyCode.H))
-                {
-                    health = characterData.Health.Value;
-                    UpdateHeartsUi();
-                }
-
                 // Increase timer that controls attack combo
                 timeSinceAttack += Time.deltaTime;
 
@@ -271,7 +265,7 @@ namespace HeroKnight
 
         private void UpdateHeartsUi()
         {
-            var heartsLeft = Mathf.Ceil(health / characterData.Health.Value * maxHearts);
+            var heartsLeft = Mathf.Ceil(health / characterData.health.Value * maxHearts);
 
             while (hearts.Count > heartsLeft)
             {

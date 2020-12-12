@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine.Serialization;
 
-namespace Statistics
+namespace Inventory
 {
     public enum GearType
     {

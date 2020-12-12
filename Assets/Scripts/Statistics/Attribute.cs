@@ -1,52 +1,53 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using Inventory;
 
 namespace Statistics
 {
     [Serializable]
     public class Attribute
     {
-        protected readonly List<AttributeModifier>               attributeModifiers;
-        public readonly    ReadOnlyCollection<AttributeModifier> AttributeModifiers;
-        public             float                                 BaseValue;
+        protected readonly List<AttributeModifier>               modifiers;
+        public readonly    ReadOnlyCollection<AttributeModifier> attributeModifiers;
+        public             float                                 baseValue;
 
         protected float lastBaseValue;
 
-        protected float _value;
+        protected float value;
 
-        public virtual float Value => _value;
+        public virtual float Value => value;
 
         public Attribute()
         {
-            attributeModifiers = new List<AttributeModifier>();
-            AttributeModifiers = attributeModifiers.AsReadOnly();
+            modifiers          = new List<AttributeModifier>();
+            attributeModifiers = modifiers.AsReadOnly();
         }
 
         public Attribute(float baseValue) : this()
         {
-            BaseValue = baseValue;
-            _value    = BaseValue;
+            this.baseValue = baseValue;
+            value          = this.baseValue;
         }
 
         public event EventHandler<ValueChangedEventArgs> ValueChanged;
 
         private void UpdateValue()
         {
-            lastBaseValue = BaseValue;
-            _value        = ComputeFinalValue();
-            OnValueChanged(_value);
+            lastBaseValue = baseValue;
+            value         = ComputeFinalValue();
+            OnValueChanged(value);
         }
 
         public virtual void Add(AttributeModifier mod)
         {
-            attributeModifiers.Add(mod);
+            modifiers.Add(mod);
             UpdateValue();
         }
 
         public virtual bool Remove(AttributeModifier mod)
         {
-            if (attributeModifiers.Remove(mod))
+            if (modifiers.Remove(mod))
             {
                 UpdateValue();
                 return true;
@@ -57,7 +58,7 @@ namespace Statistics
 
         public virtual bool RemoveAllFromSource(object source)
         {
-            var numRemovals = attributeModifiers.RemoveAll(mod => mod.Source == source);
+            var numRemovals = modifiers.RemoveAll(mod => mod.source == source);
 
             if (numRemovals > 0)
             {
@@ -70,12 +71,12 @@ namespace Statistics
 
         protected virtual int CompareOrder(AttributeModifier a, AttributeModifier b)
         {
-            if (a.Order < b.Order)
+            if (a.order < b.order)
             {
                 return -1;
             }
 
-            if (a.Order > b.Order)
+            if (a.order > b.order)
             {
                 return 1;
             }
@@ -90,32 +91,36 @@ namespace Statistics
 
         protected virtual float ComputeFinalValue()
         {
-            var   finalValue    = BaseValue;
+            var   finalValue    = baseValue;
             float sumPercentAdd = 0;
 
-            attributeModifiers.Sort(CompareOrder);
+            modifiers.Sort(CompareOrder);
 
-            for (var i = 0; i < attributeModifiers.Count; i++)
+            for (var i = 0; i < modifiers.Count; i++)
             {
-                var mod = attributeModifiers[i];
+                var mod = modifiers[i];
 
-                if (mod.Scaler == BonusScaler.Flat)
+                switch (mod.scaler)
                 {
-                    finalValue += mod.Value;
-                }
-                else if (mod.Scaler == BonusScaler.PercentAdd)
-                {
-                    sumPercentAdd += mod.Value;
-
-                    if ((i + 1 >= attributeModifiers.Count) || (attributeModifiers[i + 1].Scaler != BonusScaler.PercentAdd))
+                    case BonusScaler.Flat:
+                        finalValue += mod.value;
+                        break;
+                    case BonusScaler.PercentAdd:
                     {
-                        finalValue    *= 1 + sumPercentAdd;
-                        sumPercentAdd =  0;
+                        sumPercentAdd += mod.value;
+
+                        if ((i + 1 >= modifiers.Count) || (modifiers[i + 1].scaler != BonusScaler.PercentAdd))
+                        {
+                            finalValue    *= 1 + sumPercentAdd;
+                            sumPercentAdd =  0;
+                        }
+
+                        break;
                     }
-                }
-                else if (mod.Scaler == BonusScaler.PercentMult)
-                {
-                    finalValue *= 1 + mod.Value;
+
+                    case BonusScaler.PercentMult:
+                        finalValue *= 1 + mod.value;
+                        break;
                 }
             }
 

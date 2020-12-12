@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace Statistics
+namespace Inventory
 {
     [Serializable]
     public class ItemSlot : MonoBehaviour
