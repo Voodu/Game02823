@@ -11,7 +11,8 @@ public class Slot : MonoBehaviour
 
     void Start()
     {
-        Inventory = GameObject.FindGameObjectWithTag("Player").GetComponent<Inventory>();
+        var player = GameObject.FindGameObjectWithTag("Player");
+        Inventory = player.GetComponent<Inventory>();
     }
 
     // Update is called once per frame

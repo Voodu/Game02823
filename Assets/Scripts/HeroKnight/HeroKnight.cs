@@ -31,10 +31,7 @@ namespace HeroKnight
         private float rollForce = 6.0f;
 
         [SerializeField]
-        private GameObject heart1;
-
-        [SerializeField]
-        private GameObject heart2;
+        private List<GameObject> hearts = new List<GameObject>();
 
         [SerializeField]
         private GameObject attackHitBox;
@@ -49,7 +46,6 @@ namespace HeroKnight
         private float             timeSinceAttack;
         private float             delayToIdle;
         private int               coins;
-        private int               lives = 2;
         private bool              alive = true;
         private bool              isAttacking;
 
@@ -61,8 +57,6 @@ namespace HeroKnight
             groundSensor = transform.Find("GroundSensor").GetComponent<Sensor_HeroKnight>();
             attackHitBox = GameObject.Find("AttackHitbox");
             attackHitBox.SetActive(false);
-            heart1 = GameObject.Find("Heart1");
-            heart2 = GameObject.Find("Heart2");
         }
 
         // Update is called once per frame
@@ -254,19 +248,17 @@ namespace HeroKnight
 
         public void DealDamage(int damage)
         {
-            lives -= damage;
-
-            if (lives == 0)
+            Destroy(hearts[hearts.Count-1]);
+            hearts.RemoveAt(hearts.Count-1);
+            if (hearts.Count == 0)
             {
                 animator.SetTrigger(DeathHash);
                 alive = false;
-                Destroy(heart1.gameObject);
                 body2d.velocity = new Vector2(0, 0);
             }
             else
             {
                 animator.SetTrigger(HurtHash);
-                Destroy(heart2.gameObject);
             }
         }
 
