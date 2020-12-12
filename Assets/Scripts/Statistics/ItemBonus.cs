@@ -1,5 +1,4 @@
 ﻿using System;
-using UnityEngine.Serialization;
 
 namespace Statistics
 {
@@ -22,39 +21,36 @@ namespace Statistics
     [Serializable]
     public class ItemBonus
     {
-        [FormerlySerializedAs("Type")]
-        public BonusType type;
+        public BonusType Type;
 
-        [FormerlySerializedAs("Scaler")]
-        public BonusScaler scaler;
+        public BonusScaler Scaler;
 
-        [FormerlySerializedAs("Value")]
-        public float value;
+        public float Value;
 
         public ItemBonus(BonusType type, BonusScaler scaler, float value)
         {
-            this.type   = type;
-            this.scaler = scaler;
-            this.value  = value;
+            Type   = type;
+            Scaler = scaler;
+            Value  = value;
         }
 
         public void Apply(Character c, GearItem item)
         {
             if (item.bonus != null)
             {
-                switch (item.bonus.type)
+                switch (item.bonus.Type)
                 {
                     case BonusType.Health:
-                        c.Health.Add(new AttributeModifier(item.bonus.value, item.bonus.scaler, item));
+                        c.Health.Add(new AttributeModifier(item.bonus.Value, item.bonus.Scaler, item));
                         break;
                     case BonusType.Stamina:
-                        c.Stamina.Add(new AttributeModifier(item.bonus.value, item.bonus.scaler, item));
+                        c.Stamina.Add(new AttributeModifier(item.bonus.Value, item.bonus.Scaler, item));
                         break;
                     case BonusType.Strength:
-                        c.Strength.Add(new AttributeModifier(item.bonus.value, item.bonus.scaler, item));
+                        c.Strength.Add(new AttributeModifier(item.bonus.Value, item.bonus.Scaler, item));
                         break;
                     case BonusType.Speed:
-                        c.Speed.Add(new AttributeModifier(item.bonus.value, item.bonus.scaler, item));
+                        c.Speed.Add(new AttributeModifier(item.bonus.Value, item.bonus.Scaler, item));
                         break;
                 }
             }

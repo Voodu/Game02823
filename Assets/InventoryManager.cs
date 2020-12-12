@@ -103,8 +103,6 @@ public class InventoryManager : Singleton<InventoryManager>
 
                        slot.transform.Find("Cross").GetComponent<Button>().onClick.AddListener(UnequipGearItemUi(item));
                    }
-
-                   print(player.characterData.Health.Value);
                };
     }
 

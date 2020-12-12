@@ -11,25 +11,11 @@ namespace Statistics
         public readonly    ReadOnlyCollection<AttributeModifier> AttributeModifiers;
         public             float                                 BaseValue;
 
-        protected bool  isDirty = true;
         protected float lastBaseValue;
 
         protected float _value;
 
-        public virtual float Value
-        {
-            get
-            {
-                if (isDirty || (lastBaseValue != BaseValue))
-                {
-                    lastBaseValue = BaseValue;
-                    _value        = ComputeFinalValue();
-                    isDirty       = false;
-                }
-
-                return _value;
-            }
-        }
+        public virtual float Value => _value;
 
         public Attribute()
         {
@@ -40,19 +26,29 @@ namespace Statistics
         public Attribute(float baseValue) : this()
         {
             BaseValue = baseValue;
+            _value    = BaseValue;
+        }
+
+        public event EventHandler<ValueChangedEventArgs> ValueChanged;
+
+        private void UpdateValue()
+        {
+            lastBaseValue = BaseValue;
+            _value        = ComputeFinalValue();
+            OnValueChanged(_value);
         }
 
         public virtual void Add(AttributeModifier mod)
         {
-            isDirty = true;
             attributeModifiers.Add(mod);
+            UpdateValue();
         }
 
         public virtual bool Remove(AttributeModifier mod)
         {
             if (attributeModifiers.Remove(mod))
             {
-                isDirty = true;
+                UpdateValue();
                 return true;
             }
 
@@ -65,7 +61,7 @@ namespace Statistics
 
             if (numRemovals > 0)
             {
-                isDirty = true;
+                UpdateValue();
                 return true;
             }
 
@@ -85,6 +81,11 @@ namespace Statistics
             }
 
             return 0; //if (a.Order == b.Order)
+        }
+
+        private void OnValueChanged(float newValue)
+        {
+            ValueChanged?.Invoke(this, new ValueChangedEventArgs(newValue));
         }
 
         protected virtual float ComputeFinalValue()

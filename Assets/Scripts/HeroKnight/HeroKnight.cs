@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using Common;
 using Statistics;
 using UnityEngine;
 
@@ -18,9 +17,10 @@ namespace HeroKnight
         private static readonly int AnimStateHash = Animator.StringToHash("AnimState");
         private static readonly int AirSpeedYHash = Animator.StringToHash("AirSpeedY");
 
+        private readonly List<GameObject> hearts = new List<GameObject>();
+
         public Character characterData = new Character("Player");
 
-        [SerializeField]
         private float speed = 4.0f;
 
         [SerializeField]
@@ -30,9 +30,8 @@ namespace HeroKnight
         private float rollForce = 6.0f;
 
         [SerializeField]
-        private List<GameObject> hearts = new List<GameObject>();
+        private int maxHearts = 5;
 
-        private int maxHearts;
         private float health;
 
         [SerializeField]
@@ -50,17 +49,25 @@ namespace HeroKnight
         private int               coins;
         private bool              alive = true;
         private bool              isAttacking;
-
+        public  GameObject        heartPrefab;
+        public  GameObject        healthBar;
 
         // Use this for initialization
         private void Start()
         {
-            maxHearts = hearts.Count;
             health = characterData.Health.BaseValue;
-            animator     = GetComponent<Animator>();
-            body2d       = GetComponent<Rigidbody2D>();
-            groundSensor = transform.Find("GroundSensor").GetComponent<Sensor_HeroKnight>();
-            attackHitBox = GameObject.Find("AttackHitbox");
+            characterData.Health.ValueChanged += (sender, args) =>
+                                                 {
+                                                     health = Mathf.Min(health, args.newValue);
+                                                     UpdateHeartsUi();
+                                                 };
+            UpdateHeartsUi();
+            speed                            =  characterData.Speed.BaseValue;
+            characterData.Speed.ValueChanged += (sender, args) => speed = args.newValue;
+            animator                         =  GetComponent<Animator>();
+            body2d                           =  GetComponent<Rigidbody2D>();
+            groundSensor                     =  transform.Find("GroundSensor").GetComponent<Sensor_HeroKnight>();
+            attackHitBox                     =  GameObject.Find("AttackHitbox");
             attackHitBox.SetActive(false);
         }
 
@@ -69,6 +76,12 @@ namespace HeroKnight
         {
             if (alive)
             {
+                if (Input.GetKeyDown(KeyCode.H))
+                {
+                    health = characterData.Health.Value;
+                    UpdateHeartsUi();
+                }
+
                 // Increase timer that controls attack combo
                 timeSinceAttack += Time.deltaTime;
 
@@ -242,22 +255,33 @@ namespace HeroKnight
         public void DealDamage(int damage)
         {
             health -= damage;
-            var heartsLeft = Mathf.Ceil(health / characterData.Health.BaseValue * maxHearts);
-            
-            while (hearts.Count > heartsLeft)
-            {
-                Destroy(hearts[hearts.Count - 1]);
-                hearts.RemoveAt(hearts.Count-1);
-            }
-            if (hearts.Count == 0)
+            if (health <= 0)
             {
                 animator.SetTrigger(DeathHash);
-                alive = false;
+                alive           = false;
                 body2d.velocity = new Vector2(0, 0);
             }
             else
             {
                 animator.SetTrigger(HurtHash);
+            }
+
+            UpdateHeartsUi();
+        }
+
+        private void UpdateHeartsUi()
+        {
+            var heartsLeft = Mathf.Ceil(health / characterData.Health.Value * maxHearts);
+
+            while (hearts.Count > heartsLeft)
+            {
+                Destroy(hearts[hearts.Count - 1]);
+                hearts.RemoveAt(hearts.Count - 1);
+            }
+
+            while (hearts.Count < heartsLeft)
+            {
+                hearts.Add(Instantiate(heartPrefab, healthBar.transform));
             }
         }
 
