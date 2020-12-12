@@ -1,5 +1,9 @@
-﻿namespace Statistics {
-    public class ItemSlot
+﻿using System;
+using UnityEngine;
+
+namespace Statistics {
+    [Serializable]
+    public class ItemSlot : MonoBehaviour
     {
         public Item Item     { get; set; }
         public bool Occupied { get; set; }

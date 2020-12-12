@@ -1,10 +1,14 @@
-﻿namespace Statistics {
+﻿using System;
+using UnityEngine;
+
+namespace Statistics {
     public enum Tier
     {
         Poor, Common, Uncommon, Rare, Epic, Legendary
     }
 
-    public class Item
+    [Serializable]
+    public class Item : MonoBehaviour
     {
         public string Name { get; private set; }
         public Tier   Tier { get; private set; }

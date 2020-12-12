@@ -18,11 +18,7 @@ namespace HeroKnight
         private static readonly int AnimStateHash = Animator.StringToHash("AnimState");
         private static readonly int AirSpeedYHash = Animator.StringToHash("AirSpeedY");
 
-        [SerializeField]
         public Character characterData = new Character("Player");
-
-        [SerializeField]
-        private List<string> items = new List<string>();
 
         [SerializeField]
         private float speed = 4.0f;
@@ -227,18 +223,6 @@ namespace HeroKnight
         public bool IsAttacking()
         {
             return isAttacking;
-        }
-
-        public void CollectItem(CollectableObject item)
-        {
-            if (item.CompareTag("Coin"))
-            {
-                coins++; // TODO: Coins shouldn't have separate case. They are normal collectables.
-            }
-            else
-            {
-                items.Add(item.name); // TODO: use inventory system
-            }
         }
 
         private void OnTriggerEnter2D(Collider2D collision)
