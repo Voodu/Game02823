@@ -19,6 +19,9 @@ namespace HeroKnight
         private static readonly int AirSpeedYHash = Animator.StringToHash("AirSpeedY");
 
         [SerializeField]
+        public Character characterData = new Character("Player");
+
+        [SerializeField]
         private List<string> items = new List<string>();
 
         [SerializeField]
@@ -32,6 +35,9 @@ namespace HeroKnight
 
         [SerializeField]
         private List<GameObject> hearts = new List<GameObject>();
+
+        private int maxHearts;
+        private float health;
 
         [SerializeField]
         private GameObject attackHitBox;
@@ -49,9 +55,12 @@ namespace HeroKnight
         private bool              alive = true;
         private bool              isAttacking;
 
+
         // Use this for initialization
         private void Start()
         {
+            maxHearts = hearts.Count;
+            health = characterData.Health.BaseValue;
             animator     = GetComponent<Animator>();
             body2d       = GetComponent<Rigidbody2D>();
             groundSensor = transform.Find("GroundSensor").GetComponent<Sensor_HeroKnight>();
@@ -248,8 +257,14 @@ namespace HeroKnight
 
         public void DealDamage(int damage)
         {
-            Destroy(hearts[hearts.Count-1]);
-            hearts.RemoveAt(hearts.Count-1);
+            health -= damage;
+            var heartsLeft = Mathf.Ceil(health / characterData.Health.BaseValue * maxHearts);
+            
+            while (hearts.Count > heartsLeft)
+            {
+                Destroy(hearts[hearts.Count - 1]);
+                hearts.RemoveAt(hearts.Count-1);
+            }
             if (hearts.Count == 0)
             {
                 animator.SetTrigger(DeathHash);
