@@ -14,14 +14,14 @@ namespace Dialogues
     {
         [SerializeField]
         private string playerPrefix = "ME: ";
-        
+
         [SerializeField]
         private string extensionLinePrefix = "EXT";
 
         private Dialogue dialogue;
+
         [SerializeField]
         private List<Dialogue> dialogues = new List<Dialogue>();
-        public Dialogue this[string dialogueId] => dialogues.First(x => x.id == dialogueId);
 
         /* UI Prefabs */
         [SerializeField]
@@ -35,6 +35,8 @@ namespace Dialogues
 
         [SerializeField]
         private GameObject choiceMenu;
+
+        public Dialogue this[string dialogueId] => dialogues.First(x => x.id == dialogueId);
 
         public void Register(Dialogue dialogue)
         {
@@ -94,12 +96,7 @@ namespace Dialogues
                         else if (words[2].Trim() == "progress")
                         {
                             var objectiveId = words[4].Trim();
-                            QuestManager.instance[questId][objectiveId].RecordProgress(new ObjectiveItemData()
-                                                                                       {
-                                                                                           connectedQuestId = questId,
-                                                                                           connectedObjectiveId = objectiveId,
-                                                                                           objectiveType = ObjectiveType.Talk
-                                                                                       });
+                            QuestManager.instance[questId][objectiveId].RecordProgress(new ObjectiveItemData {connectedQuestId = questId, connectedObjectiveId = objectiveId, objectiveType = ObjectiveType.Talk});
                         }
 
                         break;

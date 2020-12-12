@@ -1,24 +1,20 @@
 ﻿using System.Collections.Generic;
 using Common;
-using Inventory_Bak;
 using Statistics;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
-using Inventory = Statistics.Inventory;
 
 public class InventoryManager : Singleton<InventoryManager>
 {
+    private readonly List<ItemSlot>        slots = new List<ItemSlot>();
     public           GameObject            inventoryBar;
     public           GameObject            equipmentBar;
     public           GameObject            inventorySlotPrefab;
-    [FormerlySerializedAs("inventoryItemPrefab")]
-    public           GameObject gearItemPrefab;
-    public           GameObject itemPrefab;
+    public           GameObject            gearItemPrefab;
+    public           GameObject            itemPrefab;
     public           HeroKnight.HeroKnight player;
     private          Inventory             inventory;
-    private readonly List<ItemSlot>        slots = new List<ItemSlot>();
 
     private void Start()
     {
@@ -66,7 +62,7 @@ public class InventoryManager : Singleton<InventoryManager>
 
     public void SpawnDroppedItem(Item item, Image itemImage)
     {
-        var position = player.transform.position;
+        var position  = player.transform.position;
         var playerPos = new Vector2(position.x + 1, position.y + 0.5f);
         switch (item)
         {
@@ -74,17 +70,17 @@ public class InventoryManager : Singleton<InventoryManager>
                 var spawnedGearItem = Instantiate(gearItemPrefab, playerPos, Quaternion.identity);
                 spawnedGearItem.GetComponent<SpriteRenderer>().sprite = itemImage.sprite;
                 var gearItem = spawnedGearItem.GetComponent<GearItem>();
-                gearItem.type = g.type;
+                gearItem.type  = g.type;
                 gearItem.bonus = g.bonus;
-                gearItem.Tier = g.Tier;
-                gearItem.Name = g.Name;
+                gearItem.Tier  = g.Tier;
+                gearItem.Name  = g.Name;
                 break;
             case Item i:
                 var spawnedItem = Instantiate(itemPrefab, playerPos, Quaternion.identity);
                 spawnedItem.GetComponent<SpriteRenderer>().sprite = itemImage.sprite;
                 var component = spawnedItem.GetComponent<Item>();
-                component.Tier  = i.Tier;
-                component.Name  = i.Name;
+                component.Tier = i.Tier;
+                component.Name = i.Name;
                 break;
         }
     }
