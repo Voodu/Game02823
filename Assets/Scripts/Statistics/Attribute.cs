@@ -2,32 +2,34 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
-namespace Statistics {
+namespace Statistics
+{
     [Serializable]
     public class Attribute
     {
-        public float BaseValue;
+        protected readonly List<AttributeModifier>               attributeModifiers;
+        public readonly    ReadOnlyCollection<AttributeModifier> AttributeModifiers;
+        public             float                                 BaseValue;
 
         protected bool  isDirty = true;
         protected float lastBaseValue;
 
         protected float _value;
+
         public virtual float Value
         {
             get
             {
-                if (isDirty || lastBaseValue != BaseValue)
+                if (isDirty || (lastBaseValue != BaseValue))
                 {
                     lastBaseValue = BaseValue;
                     _value        = ComputeFinalValue();
                     isDirty       = false;
                 }
+
                 return _value;
             }
         }
-
-        protected readonly List<AttributeModifier>               attributeModifiers;
-        public readonly    ReadOnlyCollection<AttributeModifier> AttributeModifiers;
 
         public Attribute()
         {
@@ -53,40 +55,48 @@ namespace Statistics {
                 isDirty = true;
                 return true;
             }
+
             return false;
         }
 
         public virtual bool RemoveAllFromSource(object source)
         {
-            int numRemovals = attributeModifiers.RemoveAll(mod => mod.Source == source);
+            var numRemovals = attributeModifiers.RemoveAll(mod => mod.Source == source);
 
             if (numRemovals > 0)
             {
                 isDirty = true;
                 return true;
             }
+
             return false;
         }
 
         protected virtual int CompareOrder(AttributeModifier a, AttributeModifier b)
         {
             if (a.Order < b.Order)
+            {
                 return -1;
-            else if (a.Order > b.Order)
+            }
+
+            if (a.Order > b.Order)
+            {
                 return 1;
+            }
+
             return 0; //if (a.Order == b.Order)
         }
 
         protected virtual float ComputeFinalValue()
         {
-            float finalValue    = BaseValue;
+            var   finalValue    = BaseValue;
             float sumPercentAdd = 0;
 
             attributeModifiers.Sort(CompareOrder);
 
-            for (int i = 0; i < attributeModifiers.Count; i++)
+            for (var i = 0; i < attributeModifiers.Count; i++)
             {
-                AttributeModifier mod = attributeModifiers[i];
+                var mod = attributeModifiers[i];
 
                 if (mod.Scaler == BonusScaler.Flat)
                 {
@@ -96,7 +106,7 @@ namespace Statistics {
                 {
                     sumPercentAdd += mod.Value;
 
-                    if (i + 1 >= attributeModifiers.Count || attributeModifiers[i + 1].Scaler != BonusScaler.PercentAdd)
+                    if ((i + 1 >= attributeModifiers.Count) || (attributeModifiers[i + 1].Scaler != BonusScaler.PercentAdd))
                     {
                         finalValue    *= 1 + sumPercentAdd;
                         sumPercentAdd =  0;
@@ -109,7 +119,7 @@ namespace Statistics {
             }
 
             // Workaround for float calculation errors, like displaying 12.00001 instead of 12
-            return (float)Math.Round(finalValue, 4);
+            return (float) Math.Round(finalValue, 4);
         }
     }
 }

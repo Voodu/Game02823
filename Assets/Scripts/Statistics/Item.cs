@@ -1,17 +1,23 @@
 ﻿using System;
 using UnityEngine;
 
-namespace Statistics {
+namespace Statistics
+{
     public enum Tier
     {
-        Poor, Common, Uncommon, Rare, Epic, Legendary
+        Poor,
+        Common,
+        Uncommon,
+        Rare,
+        Epic,
+        Legendary
     }
 
     [Serializable]
     public class Item : MonoBehaviour
     {
-        public string Name { get; private set; }
-        public Tier   Tier { get; private set; }
+        public string Name;
+        public Tier   Tier;
 
         public Item(string name, Tier tier)
         {

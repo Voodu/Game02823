@@ -1,7 +1,8 @@
 ﻿using System;
 using UnityEngine;
 
-namespace Statistics {
+namespace Statistics
+{
     [Serializable]
     public class ItemSlot : MonoBehaviour
     {
@@ -17,4 +18,3 @@ namespace Statistics {
         public ItemSlot() : this(null) { }
     }
 }
-

@@ -6,27 +6,35 @@ namespace Statistics
     [Serializable]
     public class Inventory
     {
-        public List<Item> Items { get; private set; } = new List<Item>();
-        public int Size { get; private set; } = 3;
+        public List<Item> Items = new List<Item>();
+        public int        Size  = 10;
 
-        public ItemSlot Helmet { get; private set; }
-        public ItemSlot Chest { get; private set; }
-        public ItemSlot Gloves { get; private set; }
-        public ItemSlot Boots { get; private set; }
-        public ItemSlot Weapon { get; private set; }
-        public ItemSlot Accessory { get; private set; }
-        public ItemSlot Bag { get; private set; }
+        public ItemSlot Helmet;
+        public ItemSlot Chest;
+        public ItemSlot Gloves;
+        public ItemSlot Boots;
+        public ItemSlot Weapon;
+        public ItemSlot Accessory;
+        public ItemSlot Bag;
 
         public bool AddItem(Item item)
         {
-            if (IsFull()) return false;
+            if (IsFull())
+            {
+                return false;
+            }
+
             Items.Add(item);
             return true;
         }
 
         public bool RemoveItem(Item item)
         {
-            if (Items.Remove(item)) return true;
+            if (Items.Remove(item))
+            {
+                return true;
+            }
+
             return false;
         }
 

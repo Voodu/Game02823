@@ -1,4 +1,5 @@
-﻿namespace Statistics {
+﻿namespace Statistics
+{
     public class AttributeModifier
     {
         public readonly float       Value;
@@ -14,10 +15,10 @@
             Source = source;
         }
 
-        public AttributeModifier(float value, BonusScaler scaler) : this(value, scaler, (int)scaler, null) { }
+        public AttributeModifier(float value, BonusScaler scaler) : this(value, scaler, (int) scaler, null) { }
 
         public AttributeModifier(float value, BonusScaler scaler, int order) : this(value, scaler, order, null) { }
 
-        public AttributeModifier(float value, BonusScaler scaler, object source) : this(value, scaler, (int)scaler, source) { }
+        public AttributeModifier(float value, BonusScaler scaler, object source) : this(value, scaler, (int) scaler, source) { }
     }
 }
