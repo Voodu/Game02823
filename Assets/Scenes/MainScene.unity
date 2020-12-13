@@ -98089,6 +98089,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: HeroKnight Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 6812093827938192994, guid: 838467b854fe723449fcbb668f92467f, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 9113881985321588745, guid: 838467b854fe723449fcbb668f92467f, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 838467b854fe723449fcbb668f92467f, type: 3}
 --- !u!114 &316357635 stripped
