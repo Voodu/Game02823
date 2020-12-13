@@ -29,19 +29,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6323719953710832613, guid: a4b4a6d32bcb19248a754d6602ffc7e4, type: 3}
       propertyPath: m_Name
-      value: HeroKnight
+      value: HeroKnight Variant
       objectReference: {fileID: 0}
     - target: {fileID: 8413529789942519730, guid: a4b4a6d32bcb19248a754d6602ffc7e4, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1.8
+      value: -83.23
       objectReference: {fileID: 0}
     - target: {fileID: 8413529789942519730, guid: a4b4a6d32bcb19248a754d6602ffc7e4, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.9
+      value: 4.91
       objectReference: {fileID: 0}
     - target: {fileID: 8413529789942519730, guid: a4b4a6d32bcb19248a754d6602ffc7e4, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -4.16
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8413529789942519730, guid: a4b4a6d32bcb19248a754d6602ffc7e4, type: 3}
       propertyPath: m_LocalRotation.x
@@ -99,6 +99,50 @@ PrefabInstance:
       propertyPath: m_speed
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 9043920546160527475, guid: a4b4a6d32bcb19248a754d6602ffc7e4, type: 3}
+      propertyPath: characterData.inventory.helmet
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 9043920546160527475, guid: a4b4a6d32bcb19248a754d6602ffc7e4, type: 3}
+      propertyPath: characterData.inventory.chest
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 9043920546160527475, guid: a4b4a6d32bcb19248a754d6602ffc7e4, type: 3}
+      propertyPath: characterData.inventory.gloves
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 9043920546160527475, guid: a4b4a6d32bcb19248a754d6602ffc7e4, type: 3}
+      propertyPath: characterData.inventory.boots
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 9043920546160527475, guid: a4b4a6d32bcb19248a754d6602ffc7e4, type: 3}
+      propertyPath: characterData.inventory.weapon
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 9043920546160527475, guid: a4b4a6d32bcb19248a754d6602ffc7e4, type: 3}
+      propertyPath: characterData.inventory.accessory
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 9043920546160527475, guid: a4b4a6d32bcb19248a754d6602ffc7e4, type: 3}
+      propertyPath: characterData.inventory.bag
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 9043920546160527475, guid: a4b4a6d32bcb19248a754d6602ffc7e4, type: 3}
+      propertyPath: attackHitBox
+      value: 
+      objectReference: {fileID: 6812093827938192994}
+    - target: {fileID: 9043920546160527475, guid: a4b4a6d32bcb19248a754d6602ffc7e4, type: 3}
+      propertyPath: heartPrefab
+      value: 
+      objectReference: {fileID: 8626012067300370759, guid: 892bef60084435f4da8fe70eac906747, type: 3}
+    - target: {fileID: 9043920546160527475, guid: a4b4a6d32bcb19248a754d6602ffc7e4, type: 3}
+      propertyPath: healthBar
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 9043920546160527475, guid: a4b4a6d32bcb19248a754d6602ffc7e4, type: 3}
+      propertyPath: characterData.speed.baseValue
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 9117128348835321587, guid: a4b4a6d32bcb19248a754d6602ffc7e4, type: 3}
       propertyPath: m_Offset.x
       value: 0
@@ -116,5 +160,10 @@ PrefabInstance:
 --- !u!1 &2897037192395218330 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6323719953710832613, guid: a4b4a6d32bcb19248a754d6602ffc7e4, type: 3}
+  m_PrefabInstance: {fileID: 9220568493365397119}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &6812093827938192994 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2413754645514487837, guid: a4b4a6d32bcb19248a754d6602ffc7e4, type: 3}
   m_PrefabInstance: {fileID: 9220568493365397119}
   m_PrefabAsset: {fileID: 0}

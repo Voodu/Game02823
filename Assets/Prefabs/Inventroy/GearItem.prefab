@@ -94,16 +94,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 139727523005390322}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7be0a34650da6334bb56679a927a3669, type: 3}
+  m_Script: {fileID: 11500000, guid: 908e6f8c5a2c9df4182b148dc2e536bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Name: 
-  Tier: 0
+  itemName: 
+  tier: 0
   type: 6
   bonus:
-    type: 4
+    type: 0
     scaler: 100
-    value: 0
+    value: 20
 --- !u!61 &139727523005390287
 BoxCollider2D:
   m_ObjectHideFlags: 0
