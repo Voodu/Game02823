@@ -154,7 +154,7 @@ namespace Dialogues
             endButton.onClick.AddListener(DisableDialogue);
 
             var endText = endButton.GetComponentInChildren<TextMeshProUGUI>();
-            endText.SetText("[End conversation]");
+            endText.SetText("<End conversation>");
         }
     }
 }
