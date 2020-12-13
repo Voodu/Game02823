@@ -14,12 +14,11 @@ namespace Inventory
         public           GameObject            inventorySlotPrefab;
         public           GameObject            gearItemPrefab;
         public           GameObject            itemPrefab;
-        public           HeroKnight.HeroKnight player;
         private          Inventory             inventory;
 
         private void Start()
         {
-            inventory = player.characterData.inventory;
+            inventory = GameManager.Instance.Player.characterData.inventory;
             CreateUiSlots();
         }
 
@@ -52,7 +51,7 @@ namespace Inventory
             itemImage.enabled = false;
             itemSlot.Occupied = false;
             itemImage.GetComponent<Button>().onClick.RemoveAllListeners();
-            player.characterData.inventory.RemoveItem(itemSlot.Item);
+            GameManager.Instance.Player.characterData.inventory.RemoveItem(itemSlot.Item);
             SpawnDroppedItem(itemSlot.Item, itemImage);
 
             if (itemSlot.Item is GearItem g)
@@ -63,7 +62,7 @@ namespace Inventory
 
         public void SpawnDroppedItem(Item item, Image itemImage)
         {
-            var position  = player.transform.position;
+            var position  = GameManager.Instance.Player.transform.position;
             var playerPos = new Vector2(position.x + 1, position.y + 0.5f);
             switch (item)
             {
@@ -90,7 +89,7 @@ namespace Inventory
         {
             return () =>
                    {
-                       if (player.characterData.EquipItem(item))
+                       if (GameManager.Instance.Player.characterData.EquipItem(item))
                        {
                            var slotName  = item.type + "Slot";
                            var slot      = equipmentBar.transform.Find(slotName);
@@ -107,7 +106,7 @@ namespace Inventory
         {
             return () =>
                    {
-                       player.characterData.Unequip(item);
+                       GameManager.Instance.Player.characterData.Unequip(item);
                        var slotName  = item.type + "Slot";
                        var slot      = equipmentBar.transform.Find(slotName);
                        var itemImage = slot.gameObject.transform.Find("Slot").transform.Find("Item").GetComponent<Image>();

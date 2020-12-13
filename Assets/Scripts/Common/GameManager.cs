@@ -1,4 +1,4 @@
-﻿using System;
+﻿using Other;
 using UnityEngine;
 
 namespace Common
@@ -13,11 +13,21 @@ namespace Common
             {
                 if (player == null)
                 {
-                    player = GameObject.FindGameObjectWithTag("Player").GetComponent<HeroKnight.HeroKnight>();
+                    LocatePlayer();
                 }
 
                 return player;
             }
+        }
+
+        private void Awake()
+        {
+            SceneManager.Instance.OnSceneLoaded((arg0, mode) => LocatePlayer());
+        }
+
+        private void LocatePlayer()
+        {
+            player = GameObject.FindGameObjectWithTag("Player").GetComponent<HeroKnight.HeroKnight>();
         }
     }
 }
