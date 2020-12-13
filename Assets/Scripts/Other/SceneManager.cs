@@ -1,4 +1,8 @@
-﻿using Common;
+﻿using System;
+using Common;
+using UnityEngine.Events;
+using UnityEngine.SceneManagement;
+using USceneManager = UnityEngine.SceneManagement.SceneManager;
 
 namespace Other
 {
@@ -6,7 +10,22 @@ namespace Other
     {
         public void ChangeScene(string sceneName)
         {
-            UnityEngine.SceneManagement.SceneManager.LoadScene(sceneName);
+            USceneManager.LoadScene(sceneName);
+        }
+
+        public void OnSceneUnloaded(UnityAction<Scene> callback)
+        {
+            USceneManager.sceneUnloaded += callback;
+        }
+
+        public void OnSceneLoaded(UnityAction<Scene, LoadSceneMode> callback)
+        {
+            USceneManager.sceneLoaded += callback;
+        }
+
+        public void OnActiveSceneChanged(UnityAction<Scene, Scene> callback)
+        {
+            USceneManager.activeSceneChanged += callback;
         }
     }
 }

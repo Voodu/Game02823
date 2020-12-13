@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 
-namespace Other {
+namespace Other
+{
     [RequireComponent(typeof(Collider2D))]
     public class SceneChange : MonoBehaviour
     {

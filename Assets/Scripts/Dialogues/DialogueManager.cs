@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Common;
 using Ink.Runtime;
+using Other;
 using Quests;
 using Quests.Enums;
 using TMPro;
@@ -18,10 +19,12 @@ namespace Dialogues
         [SerializeField]
         private string extensionLinePrefix = "EXT";
 
-        private Dialogue dialogue;
+        private Dialogue currentDialogue;
 
         [SerializeField]
-        private List<Dialogue> dialogues = new List<Dialogue>();
+        private List<Dialogue> sceneDialogues = new List<Dialogue>();
+
+        private readonly Dictionary<string, string> dialogueStates = new Dictionary<string, string>();
 
         /* UI Prefabs */
         [SerializeField]
@@ -36,25 +39,49 @@ namespace Dialogues
         [SerializeField]
         private GameObject choiceMenu;
 
-        public Dialogue this[string dialogueId] => dialogues.First(x => x.id == dialogueId);
+        public Dialogue this[string dialogueId] => sceneDialogues.First(x => x.id == dialogueId);
 
         public void Register(Dialogue dialogue)
         {
-            dialogues.AddWithId(dialogue);
+            if (dialogueStates.ContainsKey(dialogue.id))
+            {
+                dialogue.LoadFromJson(dialogueStates[dialogue.id]);
+            }
+            else
+            {
+                sceneDialogues.AddWithId(dialogue);
+            }
+        }
+
+        private void Start()
+        {
+            SceneManager.Instance.OnSceneUnloaded(_ => sceneDialogues.Clear());
+        }
+
+        public void SaveDialogue(Dialogue dialogue)
+        {
+            if (dialogueStates.ContainsKey(dialogue.id))
+            {
+                dialogueStates[dialogue.id] = dialogue.GetStateJson();
+            }
+            else
+            {
+                dialogueStates.Add(dialogue.id, dialogue.GetStateJson());
+            }
         }
 
         public void ShowDialogue(Dialogue dialogue)
         {
-            this.dialogue = dialogue;
+            currentDialogue = dialogue;
             dialoguePanel.gameObject.SetActive(true);
-            GameManager.Instance.player.Freeze(true);
+            GameManager.Instance.Player.Freeze(true);
         }
 
         public void DisableDialogue()
         {
-            dialogue.enabled = false;
+            currentDialogue.enabled = false;
             dialoguePanel.gameObject.SetActive(false);
-            GameManager.Instance.player.Freeze(false);
+            GameManager.Instance.Player.Freeze(false);
         }
 
         public void UpdateDialogueCanvas(IEnumerable<string> storyLines, IEnumerable<Choice> choices)
@@ -91,15 +118,17 @@ namespace Dialogues
                         break;
                     case "QUEST":
                         var questId = words[3].Trim();
-                        switch (words[2].Trim()) {
+                        switch (words[2].Trim())
+                        {
                             case "start":
                                 QuestManager.instance.Begin(questId);
                                 break;
-                            case "progress": {
-                                var objectiveId = words[4].Trim();
-                                QuestManager.instance[questId][objectiveId].RecordProgress(new ObjectiveItemData {connectedQuestId = questId, connectedObjectiveId = objectiveId, objectiveType = ObjectiveType.Talk});
-                                break;
-                            }
+                            case "progress":
+                                {
+                                    var objectiveId = words[4].Trim();
+                                    QuestManager.instance[questId][objectiveId].RecordProgress(new ObjectiveItemData { connectedQuestId = questId, connectedObjectiveId = objectiveId, objectiveType = ObjectiveType.Talk });
+                                    break;
+                                }
                         }
 
                         break;
@@ -124,7 +153,7 @@ namespace Dialogues
             foreach (var choice in choices)
             {
                 var choiceButton = Instantiate(choiceButtonPrefab, choiceMenu.transform);
-                choiceButton.onClick.AddListener(() => dialogue.ChooseSelected(choice.index));
+                choiceButton.onClick.AddListener(() => currentDialogue.ChooseSelected(choice.index));
 
                 var choiceText = choiceButton.GetComponent<TextMeshProUGUI>();
                 choiceText.SetText(choice.text.Substring(playerPrefix.Length));
@@ -133,8 +162,8 @@ namespace Dialogues
 
         private void EndConversation()
         {
-            dialogue.StoryNeeded = false;
-            ShowStory(dialogue.StoryLines);
+            currentDialogue.StoryNeeded = false;
+            ShowStory(currentDialogue.StoryLines);
             ClearChoiceMenu();
             ShowEndingButton();
         }

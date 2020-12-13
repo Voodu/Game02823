@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Ink.Runtime;
 using UnityEngine;
 
@@ -37,6 +38,11 @@ namespace Dialogues
             StoryNeeded = false;
         }
 
+        private void OnDestroy()
+        {
+            DialogueManager.Instance.SaveDialogue(this);
+        }
+
         private void Update()
         {
             if (StoryNeeded)
@@ -69,6 +75,16 @@ namespace Dialogues
             Tags.AddRange(inkStory.currentTags);
             // Tags have to be parsed instantly, as they may have special effects on the display
             DialogueManager.Instance.ParseTags(inkStory.currentTags);
+        }
+
+        public string GetStateJson()
+        {
+            return inkStory.state.ToJson();
+        }
+
+        public void LoadFromJson(string stateJson)
+        {
+            inkStory.state.LoadJson(stateJson);
         }
 
         public void ChooseSelected(int id)
