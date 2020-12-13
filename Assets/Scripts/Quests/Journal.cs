@@ -39,6 +39,7 @@ namespace Quests
             {
                 journalPanel.SetActive(false);
                 ClearQuestMenu();
+                GameManager.Instance.player.Freeze(false);
             }
             else // populate and activate
             {
@@ -58,6 +59,7 @@ namespace Quests
                 }
 
                 journalPanel.SetActive(true);
+                GameManager.Instance.player.Freeze(true);
             }
         }
 
