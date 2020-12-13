@@ -67,9 +67,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8110688315323076245, guid: cc6a4f22b4a68c44ebb5e6e640ca1b2c, type: 3}
       propertyPath: m_Name
-      value: Golden Coin
+      value: Coin Variant
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1231131141, guid: cc6a4f22b4a68c44ebb5e6e640ca1b2c, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: cc6a4f22b4a68c44ebb5e6e640ca1b2c, type: 3}
 --- !u!1 &6198350435307299136 stripped
 GameObject:
