@@ -13,7 +13,7 @@ namespace Common
             {
                 if (instance == null)
                 {
-                    instance = (T) FindObjectOfType(typeof(T));
+                    instance = (T)FindObjectOfType(typeof(T));
 
                     if (instance == null)
                     {
@@ -28,7 +28,14 @@ namespace Common
 
         private void Awake()
         {
-            DontDestroyOnLoad(gameObject);
+            if (Instance != null && Instance != this)
+            {
+                Destroy(gameObject);
+            }
+            else
+            {
+                DontDestroyOnLoad(gameObject);
+            }
         }
     }
 }
