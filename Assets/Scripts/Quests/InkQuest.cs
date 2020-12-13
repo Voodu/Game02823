@@ -39,6 +39,16 @@ namespace Quests
             inkQuest.variablesState[key] = value;
         }
 
+        public string GetStateJson()
+        {
+            return inkQuest.state.ToJson();
+        }
+
+        public void LoadFromJson(string stateJson)
+        {
+            inkQuest.state.LoadJson(stateJson);
+        }
+
         public string Continue()
         {
             Variables("continue", true);

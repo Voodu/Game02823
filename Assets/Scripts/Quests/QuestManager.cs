@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Common;
+using Other;
 using Quests.Enums;
 using UnityEngine;
 
@@ -9,18 +10,43 @@ namespace Quests
     public class QuestManager : Singleton<QuestManager>
     {
         [SerializeField]
-        private List<Quest> quests = new List<Quest>();
+        private List<Quest> sceneQuests = new List<Quest>();
+        private readonly Dictionary<string, string> questStates = new Dictionary<string, string>();
 
-        public Quest this[string questId] => quests.First(x => x.id == questId);
+        public Quest this[string questId] => sceneQuests.First(x => x.id == questId);
 
         public List<Quest> VisibleQuests =>
-            quests
+            sceneQuests
                 .Where(q => q.status != QuestStatus.NotStarted)
                 .ToList();
 
+        private void Start()
+        {
+            SceneManager.Instance.OnSceneUnloaded(_ => sceneQuests.Clear());
+        }
+
         public void Register(Quest quest)
         {
-            quests.AddWithId(quest);
+            if (questStates.ContainsKey(quest.id))
+            {
+                quest.LoadFromJson(questStates[quest.id]);
+            }
+            else
+            {
+                sceneQuests.AddWithId(quest);
+            }
+        }
+
+        public void SaveQuest(Quest quest)
+        {
+            if (questStates.ContainsKey(quest.id))
+            {
+                questStates[quest.id] = quest.GetStateJson();
+            }
+            else
+            {
+                questStates.Add(quest.id, quest.GetStateJson());
+            }
         }
 
         public void Begin(string questId)
