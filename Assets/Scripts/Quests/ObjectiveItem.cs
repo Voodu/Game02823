@@ -1,5 +1,4 @@
-﻿using Quests.Enums;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Quests
 {

@@ -14,14 +14,14 @@ namespace Dialogues
     {
         [SerializeField]
         private string playerPrefix = "ME: ";
-        
+
         [SerializeField]
         private string extensionLinePrefix = "EXT";
 
         private Dialogue dialogue;
+
         [SerializeField]
         private List<Dialogue> dialogues = new List<Dialogue>();
-        public Dialogue this[string dialogueId] => dialogues.First(x => x.id == dialogueId);
 
         /* UI Prefabs */
         [SerializeField]
@@ -36,6 +36,8 @@ namespace Dialogues
         [SerializeField]
         private GameObject choiceMenu;
 
+        public Dialogue this[string dialogueId] => dialogues.First(x => x.id == dialogueId);
+
         public void Register(Dialogue dialogue)
         {
             dialogues.AddWithId(dialogue);
@@ -45,12 +47,14 @@ namespace Dialogues
         {
             this.dialogue = dialogue;
             dialoguePanel.gameObject.SetActive(true);
+            GameManager.Instance.player.Freeze(true);
         }
 
         public void DisableDialogue()
         {
             dialogue.enabled = false;
             dialoguePanel.gameObject.SetActive(false);
+            GameManager.Instance.player.Freeze(false);
         }
 
         public void UpdateDialogueCanvas(IEnumerable<string> storyLines, IEnumerable<Choice> choices)
@@ -87,19 +91,15 @@ namespace Dialogues
                         break;
                     case "QUEST":
                         var questId = words[3].Trim();
-                        if (words[2].Trim() == "start")
-                        {
-                            QuestManager.instance.Begin(questId);
-                        }
-                        else if (words[2].Trim() == "progress")
-                        {
-                            var objectiveId = words[4].Trim();
-                            QuestManager.instance[questId][objectiveId].RecordProgress(new ObjectiveItemData()
-                                                                                       {
-                                                                                           connectedQuestId = questId,
-                                                                                           connectedObjectiveId = objectiveId,
-                                                                                           objectiveType = ObjectiveType.Talk
-                                                                                       });
+                        switch (words[2].Trim()) {
+                            case "start":
+                                QuestManager.instance.Begin(questId);
+                                break;
+                            case "progress": {
+                                var objectiveId = words[4].Trim();
+                                QuestManager.instance[questId][objectiveId].RecordProgress(new ObjectiveItemData {connectedQuestId = questId, connectedObjectiveId = objectiveId, objectiveType = ObjectiveType.Talk});
+                                break;
+                            }
                         }
 
                         break;
@@ -154,7 +154,7 @@ namespace Dialogues
             endButton.onClick.AddListener(DisableDialogue);
 
             var endText = endButton.GetComponentInChildren<TextMeshProUGUI>();
-            endText.SetText("[End conversation]");
+            endText.SetText("<End conversation>");
         }
     }
 }

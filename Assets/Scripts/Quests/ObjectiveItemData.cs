@@ -1,12 +1,14 @@
 ﻿using System;
 using Quests.Enums;
 
-namespace Quests {
+namespace Quests
+{
     [Serializable]
-    public class ObjectiveItemData {
+    public class ObjectiveItemData
+    {
         public ObjectiveType objectiveType;
-        public string connectedQuestId;
-        public string connectedObjectiveId;
-        public string data;
+        public string        connectedQuestId;
+        public string        connectedObjectiveId;
+        public string        data;
     }
 }

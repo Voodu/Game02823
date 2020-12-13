@@ -1,21 +1,51 @@
-﻿using System.Collections;
+﻿using System;
 using System.Collections.Generic;
-using UnityEngine;
 
-public class Inventory : MonoBehaviour
+namespace Inventory
 {
-    public bool[] isFull;
-    public GameObject[] slots;
-
-    // Start is called before the first frame update
-    void Start()
+    [Serializable]
+    public class Inventory
     {
+        public List<Item> items = new List<Item>();
+        public int        size  = 10;
 
-    }
+        public ItemSlot helmet;
+        public ItemSlot chest;
+        public ItemSlot gloves;
+        public ItemSlot boots;
+        public ItemSlot weapon;
+        public ItemSlot accessory;
+        public ItemSlot bag;
 
-    // Update is called once per frame
-    void Update()
-    {
+        public bool AddItem(Item item)
+        {
+            if (IsFull())
+            {
+                return false;
+            }
 
+            items.Add(item);
+            return true;
+        }
+
+        public bool RemoveItem(Item item)
+        {
+            return items.Remove(item);
+        }
+
+        public bool IsFull()
+        {
+            return items.Count >= size;
+        }
+
+        public void IncreaseSize(int amount)
+        {
+            size += amount;
+        }
+
+        public void DecreaseSize(int amount)
+        {
+            size -= amount;
+        }
     }
 }

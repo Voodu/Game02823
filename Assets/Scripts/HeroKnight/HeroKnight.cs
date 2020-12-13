@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using Common;
+using Dialogues;
 using Statistics;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 namespace HeroKnight
 {
@@ -18,10 +19,10 @@ namespace HeroKnight
         private static readonly int AnimStateHash = Animator.StringToHash("AnimState");
         private static readonly int AirSpeedYHash = Animator.StringToHash("AirSpeedY");
 
-        [SerializeField]
-        private List<string> items = new List<string>();
+        private readonly List<GameObject> hearts = new List<GameObject>();
 
-        [SerializeField]
+        public Character characterData = new Character("Player");
+
         private float speed = 4.0f;
 
         [SerializeField]
@@ -31,10 +32,9 @@ namespace HeroKnight
         private float rollForce = 6.0f;
 
         [SerializeField]
-        private GameObject heart1;
+        private int maxHearts = 5;
 
-        [SerializeField]
-        private GameObject heart2;
+        private float health;
 
         [SerializeField]
         private GameObject attackHitBox;
@@ -49,26 +49,35 @@ namespace HeroKnight
         private float             timeSinceAttack;
         private float             delayToIdle;
         private int               coins;
-        private int               lives = 2;
         private bool              alive = true;
+        private bool frozen = false;
         private bool              isAttacking;
+        public  GameObject        heartPrefab;
+        public  GameObject        healthBar;
 
         // Use this for initialization
         private void Start()
         {
-            animator     = GetComponent<Animator>();
-            body2d       = GetComponent<Rigidbody2D>();
-            groundSensor = transform.Find("GroundSensor").GetComponent<Sensor_HeroKnight>();
-            attackHitBox = GameObject.Find("AttackHitbox");
+            health = characterData.health.baseValue;
+            characterData.health.ValueChanged += (sender, args) =>
+                                                 {
+                                                     health = Mathf.Min(health, args.newValue);
+                                                     UpdateHeartsUi();
+                                                 };
+            UpdateHeartsUi();
+            speed                            =  characterData.speed.baseValue;
+            characterData.speed.ValueChanged += (sender, args) => speed = args.newValue;
+            animator                         =  GetComponent<Animator>();
+            body2d                           =  GetComponent<Rigidbody2D>();
+            groundSensor                     =  transform.Find("GroundSensor").GetComponent<Sensor_HeroKnight>();
+            attackHitBox                     =  GameObject.Find("AttackHitbox");
             attackHitBox.SetActive(false);
-            heart1 = GameObject.Find("Heart1");
-            heart2 = GameObject.Find("Heart2");
         }
 
         // Update is called once per frame
         private void Update()
         {
-            if (alive)
+            if (alive && !frozen)
             {
                 // Increase timer that controls attack combo
                 timeSinceAttack += Time.deltaTime;
@@ -136,9 +145,35 @@ namespace HeroKnight
                 {
                     Run();
                 }
+                else if (Input.GetKeyDown(KeyCode.T))
+                {
+                    Interact();
+                }
                 else
                 {
                     Idle();
+                }
+            }
+        }
+
+        public void Freeze(bool freeze)
+        {
+            frozen = freeze;
+        }
+
+        private void Interact()
+        {
+            var hit = Physics2D.Raycast(body2d.position + Vector2.up * 0.2f, 
+                                        facingDirection == 1 ? Vector2.right : Vector2.left, 
+                                        1, 
+                                        LayerMask.GetMask("NPC"));
+            if (hit.collider != null)
+            {
+                var go = hit.collider.gameObject;
+                var talkingNpc = go.GetComponent<TalkingNPC>();
+                if (talkingNpc != null)
+                {
+                    talkingNpc.Talk();
                 }
             }
         }
@@ -226,18 +261,6 @@ namespace HeroKnight
             return isAttacking;
         }
 
-        public void CollectItem(CollectableObject item)
-        {
-            if (item.CompareTag("Coin"))
-            {
-                coins++; // TODO: Coins shouldn't have separate case. They are normal collectables.
-            }
-            else
-            {
-                items.Add(item.name); // TODO: use inventory system
-            }
-        }
-
         private void OnTriggerEnter2D(Collider2D collision)
         {
             // Will we have something like "End" in RPG?
@@ -254,19 +277,34 @@ namespace HeroKnight
 
         public void DealDamage(int damage)
         {
-            lives -= damage;
-
-            if (lives == 0)
+            health -= damage;
+            if (health <= 0)
             {
                 animator.SetTrigger(DeathHash);
-                alive = false;
-                Destroy(heart1.gameObject);
+                alive           = false;
                 body2d.velocity = new Vector2(0, 0);
             }
             else
             {
                 animator.SetTrigger(HurtHash);
-                Destroy(heart2.gameObject);
+            }
+
+            UpdateHeartsUi();
+        }
+
+        private void UpdateHeartsUi()
+        {
+            var heartsLeft = Mathf.Ceil(health / characterData.health.Value * maxHearts);
+
+            while (hearts.Count > heartsLeft)
+            {
+                Destroy(hearts[hearts.Count - 1]);
+                hearts.RemoveAt(hearts.Count - 1);
+            }
+
+            while (hearts.Count < heartsLeft)
+            {
+                hearts.Add(Instantiate(heartPrefab, healthBar.transform));
             }
         }
 

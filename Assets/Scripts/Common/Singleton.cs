@@ -17,13 +17,18 @@ namespace Common
 
                     if (instance == null)
                     {
-                        Debug.LogError("An instance of " + typeof(T) +
-                                       " is needed in the scene, but there is none.");
+                        Debug.LogWarning($"Creating Singleton_{typeof(T)}");
+                        return instance = new GameObject($"(Singleton){typeof(T)}").AddComponent<T>();
                     }
                 }
 
                 return instance;
             }
+        }
+
+        private void Awake()
+        {
+            DontDestroyOnLoad(gameObject);
         }
     }
 }

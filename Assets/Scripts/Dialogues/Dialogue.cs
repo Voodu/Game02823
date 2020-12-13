@@ -14,7 +14,6 @@ namespace Dialogues
 
         private Story inkStory;
 
-
         public bool         StoryNeeded { get; set; }
         public List<string> StoryLines  { get; private set; } = new List<string>();
         public List<string> Tags        { get; private set; } = new List<string>();
@@ -23,7 +22,7 @@ namespace Dialogues
         private void Awake()
         {
             inkStory = new Story(inkAsset.text);
-            id = (string)inkStory.variablesState["name"];
+            id       = (string) inkStory.variablesState["name"];
             DialogueManager.Instance.Register(this);
         }
 

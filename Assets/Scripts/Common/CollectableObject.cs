@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using Inventory;
+using Statistics;
+using UnityEngine;
 
 namespace Common
 {
@@ -20,8 +22,17 @@ namespace Common
             var heroKnight = other.GetComponent<HeroKnight.HeroKnight>();
             if (heroKnight != null)
             {
-                heroKnight.CollectItem(this);
-                Destroy(gameObject);
+                var item = gameObject.GetComponent<Item>();
+                if (item != null)
+                {
+                    if (heroKnight.characterData.inventory.AddItem(item))
+                    {
+                        InventoryManager.Instance.AddInventoryItemUi(item);
+                        gameObject.SetActive(false);
+                    }
+                }
+
+                //Destroy(gameObject);
             }
         }
     }
