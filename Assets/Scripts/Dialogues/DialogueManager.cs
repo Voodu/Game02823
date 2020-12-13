@@ -47,12 +47,14 @@ namespace Dialogues
         {
             this.dialogue = dialogue;
             dialoguePanel.gameObject.SetActive(true);
+            GameManager.Instance.player.Freeze(true);
         }
 
         public void DisableDialogue()
         {
             dialogue.enabled = false;
             dialoguePanel.gameObject.SetActive(false);
+            GameManager.Instance.player.Freeze(false);
         }
 
         public void UpdateDialogueCanvas(IEnumerable<string> storyLines, IEnumerable<Choice> choices)
@@ -89,14 +91,15 @@ namespace Dialogues
                         break;
                     case "QUEST":
                         var questId = words[3].Trim();
-                        if (words[2].Trim() == "start")
-                        {
-                            QuestManager.instance.Begin(questId);
-                        }
-                        else if (words[2].Trim() == "progress")
-                        {
-                            var objectiveId = words[4].Trim();
-                            QuestManager.instance[questId][objectiveId].RecordProgress(new ObjectiveItemData {connectedQuestId = questId, connectedObjectiveId = objectiveId, objectiveType = ObjectiveType.Talk});
+                        switch (words[2].Trim()) {
+                            case "start":
+                                QuestManager.instance.Begin(questId);
+                                break;
+                            case "progress": {
+                                var objectiveId = words[4].Trim();
+                                QuestManager.instance[questId][objectiveId].RecordProgress(new ObjectiveItemData {connectedQuestId = questId, connectedObjectiveId = objectiveId, objectiveType = ObjectiveType.Talk});
+                                break;
+                            }
                         }
 
                         break;

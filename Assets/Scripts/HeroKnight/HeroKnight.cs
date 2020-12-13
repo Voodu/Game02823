@@ -1,7 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Dialogues;
 using Statistics;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 namespace HeroKnight
 {
@@ -48,6 +50,7 @@ namespace HeroKnight
         private float             delayToIdle;
         private int               coins;
         private bool              alive = true;
+        private bool frozen = false;
         private bool              isAttacking;
         public  GameObject        heartPrefab;
         public  GameObject        healthBar;
@@ -74,7 +77,7 @@ namespace HeroKnight
         // Update is called once per frame
         private void Update()
         {
-            if (alive)
+            if (alive && !frozen)
             {
                 // Increase timer that controls attack combo
                 timeSinceAttack += Time.deltaTime;
@@ -142,9 +145,35 @@ namespace HeroKnight
                 {
                     Run();
                 }
+                else if (Input.GetKeyDown(KeyCode.T))
+                {
+                    Interact();
+                }
                 else
                 {
                     Idle();
+                }
+            }
+        }
+
+        public void Freeze(bool freeze)
+        {
+            frozen = freeze;
+        }
+
+        private void Interact()
+        {
+            var hit = Physics2D.Raycast(body2d.position + Vector2.up * 0.2f, 
+                                        facingDirection == 1 ? Vector2.right : Vector2.left, 
+                                        1, 
+                                        LayerMask.GetMask("NPC"));
+            if (hit.collider != null)
+            {
+                var go = hit.collider.gameObject;
+                var talkingNpc = go.GetComponent<TalkingNPC>();
+                if (talkingNpc != null)
+                {
+                    talkingNpc.Talk();
                 }
             }
         }
