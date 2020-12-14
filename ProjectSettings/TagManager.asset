@@ -9,6 +9,8 @@ TagManager:
   - Coin
   - Heart
   - End
+  - SpawnPoint
+  - VirtualCamera
   layers:
   - Default
   - TransparentFX

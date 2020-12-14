@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 7342078537718671041}
   - component: {fileID: 8765629751958611407}
   - component: {fileID: 1779508742660075144}
+  - component: {fileID: 869736671}
   m_Layer: 0
   m_Name: Managers
   m_TagString: Untagged
@@ -51,6 +52,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inventoryBar: {fileID: 0}
   equipmentBar: {fileID: 0}
+  equipmentSlots:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   inventorySlotPrefab: {fileID: 4244797146890187576, guid: d4f85519f0f2dcc44a09678f6c48cbc4, type: 3}
   gearItemPrefab: {fileID: 139727523005390322, guid: b9beb471a01d241438c620a9e531d5d3, type: 3}
   itemPrefab: {fileID: 4055571645384411337, guid: 8aa57b0f9577f6e499408ce398a90367, type: 3}
@@ -98,6 +107,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2fe6fa6667344ee8a38d93eaa07be855, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerPrefab: {fileID: 982734834951172722, guid: 1a5c1d7dc658bfa4aaa2f8c0256144bc, type: 3}
+  targetSpawn: Start
 --- !u!114 &7342078537718671041
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -140,3 +151,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b33e4dcdf79c4dc6b2b03c71bb7c4f6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &869736671
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7342078537718671040}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 40ad97fd83dc6dd46a0cf0dc76c57f4f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  heartPrefab: {fileID: 8626012067300370759, guid: 892bef60084435f4da8fe70eac906747, type: 3}
+  healthBar: {fileID: 0}
+  maxHearts: 5

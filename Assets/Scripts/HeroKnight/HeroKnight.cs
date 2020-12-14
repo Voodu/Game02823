@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Common;
 using Dialogues;
 using Inventory;
 using Other;
@@ -10,7 +11,7 @@ using UnityEngine.UIElements;
 
 namespace HeroKnight
 {
-    public class HeroKnight : MonoBehaviour
+    public class HeroKnight : Singleton<HeroKnight>
     {
         private static readonly int HurtHash      = Animator.StringToHash("Hurt");
         private static readonly int DeathHash     = Animator.StringToHash("Death");
@@ -88,11 +89,6 @@ namespace HeroKnight
         {
             if (alive && !frozen)
             {
-                if (Input.GetKeyDown(KeyCode.B))
-                {
-                    print(characterData.inventory.boots.Item.itemName);
-                }
-
                 // Increase timer that controls attack combo
                 timeSinceAttack += Time.deltaTime;
 
