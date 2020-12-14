@@ -1,12 +1,17 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using Common;
+using Dialogues;
+using Inventory;
+using Other;
 using Statistics;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 namespace HeroKnight
 {
-    public class HeroKnight : MonoBehaviour
+    public class HeroKnight : Singleton<HeroKnight>
     {
         private static readonly int HurtHash      = Animator.StringToHash("Hurt");
         private static readonly int DeathHash     = Animator.StringToHash("Death");
@@ -18,8 +23,8 @@ namespace HeroKnight
         private static readonly int AnimStateHash = Animator.StringToHash("AnimState");
         private static readonly int AirSpeedYHash = Animator.StringToHash("AirSpeedY");
 
-        [SerializeField]
-        private List<string> items = new List<string>();
+
+        public Character characterData = new Character("Player");
 
         [SerializeField]
         private float speed = 4.0f;
@@ -30,11 +35,7 @@ namespace HeroKnight
         [SerializeField]
         private float rollForce = 6.0f;
 
-        [SerializeField]
-        private GameObject heart1;
-
-        [SerializeField]
-        private GameObject heart2;
+        private float health;
 
         [SerializeField]
         private GameObject attackHitBox;
@@ -44,62 +45,96 @@ namespace HeroKnight
         private Sensor_HeroKnight groundSensor;
         private bool              grounded;
         private bool              rolling;
+        private bool              airJump;
         private int               facingDirection = 1;
         private int               currentAttack;
         private float             timeSinceAttack;
         private float             delayToIdle;
         private int               coins;
-        private int               lives = 2;
         private bool              alive = true;
+        private bool frozen;
         private bool              isAttacking;
+
 
         // Use this for initialization
         private void Start()
         {
-            animator     = GetComponent<Animator>();
-            body2d       = GetComponent<Rigidbody2D>();
-            groundSensor = transform.Find("GroundSensor").GetComponent<Sensor_HeroKnight>();
-            attackHitBox = GameObject.Find("AttackHitbox");
+            airJump = false;
+            health = characterData.health.baseValue;
+            characterData.health.ValueChanged += (sender, args) =>
+                                                 {
+                                                     health = Mathf.Min(health, args.newValue);
+                                                     HealthUiManager.Instance.UpdateHeartsUi(health, characterData.health.Value);
+                                                 };
+            HealthUiManager.Instance.UpdateHeartsUi(health, characterData.health.Value);
+            speed                            =  characterData.speed.baseValue;
+            characterData.speed.ValueChanged += (sender, args) => speed = args.newValue;
+            animator                         =  GetComponent<Animator>();
+            body2d                           =  GetComponent<Rigidbody2D>();
+            groundSensor                     =  transform.Find("GroundSensor").GetComponent<Sensor_HeroKnight>();
+            attackHitBox                     =  GameObject.Find("AttackHitbox");
             attackHitBox.SetActive(false);
-            heart1 = GameObject.Find("Heart1");
-            heart2 = GameObject.Find("Heart2");
+            SetupEquipment();
+        }
+
+        private void SetupEquipment()
+        {
+            foreach (var slot in InventoryManager.Instance.equipmentSlots)
+            {
+                var eqName = slot.name.Replace("Slot", string.Empty).ToLower();
+                typeof(Inventory.Inventory).GetField(eqName).SetValue(characterData.inventory, slot);
+            }
+        }
+
+        public int GetDirection()
+        {
+            return facingDirection;
+        }
+
+        public int GetStrength()
+        {
+            return (int)characterData.strength.Value;
         }
 
         // Update is called once per frame
         private void Update()
         {
-            if (alive)
+            
+            if (alive && !frozen && !rolling)
             {
                 // Increase timer that controls attack combo
                 timeSinceAttack += Time.deltaTime;
 
-                //Check if character just landed on the ground
+                // Check if character just landed on the ground
                 if (!grounded && groundSensor.State())
                 {
                     grounded = true;
+                    airJump = false;
                     animator.SetBool(GroundedHash, grounded);
                 }
 
-                //Check if character just started falling
+                // Check if character just started falling
                 if (grounded && !groundSensor.State())
                 {
                     grounded = false;
                     animator.SetBool(GroundedHash, grounded);
                 }
 
-                // -- Handle input and movement --
+                // Get user input left and right
                 var inputX = Input.GetAxis("Horizontal");
 
                 // Swap direction of sprite depending on walk direction
                 if (inputX > 0)
                 {
                     GetComponent<SpriteRenderer>().flipX = false;
+                    attackHitBox.transform.localScale = new Vector3(1,1,1);
                     facingDirection                      = 1;
                 }
 
                 else if (inputX < 0)
                 {
                     GetComponent<SpriteRenderer>().flipX = true;
+                    attackHitBox.transform.localScale = new Vector3(-1,1,1);
                     facingDirection                      = -1;
                 }
 
@@ -111,34 +146,78 @@ namespace HeroKnight
 
                 //Set AirSpeed in animator
                 animator.SetFloat(AirSpeedYHash, body2d.velocity.y);
-
-                if (Input.GetKeyDown(KeyCode.Q) && (timeSinceAttack > 0.25f))
+                if (characterData.inventory.accessory.Occupied == true)
+                {
+                    if (characterData.inventory.accessory.Item.itemName == "Feather")
+                    {
+                        body2d.gravityScale = 0.7f;
+                    }
+                    if (Input.GetKeyDown(KeyCode.E) && (characterData.inventory.accessory.Item.itemName == "Shield"))
+                    {
+                        Block();
+                    }
+                    else if (Input.GetKeyUp(KeyCode.E))
+                    {
+                        IdleBlock();
+                    }
+                    else if ((Input.GetKeyDown(KeyCode.LeftShift)) && (characterData.inventory.accessory.Item.itemName == "Beer") && !rolling)
+                    {
+                        Roll();
+                    }
+                }
+                else
+                {
+                    body2d.gravityScale = 1f;
+                }
+                if (Input.GetKeyDown(KeyCode.Space) && (airJump == false) && (characterData.inventory.boots.Occupied == true) && (characterData.inventory.boots.Item.itemName == "BouncyBoots"))
+                {
+                    Jump(jumpForce*0.95f);
+                }
+                else if (Input.GetKeyDown(KeyCode.Space) && grounded)
+                {
+                    Jump(jumpForce);
+                }
+                else if (Input.GetKeyDown(KeyCode.Q) && (timeSinceAttack > 0.5f/characterData.strength.Value) && (characterData.inventory.weapon.Occupied == true))
                 {
                     Attack();
-                }
-                else if (Input.GetKeyDown(KeyCode.E))
-                {
-                    Block();
                 }
                 else if (Input.GetKeyUp(KeyCode.E))
                 {
                     IdleBlock();
                 }
-                else if (Input.GetKeyDown(KeyCode.LeftShift) && !rolling)
-                {
-                    Roll();
-                }
-                else if (Input.GetKeyDown(KeyCode.Space) && grounded)
-                {
-                    Jump();
-                }
                 else if (Mathf.Abs(inputX) > Mathf.Epsilon)
                 {
                     Run();
                 }
+                else if (Input.GetKeyDown(KeyCode.T))
+                {
+                    Interact();
+                }
                 else
                 {
                     Idle();
+                }
+            }
+        }
+
+        public void Freeze(bool freeze)
+        {
+            frozen = freeze;
+        }
+
+        private void Interact()
+        {
+            var hit = Physics2D.Raycast(body2d.position + Vector2.up * 0.2f, 
+                                        facingDirection == 1 ? Vector2.right : Vector2.left, 
+                                        1, 
+                                        LayerMask.GetMask("NPC"));
+            if (hit.collider != null)
+            {
+                var go = hit.collider.gameObject;
+                var talkingNpc = go.GetComponent<TalkingNPC>();
+                if (talkingNpc != null)
+                {
+                    talkingNpc.Talk();
                 }
             }
         }
@@ -160,13 +239,15 @@ namespace HeroKnight
             animator.SetInteger(AnimStateHash, 1);
         }
 
-        private void Jump()
+        private void Jump(float jumpForce)
         {
             animator.SetTrigger(JumpHash);
+            if (grounded == false)
+                airJump = true;
             grounded = false;
             animator.SetBool(GroundedHash, grounded);
             body2d.velocity = new Vector2(body2d.velocity.x, jumpForce);
-            groundSensor.Disable(0.2f);
+            groundSensor.Disable(0.4f);
         }
 
         private void Roll()
@@ -226,18 +307,6 @@ namespace HeroKnight
             return isAttacking;
         }
 
-        public void CollectItem(CollectableObject item)
-        {
-            if (item.CompareTag("Coin"))
-            {
-                coins++; // TODO: Coins shouldn't have separate case. They are normal collectables.
-            }
-            else
-            {
-                items.Add(item.name); // TODO: use inventory system
-            }
-        }
-
         private void OnTriggerEnter2D(Collider2D collision)
         {
             // Will we have something like "End" in RPG?
@@ -254,21 +323,24 @@ namespace HeroKnight
 
         public void DealDamage(int damage)
         {
-            lives -= damage;
-
-            if (lives == 0)
+            health -= damage;
+            if (health <= 0)
             {
                 animator.SetTrigger(DeathHash);
-                alive = false;
-                Destroy(heart1.gameObject);
+                alive           = false;
                 body2d.velocity = new Vector2(0, 0);
+                Freeze(true);
             }
             else
             {
                 animator.SetTrigger(HurtHash);
-                Destroy(heart2.gameObject);
+                rolling = false;
             }
+
+            HealthUiManager.Instance.UpdateHeartsUi(health, characterData.health.Value);
         }
+
+
 
         // Animation Events
         // Called in end of roll animation.

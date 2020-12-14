@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Ink.Runtime;
 using UnityEngine;
 
@@ -14,7 +15,6 @@ namespace Dialogues
 
         private Story inkStory;
 
-
         public bool         StoryNeeded { get; set; }
         public List<string> StoryLines  { get; private set; } = new List<string>();
         public List<string> Tags        { get; private set; } = new List<string>();
@@ -23,7 +23,7 @@ namespace Dialogues
         private void Awake()
         {
             inkStory = new Story(inkAsset.text);
-            id = (string)inkStory.variablesState["name"];
+            id       = (string) inkStory.variablesState["name"];
             DialogueManager.Instance.Register(this);
         }
 
@@ -36,6 +36,11 @@ namespace Dialogues
         private void OnDisable()
         {
             StoryNeeded = false;
+        }
+
+        private void OnDestroy()
+        {
+            DialogueManager.Instance.SaveDialogue(this);
         }
 
         private void Update()
@@ -70,6 +75,16 @@ namespace Dialogues
             Tags.AddRange(inkStory.currentTags);
             // Tags have to be parsed instantly, as they may have special effects on the display
             DialogueManager.Instance.ParseTags(inkStory.currentTags);
+        }
+
+        public string GetStateJson()
+        {
+            return inkStory.state.ToJson();
+        }
+
+        public void LoadFromJson(string stateJson)
+        {
+            inkStory.state.LoadJson(stateJson);
         }
 
         public void ChooseSelected(int id)

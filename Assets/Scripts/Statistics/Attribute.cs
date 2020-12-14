@@ -1,112 +1,131 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using Inventory;
 
-public class Attribute
+namespace Statistics
 {
-    public float BaseValue;
-
-    protected bool isDirty = true;
-    protected float lastBaseValue;
-
-    protected float _value;
-    public virtual float Value
+    [Serializable]
+    public class Attribute
     {
-        get
+        protected readonly List<AttributeModifier>               modifiers;
+        public readonly    ReadOnlyCollection<AttributeModifier> attributeModifiers;
+        public             float                                 baseValue;
+
+        protected float lastBaseValue;
+
+        protected float value;
+
+        public virtual float Value => value;
+
+        public Attribute()
         {
-            if (isDirty || lastBaseValue != BaseValue)
+            modifiers          = new List<AttributeModifier>();
+            attributeModifiers = modifiers.AsReadOnly();
+        }
+
+        public Attribute(float baseValue) : this()
+        {
+            this.baseValue = baseValue;
+            value          = this.baseValue;
+        }
+
+        public event EventHandler<ValueChangedEventArgs> ValueChanged;
+
+        private void UpdateValue()
+        {
+            lastBaseValue = baseValue;
+            value         = ComputeFinalValue();
+            OnValueChanged(value);
+        }
+
+        public virtual void Add(AttributeModifier mod)
+        {
+            modifiers.Add(mod);
+            UpdateValue();
+        }
+
+        public virtual bool Remove(AttributeModifier mod)
+        {
+            if (modifiers.Remove(mod))
             {
-                lastBaseValue = BaseValue;
-                _value = ComputeFinalValue();
-                isDirty = false;
+                UpdateValue();
+                return true;
             }
-            return _value;
+
+            return false;
         }
-    }
 
-    protected readonly List<AttributeModifier> attributeModifiers;
-    public readonly ReadOnlyCollection<AttributeModifier> AttributeModifiers;
-
-    public Attribute()
-    {
-        attributeModifiers = new List<AttributeModifier>();
-        AttributeModifiers = attributeModifiers.AsReadOnly();
-    }
-
-    public Attribute(float baseValue) : this()
-    {
-        BaseValue = baseValue;
-    }
-
-    public virtual void Add(AttributeModifier mod)
-    {
-        isDirty = true;
-        attributeModifiers.Add(mod);
-    }
-
-    public virtual bool Remove(AttributeModifier mod)
-    {
-        if (attributeModifiers.Remove(mod))
+        public virtual bool RemoveAllFromSource(object source)
         {
-            isDirty = true;
-            return true;
-        }
-        return false;
-    }
+            var numRemovals = modifiers.RemoveAll(mod => mod.source == source);
 
-    public virtual bool RemoveAllFromSource(object source)
-    {
-        int numRemovals = attributeModifiers.RemoveAll(mod => mod.Source == source);
-
-        if (numRemovals > 0)
-        {
-            isDirty = true;
-            return true;
-        }
-        return false;
-    }
-
-    protected virtual int CompareOrder(AttributeModifier a, AttributeModifier b)
-    {
-        if (a.Order < b.Order)
-            return -1;
-        else if (a.Order > b.Order)
-            return 1;
-        return 0; //if (a.Order == b.Order)
-    }
-
-    protected virtual float ComputeFinalValue()
-    {
-        float finalValue = BaseValue;
-        float sumPercentAdd = 0;
-
-        attributeModifiers.Sort(CompareOrder);
-
-        for (int i = 0; i < attributeModifiers.Count; i++)
-        {
-            AttributeModifier mod = attributeModifiers[i];
-
-            if (mod.Scaler == BonusScaler.Flat)
+            if (numRemovals > 0)
             {
-                finalValue += mod.Value;
+                UpdateValue();
+                return true;
             }
-            else if (mod.Scaler == BonusScaler.PercentAdd)
-            {
-                sumPercentAdd += mod.Value;
 
-                if (i + 1 >= attributeModifiers.Count || attributeModifiers[i + 1].Scaler != BonusScaler.PercentAdd)
+            return false;
+        }
+
+        protected virtual int CompareOrder(AttributeModifier a, AttributeModifier b)
+        {
+            if (a.order < b.order)
+            {
+                return -1;
+            }
+
+            if (a.order > b.order)
+            {
+                return 1;
+            }
+
+            return 0; //if (a.Order == b.Order)
+        }
+
+        private void OnValueChanged(float newValue)
+        {
+            ValueChanged?.Invoke(this, new ValueChangedEventArgs(newValue));
+        }
+
+        protected virtual float ComputeFinalValue()
+        {
+            var   finalValue    = baseValue;
+            float sumPercentAdd = 0;
+
+            modifiers.Sort(CompareOrder);
+
+            for (var i = 0; i < modifiers.Count; i++)
+            {
+                var mod = modifiers[i];
+
+                switch (mod.scaler)
                 {
-                    finalValue *= 1 + sumPercentAdd;
-                    sumPercentAdd = 0;
+                    case BonusScaler.Flat:
+                        finalValue += mod.value;
+                        break;
+                    case BonusScaler.PercentAdd:
+                    {
+                        sumPercentAdd += mod.value;
+
+                        if ((i + 1 >= modifiers.Count) || (modifiers[i + 1].scaler != BonusScaler.PercentAdd))
+                        {
+                            finalValue    *= 1 + sumPercentAdd;
+                            sumPercentAdd =  0;
+                        }
+
+                        break;
+                    }
+
+                    case BonusScaler.PercentMult:
+                        finalValue *= 1 + mod.value;
+                        break;
                 }
             }
-            else if (mod.Scaler == BonusScaler.PercentMult)
-            {
-                finalValue *= 1 + mod.Value;
-            }
-        }
 
-        // Workaround for float calculation errors, like displaying 12.00001 instead of 12
-        return (float)Math.Round(finalValue, 4);
+            // Workaround for float calculation errors, like displaying 12.00001 instead of 12
+            return (float) Math.Round(finalValue, 4);
+        }
     }
 }

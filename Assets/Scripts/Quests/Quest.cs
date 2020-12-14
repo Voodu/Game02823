@@ -80,5 +80,15 @@ namespace Quests
                 Debug.LogWarning(e.Message);
             }
         }
+
+        public void LoadFromJson(string questState)
+        {
+            inkQuest.LoadFromJson(questState);
+        }
+
+        public string GetStateJson()
+        {
+            return inkQuest.GetStateJson();
+        }
     }
 }

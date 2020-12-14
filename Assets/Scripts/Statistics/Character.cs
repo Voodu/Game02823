@@ -1,121 +1,153 @@
-﻿public class Character
+﻿using System;
+using System.Linq;
+using Inventory;
+ 
+namespace Statistics
 {
-    public string Name { get; private set; }
-    public Attribute Health { get; private set; }
-    public Attribute Stamina { get; private set; }
-    public Attribute Strength { get; private set; }
-    public Attribute Speed { get; private set; }
-    public Inventory Inventory { get; private set; }
-
-    public Character(string name)
+    [Serializable]
+    public class Character
     {
-        Name = name;
-        Health = new Attribute(100);
-        Stamina = new Attribute(100);
-        Strength = new Attribute(1);
-        Speed = new Attribute(1);
-        Inventory = new Inventory();
-    }
-
-    public GearItem GetItemFromInventory(GearType type)
-    {
-        foreach (GearItem item in Inventory.Items)
+        public string    name;
+        public Attribute health;
+        public Attribute stamina;
+        public Attribute strength;
+        public Attribute speed;
+        public Inventory.Inventory inventory;
+ 
+        public Character(string name)
         {
-            if (item.Type == type)
-                return item;
+            this.name = name;
+            health    = new Attribute(100);
+            stamina   = new Attribute(100);
+            strength  = new Attribute(1);
+            speed     = new Attribute(1);
+            inventory = new Inventory.Inventory();
         }
-        return null;
-    }
-
-    public void EquipItem(GearItem item)
-    {
-        switch (item.Type)
+ 
+        public GearItem GetItemFromInventory(GearType type)
         {
-            case GearType.Helmet:
-                if (!Inventory.Helmet.Occupied)
-                {
-                    item.Bonus.Apply(this, item);
-                    Inventory.Helmet.Occupied = true;
-                }
-                break;
-            case GearType.Armor:
-                if (!Inventory.Chest.Occupied)
-                {
-                    item.Bonus.Apply(this, item);
-                    Inventory.Chest.Occupied = true;
-                };
-                break;
-            case GearType.Gloves:
-                if (!Inventory.Gloves.Occupied)
-                {
-                    item.Bonus.Apply(this, item);
-                    Inventory.Gloves.Occupied = true;
-                };
-                break;
-            case GearType.Boots:
-                if (!Inventory.Boots.Occupied)
-                {
-                    item.Bonus.Apply(this, item);
-                    Inventory.Boots.Occupied = true;
-                };
-                break;
-
-            case GearType.Weapon:
-                if (!Inventory.Weapon.Occupied)
-                {
-                    item.Bonus.Apply(this, item);
-                    Inventory.Weapon.Occupied = true;
-                };
-                break;
-            case GearType.Accessory:
-                if (!Inventory.Accessory.Occupied)
-                {
-                    item.Bonus.Apply(this, item);
-                    Inventory.Accessory.Occupied = true;
-                };
-                break;
-            case GearType.Bag:
-                if (!Inventory.Bag.Occupied)
-                {
-                    item.Bonus.Apply(this, item);
-                    Inventory.Bag.Occupied = true;
-                };
-                break;
+            return inventory.items.Where(x => x is GearItem).Cast<GearItem>().FirstOrDefault(item => item.type == type);
         }
-    }
-
-    public void Unequip(GearItem item)
-    {
-        switch (item.Type)
+ 
+        public bool EquipItem(GearItem item)
         {
-            case GearType.Helmet:
-                item.Bonus.Remove(this, item);
-                Inventory.Helmet.Occupied = false;
-                break;
-            case GearType.Armor:
-                item.Bonus.Remove(this, item);
-                Inventory.Chest.Occupied = false;
-                break;
-            case GearType.Gloves:
-                item.Bonus.Remove(this, item);
-                Inventory.Gloves.Occupied = false;
-                break;
-            case GearType.Boots:
-                item.Bonus.Remove(this, item);
-                Inventory.Boots.Occupied = false;
-                break;
-            case GearType.Weapon:
-                item.Bonus.Remove(this, item);
-                Inventory.Weapon.Occupied = false;
-                break;
-            case GearType.Accessory:
-                item.Bonus.Remove(this, item);
-                Inventory.Accessory.Occupied = false;
-                break;
-            case GearType.Bag:
-                item.Bonus.Remove(this, item);
-                Inventory.Bag.Occupied = false;
-                break;
+            switch (item.type)
+            {
+                case GearType.Helmet:
+                    if (!inventory.helmet.Occupied)
+                    {
+                        item.bonus.Apply(this, item);
+                        inventory.helmet.Occupied = true;
+                        inventory.helmet.Item = item;
+                        return true;
+                    }
+ 
+                    break;
+                case GearType.Armor:
+                    if (!inventory.armor.Occupied)
+                    {
+                        item.bonus.Apply(this, item);
+                        inventory.armor.Occupied = true;
+                        inventory.armor.Item = item;
+                        return true;
+                    }
+ 
+                    ;
+                    break;
+                case GearType.Gloves:
+                    if (!inventory.gloves.Occupied)
+                    {
+                        item.bonus.Apply(this, item);
+                        inventory.gloves.Occupied = true;
+                        inventory.gloves.Item = item;
+                        return true;
+                    }
+ 
+                    ;
+                    break;
+                case GearType.Boots:
+                    if (!inventory.boots.Occupied)
+                    {
+                        item.bonus.Apply(this, item);
+                        inventory.boots.Occupied = true;
+                        inventory.boots.Item = item;
+                        return true;
+                    }
+ 
+                    ;
+                    break;
+ 
+                case GearType.Weapon:
+                    if (!inventory.weapon.Occupied)
+                    {
+                        item.bonus.Apply(this, item);
+                        inventory.weapon.Occupied = true;
+                        inventory.weapon.Item = item;
+                        return true;
+                    }
+ 
+                    ;
+                    break;
+                case GearType.Accessory:
+                    if (!inventory.accessory.Occupied)
+                    {
+                        item.bonus.Apply(this, item);
+                        inventory.accessory.Occupied = true;
+                        inventory.accessory.Item = item;
+                        return true;
+                    }
+ 
+                    ;
+                    break;
+                case GearType.Bag:
+                    if (!inventory.bag.Occupied)
+                    {
+                        item.bonus.Apply(this, item);
+                        inventory.bag.Occupied = true;
+                        inventory.bag.Item = item;
+                        return true;
+                    }
+ 
+                    ;
+                    break;
+            }
+ 
+            return false;
+        }
+ 
+        public void Unequip(GearItem item)
+        {
+            switch (item.type)
+            {
+                case GearType.Helmet:
+                    item.bonus.Remove(this, item);
+                    inventory.helmet.Occupied = false;
+                    break;
+                case GearType.Armor:
+                    item.bonus.Remove(this, item);
+                    inventory.armor.Occupied = false;
+                    break;
+                case GearType.Gloves:
+                    item.bonus.Remove(this, item);
+                    inventory.gloves.Occupied = false;
+                    break;
+                case GearType.Boots:
+                    item.bonus.Remove(this, item);
+                    inventory.boots.Occupied = false;
+                    break;
+                case GearType.Weapon:
+                    item.bonus.Remove(this, item);
+                    inventory.weapon.Occupied = false;
+                    break;
+                case GearType.Accessory:
+                    item.bonus.Remove(this, item);
+                    inventory.accessory.Occupied = false;
+                    break;
+                case GearType.Bag:
+                    item.bonus.Remove(this, item);
+                    inventory.bag.Occupied = false;
+                    break;
+            }
         }
     }
 }

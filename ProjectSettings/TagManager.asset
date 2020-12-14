@@ -9,6 +9,8 @@ TagManager:
   - Coin
   - Heart
   - End
+  - SpawnPoint
+  - VirtualCamera
   layers:
   - Default
   - TransparentFX
@@ -18,10 +20,10 @@ TagManager:
   - UI
   - 
   - 
-  - 
-  - 
-  - 
-  - 
+  - Confiner
+  - NPC
+  - Player
+  - Ground
   - 
   - 
   - 
@@ -43,11 +45,14 @@ TagManager:
   - 
   - 
   m_SortingLayers:
-  - name: Default
-    uniqueID: 0
-    locked: 0
   - name: Back
     uniqueID: 1985795687
+    locked: 0
+  - name: Environment
+    uniqueID: 1656157089
+    locked: 0
+  - name: Default
+    uniqueID: 0
     locked: 0
   - name: Fore
     uniqueID: 1875217263
