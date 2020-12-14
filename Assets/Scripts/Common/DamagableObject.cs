@@ -43,7 +43,7 @@ namespace Common
             var weapon = other.GetComponent<Weapon>();
             if (weapon != null)
             {
-                health -= weapon.GetDamage();
+                health -= GameManager.Instance.Player.GetStrength();
                 if (health <= 0)
                 {
                     body2d.velocity = Vector2.zero;

@@ -91,6 +91,11 @@ namespace HeroKnight
             return facingDirection;
         }
 
+        public int GetStrength()
+        {
+            return (int)characterData.strength.Value;
+        }
+
         // Update is called once per frame
         private void Update()
         {
