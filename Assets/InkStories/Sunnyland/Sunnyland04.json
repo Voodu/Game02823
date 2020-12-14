@@ -1,0 +1,1 @@
+﻿{"inkVersion":19,"root":[[{"->":"start"},["done",{"#f":5,"#n":"g-0"}],null],"done",{"start":["^Pretty nasty fall, he? I know, it hurt me too. At least you managed to hit the ground. Some guys missed that cliff... ",{"#":"terminate"},"\n",{"->":".^"},{"#f":1}],"global decl":["ev","str","^fall","/str",{"VAR=":"name"},"/ev","end",null],"#f":1}],"listDefs":{}}
