@@ -15,7 +15,7 @@ namespace Other
 
         public void UpdateHeartsUi(float currentHealth, float maxHealth)
         {
-            var heartsLeft = Mathf.Ceil(currentHealth / maxHealth * maxHearts);
+            var heartsLeft = Mathf.Max(0, Mathf.Ceil(currentHealth / maxHealth * maxHearts));
 
             while (hearts.Count > heartsLeft)
             {

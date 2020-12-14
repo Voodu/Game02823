@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Cinemachine;
 using Other;
 using UnityEngine;
@@ -47,7 +48,7 @@ namespace Common
                 }
             }
 
-            throw new Exception($"No spawn point {targetSpawn} found");
+            return spawnPoints.First();
         }
 
         private void SpawnPlayer()

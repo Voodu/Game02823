@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 using Inventory;
-
+ 
 namespace Statistics
 {
     [Serializable]
@@ -13,7 +13,7 @@ namespace Statistics
         public Attribute strength;
         public Attribute speed;
         public Inventory.Inventory inventory;
-
+ 
         public Character(string name)
         {
             this.name = name;
@@ -23,12 +23,12 @@ namespace Statistics
             speed     = new Attribute(1);
             inventory = new Inventory.Inventory();
         }
-
+ 
         public GearItem GetItemFromInventory(GearType type)
         {
             return inventory.items.Where(x => x is GearItem).Cast<GearItem>().FirstOrDefault(item => item.type == type);
         }
-
+ 
         public bool EquipItem(GearItem item)
         {
             switch (item.type)
@@ -41,7 +41,7 @@ namespace Statistics
                         inventory.helmet.Item = item;
                         return true;
                     }
-
+ 
                     break;
                 case GearType.Armor:
                     if (!inventory.armor.Occupied)
@@ -51,7 +51,7 @@ namespace Statistics
                         inventory.armor.Item = item;
                         return true;
                     }
-
+ 
                     ;
                     break;
                 case GearType.Gloves:
@@ -62,7 +62,7 @@ namespace Statistics
                         inventory.gloves.Item = item;
                         return true;
                     }
-
+ 
                     ;
                     break;
                 case GearType.Boots:
@@ -73,10 +73,10 @@ namespace Statistics
                         inventory.boots.Item = item;
                         return true;
                     }
-
+ 
                     ;
                     break;
-
+ 
                 case GearType.Weapon:
                     if (!inventory.weapon.Occupied)
                     {
@@ -85,7 +85,7 @@ namespace Statistics
                         inventory.weapon.Item = item;
                         return true;
                     }
-
+ 
                     ;
                     break;
                 case GearType.Accessory:
@@ -96,7 +96,7 @@ namespace Statistics
                         inventory.accessory.Item = item;
                         return true;
                     }
-
+ 
                     ;
                     break;
                 case GearType.Bag:
@@ -107,14 +107,14 @@ namespace Statistics
                         inventory.bag.Item = item;
                         return true;
                     }
-
+ 
                     ;
                     break;
             }
-
+ 
             return false;
         }
-
+ 
         public void Unequip(GearItem item)
         {
             switch (item.type)
