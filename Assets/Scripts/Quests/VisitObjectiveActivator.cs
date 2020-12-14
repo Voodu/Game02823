@@ -1,9 +1,10 @@
 ﻿using UnityEngine;
 
-namespace Quests {
-    [RequireComponent(typeof(ObjectiveItem))]
+namespace Quests
+{
     [RequireComponent(typeof(Collider2D))]
-    public class GatherObjectiveActivator : MonoBehaviour
+    [RequireComponent(typeof(ObjectiveItem))]
+    public class VisitObjectiveActivator : MonoBehaviour
     {
         private bool activated = false;
         private void OnCollisionEnter2D(Collision2D other)

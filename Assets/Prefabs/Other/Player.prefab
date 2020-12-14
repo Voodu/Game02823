@@ -16,6 +16,22 @@ CapsuleCollider2D:
   m_Offset: {x: -0.026845217, y: 0.69829845}
   m_Size: {x: 0.73569345, y: 1.2726154}
   m_Direction: 0
+--- !u!70 &8578684106690056744
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6623727128838518753}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.057074778, y: 0.12473831}
+  m_Size: {x: 0.80243933, y: 0.07171289}
+  m_Direction: 1
 --- !u!1001 &6512554616525253015
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -23,6 +39,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 827722496337519530, guid: a4b4a6d32bcb19248a754d6602ffc7e4, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2900218875308588589, guid: a4b4a6d32bcb19248a754d6602ffc7e4, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.038
+      objectReference: {fileID: 0}
     - target: {fileID: 2954181336601895002, guid: a4b4a6d32bcb19248a754d6602ffc7e4, type: 3}
       propertyPath: m_SortingOrder
       value: 30
@@ -181,6 +205,11 @@ PrefabInstance:
 --- !u!1 &982734834951172722 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6323719953710832613, guid: a4b4a6d32bcb19248a754d6602ffc7e4, type: 3}
+  m_PrefabInstance: {fileID: 6512554616525253015}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &6623727128838518753 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 111755813442870902, guid: a4b4a6d32bcb19248a754d6602ffc7e4, type: 3}
   m_PrefabInstance: {fileID: 6512554616525253015}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &8871630452679926154 stripped

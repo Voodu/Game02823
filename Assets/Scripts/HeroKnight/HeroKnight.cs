@@ -96,6 +96,11 @@ namespace HeroKnight
         {
             if (alive && !frozen && !rolling)
             {
+                if (Input.GetKeyDown(KeyCode.X))
+                {
+                    PrintState();
+                }
+
                 // Increase timer that controls attack combo
                 timeSinceAttack += Time.deltaTime;
 
@@ -194,6 +199,15 @@ namespace HeroKnight
                     Idle();
                 }
             }
+        }
+
+        private void PrintState()
+        {
+            print($"Health: {health}/{characterData.health.Value}");
+            print($"Strength (damage dealt): {characterData.strength.Value}");
+            print($"Speed: {characterData.speed.Value}");
+            print($"Exp: {StatisticsManager.Instance.GetExperience()}");
+
         }
 
         public void Freeze(bool freeze)

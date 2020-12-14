@@ -12,7 +12,7 @@ Hey, you look like a tough one!
 * ME: Can I help you?
   Indeed, I have a problem.
 * ME: <Raise your eyebrows>
-- <> I wanted to ask for help with a pesky bear out there.
+- <> I wanted to ask for help with a pesky giant frog out there.
 - It killed three people from our village already and everone is afraid of going into the woods. Do you think you can help with that?
 * ME: Sure, no problem.
   - - (accept)
@@ -30,14 +30,14 @@ Hey, you look like a tough one!
 - - -> undecided
 
 === undecided ===
-Have you maybe changed your mind and can help with that bear?
+Have you maybe changed your mind and can help with that giant frog?
   * ME: Yes, I'll help you.
     -> start.accept
   + ME: Maybe. <> -> start.money
   + ME: No[.], -> start.refuse
 
 === progress ===
-How is it with the bear? Have you killed it?
+How is it with the giant frog? Have you killed it?
 + ME: Not yet. #terminate
 -> progress
 * {completed}ME: Yes, it's dead.
