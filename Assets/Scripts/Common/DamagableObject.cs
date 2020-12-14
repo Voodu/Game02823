@@ -1,7 +1,7 @@
-﻿using Statistics;
+﻿using System.Collections;
+using Statistics;
 using UnityEngine;
 using Weapons;
-using System.Collections;
 
 namespace Common
 {
@@ -14,20 +14,20 @@ namespace Common
         [SerializeField]
         private int killExperience = 1;
 
-        private Animator animator;
-        public float timeToColor = 0.1f;
-        SpriteRenderer sr;
-        Color defaultColor;
-        private Rigidbody2D body2d;
-    
-        void Start()
+        private Animator       animator;
+        public  float          timeToColor = 0.1f;
+        private SpriteRenderer sr;
+        private Color          defaultColor;
+        private Rigidbody2D    body2d;
+
+        private void Start()
         {
-            sr = GetComponent<SpriteRenderer>();
+            sr           = GetComponent<SpriteRenderer>();
             defaultColor = sr.color;
-            animator = GetComponent<Animator>();
-            body2d =  GetComponent<Rigidbody2D>();
+            animator     = GetComponent<Animator>();
+            body2d       = GetComponent<Rigidbody2D>();
         }
-    
+
         private void OnCollisionEnter2D(Collision2D other)
         {
             GetDamage(other.gameObject);
@@ -59,16 +59,15 @@ namespace Common
         public void Death()
         {
             StatisticsManager.Instance.AddExperience(killExperience);
-            Destroy(this.gameObject);
+            Destroy(gameObject);
         }
 
-
-        IEnumerator SwitchColor()
+        private IEnumerator SwitchColor()
         {
             sr.color = new Color(1f, 0.50196078f, 0.50196078f);
             yield return new WaitForSeconds(timeToColor);
+
             sr.color = defaultColor;
         }
     }
 }
-

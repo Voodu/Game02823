@@ -8,14 +8,14 @@ namespace Inventory
 {
     public class InventoryManager : Singleton<InventoryManager>
     {
-        private readonly List<ItemSlot>        slots = new List<ItemSlot>();
-        public           GameObject            inventoryBar;
-        public           GameObject            equipmentBar;
-        public           List<ItemSlot>        equipmentSlots = new List<ItemSlot>(7);
-        public           GameObject            inventorySlotPrefab;
-        public           GameObject            gearItemPrefab;
-        public           GameObject            itemPrefab;
-        private          Inventory             inventory;
+        private readonly List<ItemSlot> slots = new List<ItemSlot>();
+        public           GameObject     inventoryBar;
+        public           GameObject     equipmentBar;
+        public           List<ItemSlot> equipmentSlots = new List<ItemSlot>(7);
+        public           GameObject     inventorySlotPrefab;
+        public           GameObject     gearItemPrefab;
+        public           GameObject     itemPrefab;
+        private          Inventory      inventory;
 
         private void Start()
         {
@@ -47,7 +47,7 @@ namespace Inventory
 
         public void RemoveInventoryItemUi(GameObject uiSlot)
         {
-            var itemSlot  = uiSlot.GetComponent<ItemSlot>();
+            var itemSlot = uiSlot.GetComponent<ItemSlot>();
             if (itemSlot.Occupied)
             {
                 var itemImage = itemSlot.gameObject.transform.Find("Slot").transform.Find("Item").GetComponent<Image>();
@@ -72,7 +72,7 @@ namespace Inventory
             {
                 case GearItem g:
                     var spawnedGearItem = Instantiate(gearItemPrefab, playerPos, Quaternion.identity);
-                    spawnedGearItem.GetComponent<SpriteRenderer>().sprite = itemImage.sprite;
+                    spawnedGearItem.GetComponent<SpriteRenderer>().sprite           = itemImage.sprite;
                     spawnedGearItem.GetComponent<SpriteRenderer>().sortingLayerName = "Fore";
                     var gearItem = spawnedGearItem.GetComponent<GearItem>();
                     gearItem.type     = g.type;
@@ -82,7 +82,7 @@ namespace Inventory
                     break;
                 case Item i:
                     var spawnedItem = Instantiate(itemPrefab, playerPos, Quaternion.identity);
-                    spawnedItem.GetComponent<SpriteRenderer>().sprite = itemImage.sprite;
+                    spawnedItem.GetComponent<SpriteRenderer>().sprite           = itemImage.sprite;
                     spawnedItem.GetComponent<SpriteRenderer>().sortingLayerName = "Fore";
                     var component = spawnedItem.GetComponent<Item>();
                     component.tier     = i.tier;

@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections;
 using Common;
 using Dialogues;
 using Inventory;
 using Other;
 using Statistics;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 namespace HeroKnight
 {
@@ -22,7 +19,6 @@ namespace HeroKnight
         private static readonly int JumpHash      = Animator.StringToHash("Jump");
         private static readonly int AnimStateHash = Animator.StringToHash("AnimState");
         private static readonly int AirSpeedYHash = Animator.StringToHash("AirSpeedY");
-
 
         public Character characterData = new Character("Player");
 
@@ -52,15 +48,14 @@ namespace HeroKnight
         private float             delayToIdle;
         private int               coins;
         private bool              alive = true;
-        private bool frozen;
+        private bool              frozen;
         private bool              isAttacking;
-
 
         // Use this for initialization
         private void Start()
         {
             airJump = false;
-            health = characterData.health.baseValue;
+            health  = characterData.health.baseValue;
             characterData.health.ValueChanged += (sender, args) =>
                                                  {
                                                      health = Mathf.Min(health, args.newValue);
@@ -93,13 +88,12 @@ namespace HeroKnight
 
         public int GetStrength()
         {
-            return (int)characterData.strength.Value;
+            return (int) characterData.strength.Value;
         }
 
         // Update is called once per frame
         private void Update()
         {
-            
             if (alive && !frozen && !rolling)
             {
                 // Increase timer that controls attack combo
@@ -109,7 +103,7 @@ namespace HeroKnight
                 if (!grounded && groundSensor.State())
                 {
                     grounded = true;
-                    airJump = false;
+                    airJump  = false;
                     animator.SetBool(GroundedHash, grounded);
                 }
 
@@ -127,14 +121,14 @@ namespace HeroKnight
                 if (inputX > 0)
                 {
                     GetComponent<SpriteRenderer>().flipX = false;
-                    attackHitBox.transform.localScale = new Vector3(1,1,1);
+                    attackHitBox.transform.localScale    = new Vector3(1, 1, 1);
                     facingDirection                      = 1;
                 }
 
                 else if (inputX < 0)
                 {
                     GetComponent<SpriteRenderer>().flipX = true;
-                    attackHitBox.transform.localScale = new Vector3(-1,1,1);
+                    attackHitBox.transform.localScale    = new Vector3(-1, 1, 1);
                     facingDirection                      = -1;
                 }
 
@@ -146,12 +140,13 @@ namespace HeroKnight
 
                 //Set AirSpeed in animator
                 animator.SetFloat(AirSpeedYHash, body2d.velocity.y);
-                if (characterData.inventory.accessory.Occupied == true)
+                if (characterData.inventory.accessory.Occupied)
                 {
                     if (characterData.inventory.accessory.Item.itemName == "Feather")
                     {
                         body2d.gravityScale = 0.7f;
                     }
+
                     if (Input.GetKeyDown(KeyCode.E) && (characterData.inventory.accessory.Item.itemName == "Shield"))
                     {
                         Block();
@@ -160,7 +155,7 @@ namespace HeroKnight
                     {
                         IdleBlock();
                     }
-                    else if ((Input.GetKeyDown(KeyCode.LeftShift)) && (characterData.inventory.accessory.Item.itemName == "Beer") && !rolling)
+                    else if (Input.GetKeyDown(KeyCode.LeftShift) && (characterData.inventory.accessory.Item.itemName == "Beer") && !rolling)
                     {
                         Roll();
                     }
@@ -169,15 +164,16 @@ namespace HeroKnight
                 {
                     body2d.gravityScale = 1f;
                 }
-                if (Input.GetKeyDown(KeyCode.Space) && (airJump == false) && (characterData.inventory.boots.Occupied == true) && (characterData.inventory.boots.Item.itemName == "BouncyBoots"))
+
+                if (Input.GetKeyDown(KeyCode.Space) && (airJump == false) && characterData.inventory.boots.Occupied && (characterData.inventory.boots.Item.itemName == "BouncyBoots"))
                 {
-                    Jump(jumpForce*0.95f);
+                    Jump(jumpForce * 0.95f);
                 }
                 else if (Input.GetKeyDown(KeyCode.Space) && grounded)
                 {
                     Jump(jumpForce);
                 }
-                else if (Input.GetKeyDown(KeyCode.Q) && (timeSinceAttack > 0.5f/characterData.strength.Value) && (characterData.inventory.weapon.Occupied == true))
+                else if (Input.GetKeyDown(KeyCode.Q) && (timeSinceAttack > 0.5f / characterData.strength.Value) && characterData.inventory.weapon.Occupied)
                 {
                     Attack();
                 }
@@ -207,13 +203,13 @@ namespace HeroKnight
 
         private void Interact()
         {
-            var hit = Physics2D.Raycast(body2d.position + Vector2.up * 0.2f, 
-                                        facingDirection == 1 ? Vector2.right : Vector2.left, 
-                                        1, 
+            var hit = Physics2D.Raycast(body2d.position + Vector2.up * 0.2f,
+                                        facingDirection == 1 ? Vector2.right : Vector2.left,
+                                        1,
                                         LayerMask.GetMask("NPC"));
             if (hit.collider != null)
             {
-                var go = hit.collider.gameObject;
+                var go         = hit.collider.gameObject;
                 var talkingNpc = go.GetComponent<TalkingNPC>();
                 if (talkingNpc != null)
                 {
@@ -243,7 +239,10 @@ namespace HeroKnight
         {
             animator.SetTrigger(JumpHash);
             if (grounded == false)
+            {
                 airJump = true;
+            }
+
             grounded = false;
             animator.SetBool(GroundedHash, grounded);
             body2d.velocity = new Vector2(body2d.velocity.x, jumpForce);
@@ -339,8 +338,6 @@ namespace HeroKnight
 
             HealthUiManager.Instance.UpdateHeartsUi(health, characterData.health.Value);
         }
-
-
 
         // Animation Events
         // Called in end of roll animation.

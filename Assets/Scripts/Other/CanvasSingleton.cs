@@ -2,8 +2,5 @@
 
 namespace Other
 {
-    public class CanvasSingleton : Singleton<CanvasSingleton>
-    {
-        
-    }
+    public class CanvasSingleton : Singleton<CanvasSingleton> { }
 }

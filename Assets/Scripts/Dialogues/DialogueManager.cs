@@ -13,6 +13,8 @@ namespace Dialogues
 {
     public class DialogueManager : Singleton<DialogueManager>
     {
+        private readonly Dictionary<string, string> dialogueStates = new Dictionary<string, string>();
+
         [SerializeField]
         private string playerPrefix = "ME: ";
 
@@ -23,8 +25,6 @@ namespace Dialogues
 
         [SerializeField]
         private List<Dialogue> sceneDialogues = new List<Dialogue>();
-
-        private readonly Dictionary<string, string> dialogueStates = new Dictionary<string, string>();
 
         /* UI Prefabs */
         [SerializeField]
@@ -124,11 +124,11 @@ namespace Dialogues
                                 QuestManager.instance.Begin(questId);
                                 break;
                             case "progress":
-                                {
-                                    var objectiveId = words[4].Trim();
-                                    QuestManager.instance[questId][objectiveId].RecordProgress(new ObjectiveItemData { connectedQuestId = questId, connectedObjectiveId = objectiveId, objectiveType = ObjectiveType.Talk });
-                                    break;
-                                }
+                            {
+                                var objectiveId = words[4].Trim();
+                                QuestManager.instance[questId][objectiveId].RecordProgress(new ObjectiveItemData {connectedQuestId = questId, connectedObjectiveId = objectiveId, objectiveType = ObjectiveType.Talk});
+                                break;
+                            }
                         }
 
                         break;

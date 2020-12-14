@@ -1,19 +1,19 @@
 ﻿using System;
 using System.Linq;
 using Inventory;
- 
+
 namespace Statistics
 {
     [Serializable]
     public class Character
     {
-        public string    name;
-        public Attribute health;
-        public Attribute stamina;
-        public Attribute strength;
-        public Attribute speed;
+        public string              name;
+        public Attribute           health;
+        public Attribute           stamina;
+        public Attribute           strength;
+        public Attribute           speed;
         public Inventory.Inventory inventory;
- 
+
         public Character(string name)
         {
             this.name = name;
@@ -23,12 +23,12 @@ namespace Statistics
             speed     = new Attribute(1);
             inventory = new Inventory.Inventory();
         }
- 
+
         public GearItem GetItemFromInventory(GearType type)
         {
             return inventory.items.Where(x => x is GearItem).Cast<GearItem>().FirstOrDefault(item => item.type == type);
         }
- 
+
         public bool EquipItem(GearItem item)
         {
             switch (item.type)
@@ -38,20 +38,20 @@ namespace Statistics
                     {
                         item.bonus.Apply(this, item);
                         inventory.helmet.Occupied = true;
-                        inventory.helmet.Item = item;
+                        inventory.helmet.Item     = item;
                         return true;
                     }
- 
+
                     break;
                 case GearType.Armor:
                     if (!inventory.armor.Occupied)
                     {
                         item.bonus.Apply(this, item);
                         inventory.armor.Occupied = true;
-                        inventory.armor.Item = item;
+                        inventory.armor.Item     = item;
                         return true;
                     }
- 
+
                     ;
                     break;
                 case GearType.Gloves:
@@ -59,10 +59,10 @@ namespace Statistics
                     {
                         item.bonus.Apply(this, item);
                         inventory.gloves.Occupied = true;
-                        inventory.gloves.Item = item;
+                        inventory.gloves.Item     = item;
                         return true;
                     }
- 
+
                     ;
                     break;
                 case GearType.Boots:
@@ -70,22 +70,22 @@ namespace Statistics
                     {
                         item.bonus.Apply(this, item);
                         inventory.boots.Occupied = true;
-                        inventory.boots.Item = item;
+                        inventory.boots.Item     = item;
                         return true;
                     }
- 
+
                     ;
                     break;
- 
+
                 case GearType.Weapon:
                     if (!inventory.weapon.Occupied)
                     {
                         item.bonus.Apply(this, item);
                         inventory.weapon.Occupied = true;
-                        inventory.weapon.Item = item;
+                        inventory.weapon.Item     = item;
                         return true;
                     }
- 
+
                     ;
                     break;
                 case GearType.Accessory:
@@ -93,10 +93,10 @@ namespace Statistics
                     {
                         item.bonus.Apply(this, item);
                         inventory.accessory.Occupied = true;
-                        inventory.accessory.Item = item;
+                        inventory.accessory.Item     = item;
                         return true;
                     }
- 
+
                     ;
                     break;
                 case GearType.Bag:
@@ -104,17 +104,17 @@ namespace Statistics
                     {
                         item.bonus.Apply(this, item);
                         inventory.bag.Occupied = true;
-                        inventory.bag.Item = item;
+                        inventory.bag.Item     = item;
                         return true;
                     }
- 
+
                     ;
                     break;
             }
- 
+
             return false;
         }
- 
+
         public void Unequip(GearItem item)
         {
             switch (item.type)

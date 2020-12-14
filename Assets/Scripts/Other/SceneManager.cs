@@ -1,5 +1,4 @@
-﻿using System;
-using Common;
+﻿using Common;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 using USceneManager = UnityEngine.SceneManagement.SceneManager;

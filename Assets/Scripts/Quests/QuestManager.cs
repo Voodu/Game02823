@@ -9,9 +9,10 @@ namespace Quests
 {
     public class QuestManager : Singleton<QuestManager>
     {
+        private readonly Dictionary<string, string> questStates = new Dictionary<string, string>();
+
         [SerializeField]
         private List<Quest> sceneQuests = new List<Quest>();
-        private readonly Dictionary<string, string> questStates = new Dictionary<string, string>();
 
         public Quest this[string questId] => sceneQuests.First(x => x.id == questId);
 
