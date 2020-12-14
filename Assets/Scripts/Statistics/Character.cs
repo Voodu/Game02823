@@ -38,15 +38,17 @@ namespace Statistics
                     {
                         item.bonus.Apply(this, item);
                         inventory.helmet.Occupied = true;
+                        inventory.helmet.Item = item;
                         return true;
                     }
 
                     break;
                 case GearType.Armor:
-                    if (!inventory.chest.Occupied)
+                    if (!inventory.armor.Occupied)
                     {
                         item.bonus.Apply(this, item);
-                        inventory.chest.Occupied = true;
+                        inventory.armor.Occupied = true;
+                        inventory.armor.Item = item;
                         return true;
                     }
 
@@ -57,6 +59,7 @@ namespace Statistics
                     {
                         item.bonus.Apply(this, item);
                         inventory.gloves.Occupied = true;
+                        inventory.gloves.Item = item;
                         return true;
                     }
 
@@ -67,6 +70,7 @@ namespace Statistics
                     {
                         item.bonus.Apply(this, item);
                         inventory.boots.Occupied = true;
+                        inventory.boots.Item = item;
                         return true;
                     }
 
@@ -78,6 +82,7 @@ namespace Statistics
                     {
                         item.bonus.Apply(this, item);
                         inventory.weapon.Occupied = true;
+                        inventory.weapon.Item = item;
                         return true;
                     }
 
@@ -88,6 +93,7 @@ namespace Statistics
                     {
                         item.bonus.Apply(this, item);
                         inventory.accessory.Occupied = true;
+                        inventory.accessory.Item = item;
                         return true;
                     }
 
@@ -98,6 +104,7 @@ namespace Statistics
                     {
                         item.bonus.Apply(this, item);
                         inventory.bag.Occupied = true;
+                        inventory.bag.Item = item;
                         return true;
                     }
 
@@ -118,7 +125,7 @@ namespace Statistics
                     break;
                 case GearType.Armor:
                     item.bonus.Remove(this, item);
-                    inventory.chest.Occupied = false;
+                    inventory.armor.Occupied = false;
                     break;
                 case GearType.Gloves:
                     item.bonus.Remove(this, item);

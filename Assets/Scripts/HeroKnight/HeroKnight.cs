@@ -1,6 +1,9 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using Dialogues;
+using Inventory;
+using Other;
 using Statistics;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -19,7 +22,6 @@ namespace HeroKnight
         private static readonly int AnimStateHash = Animator.StringToHash("AnimState");
         private static readonly int AirSpeedYHash = Animator.StringToHash("AirSpeedY");
 
-        private readonly List<GameObject> hearts = new List<GameObject>();
 
         public Character characterData = new Character("Player");
 
@@ -30,9 +32,6 @@ namespace HeroKnight
 
         [SerializeField]
         private float rollForce = 6.0f;
-
-        [SerializeField]
-        private int maxHearts = 5;
 
         private float health;
 
@@ -50,10 +49,9 @@ namespace HeroKnight
         private float             delayToIdle;
         private int               coins;
         private bool              alive = true;
-        private bool frozen = false;
+        private bool frozen;
         private bool              isAttacking;
-        public  GameObject        heartPrefab;
-        public  GameObject        healthBar;
+
 
         // Use this for initialization
         private void Start()
@@ -62,9 +60,9 @@ namespace HeroKnight
             characterData.health.ValueChanged += (sender, args) =>
                                                  {
                                                      health = Mathf.Min(health, args.newValue);
-                                                     UpdateHeartsUi();
+                                                     HealthUiManager.Instance.UpdateHeartsUi(health, characterData.health.Value);
                                                  };
-            UpdateHeartsUi();
+            HealthUiManager.Instance.UpdateHeartsUi(health, characterData.health.Value);
             speed                            =  characterData.speed.baseValue;
             characterData.speed.ValueChanged += (sender, args) => speed = args.newValue;
             animator                         =  GetComponent<Animator>();
@@ -72,6 +70,17 @@ namespace HeroKnight
             groundSensor                     =  transform.Find("GroundSensor").GetComponent<Sensor_HeroKnight>();
             attackHitBox                     =  GameObject.Find("AttackHitbox");
             attackHitBox.SetActive(false);
+            SetupEquipment();
+        }
+
+        private void SetupEquipment()
+        {
+            foreach (var slot in InventoryManager.Instance.equipmentSlots)
+            {
+                var eqName = slot.name.Replace("Slot", string.Empty).ToLower();
+                typeof(Inventory.Inventory).GetField(eqName).SetValue(characterData.inventory, slot);
+                // TODO: Bonuses may be not applied
+            }
         }
 
         // Update is called once per frame
@@ -79,6 +88,11 @@ namespace HeroKnight
         {
             if (alive && !frozen)
             {
+                if (Input.GetKeyDown(KeyCode.B))
+                {
+                    print(characterData.inventory.boots.Item.itemName);
+                }
+
                 // Increase timer that controls attack combo
                 timeSinceAttack += Time.deltaTime;
 
@@ -289,24 +303,10 @@ namespace HeroKnight
                 animator.SetTrigger(HurtHash);
             }
 
-            UpdateHeartsUi();
+            HealthUiManager.Instance.UpdateHeartsUi(health, characterData.health.Value);
         }
 
-        private void UpdateHeartsUi()
-        {
-            var heartsLeft = Mathf.Ceil(health / characterData.health.Value * maxHearts);
 
-            while (hearts.Count > heartsLeft)
-            {
-                Destroy(hearts[hearts.Count - 1]);
-                hearts.RemoveAt(hearts.Count - 1);
-            }
-
-            while (hearts.Count < heartsLeft)
-            {
-                hearts.Add(Instantiate(heartPrefab, healthBar.transform));
-            }
-        }
 
         // Animation Events
         // Called in end of roll animation.

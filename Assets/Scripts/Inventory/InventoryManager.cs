@@ -11,6 +11,7 @@ namespace Inventory
         private readonly List<ItemSlot>        slots = new List<ItemSlot>();
         public           GameObject            inventoryBar;
         public           GameObject            equipmentBar;
+        public           List<ItemSlot>        equipmentSlots = new List<ItemSlot>(7);
         public           GameObject            inventorySlotPrefab;
         public           GameObject            gearItemPrefab;
         public           GameObject            itemPrefab;

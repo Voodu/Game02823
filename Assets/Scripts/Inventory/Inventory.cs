@@ -10,7 +10,7 @@ namespace Inventory
         public int        size  = 10;
 
         public ItemSlot helmet;
-        public ItemSlot chest;
+        public ItemSlot armor;
         public ItemSlot gloves;
         public ItemSlot boots;
         public ItemSlot weapon;

@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 7342078537718671070}
   - component: {fileID: 7342078537718671041}
   - component: {fileID: 8765629751958611407}
+  - component: {fileID: 1779508742660075144}
   m_Layer: 0
   m_Name: Managers
   m_TagString: Untagged
@@ -53,7 +54,6 @@ MonoBehaviour:
   inventorySlotPrefab: {fileID: 4244797146890187576, guid: d4f85519f0f2dcc44a09678f6c48cbc4, type: 3}
   gearItemPrefab: {fileID: 139727523005390322, guid: b9beb471a01d241438c620a9e531d5d3, type: 3}
   itemPrefab: {fileID: 4055571645384411337, guid: 8aa57b0f9577f6e499408ce398a90367, type: 3}
-  player: {fileID: 0}
 --- !u!114 &7342078537718671068
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -68,7 +68,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerPrefix: 'ME: '
   extensionLinePrefix: EXT
-  dialogues: []
+  sceneDialogues: []
   dialoguePanel: {fileID: 0}
   npcText: {fileID: 0}
   choiceButtonPrefab: {fileID: 2170382746637797334, guid: ec5f316984fdde84fac0f0d991b9c2d6, type: 3}
@@ -85,7 +85,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df94e9b829064bb682cbba218385e9ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  quests: []
+  sceneQuests: []
 --- !u!114 &7342078537718671070
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -98,7 +98,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2fe6fa6667344ee8a38d93eaa07be855, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
 --- !u!114 &7342078537718671041
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -129,3 +128,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentLevel: 1
+--- !u!114 &1779508742660075144
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7342078537718671040}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b33e4dcdf79c4dc6b2b03c71bb7c4f6c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
