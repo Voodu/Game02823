@@ -329,6 +329,7 @@ namespace HeroKnight
                 alive           = false;
                 body2d.velocity = new Vector2(0, 0);
                 Freeze(true);
+                Invoke(nameof(CleanSceneReload), 1);
             }
             else
             {
@@ -337,6 +338,13 @@ namespace HeroKnight
             }
 
             HealthUiManager.Instance.UpdateHeartsUi(health, characterData.health.Value);
+        }
+
+        private void CleanSceneReload()
+        {
+            SceneManager.Instance.ReloadScene();
+            InventoryManager.Instance.ClearAllInventory();
+            Destroy(gameObject);
         }
 
         // Animation Events

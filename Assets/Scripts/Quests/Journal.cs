@@ -47,6 +47,7 @@ namespace Quests
                 {
                     var questButton = Instantiate(questButtonPrefab, questMenu.transform);
                     questButton.GetComponent<TextMeshProUGUI>().SetText("No quests yet.");
+                    SetupQuestText("...", "...");
                 }
                 else
                 {
@@ -78,6 +79,12 @@ namespace Quests
             questNotes.SetText(string.Join("\n", quest.journalEntries)
                                +
                                string.Join("\n", objectivesText));
+        }
+
+        private void SetupQuestText(string title, string description)
+        {
+            questTitle.SetText(title);
+            questNotes.SetText(description);
         }
 
         private void ClearQuestMenu()

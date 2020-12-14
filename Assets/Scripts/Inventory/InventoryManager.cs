@@ -23,6 +23,19 @@ namespace Inventory
             CreateUiSlots();
         }
 
+        public void ClearAllInventory()
+        {
+            foreach (var slot in equipmentSlots)
+            {
+                slot.transform.Find("Cross").GetComponent<Button>().onClick.Invoke();
+            }
+
+            foreach (var slot in slots)
+            {
+                slot.transform.Find("Cross").GetComponent<Button>().onClick.Invoke();
+            }
+        }
+
         public void AddInventoryItemUi(Item item)
         {
             foreach (var slot in slots)

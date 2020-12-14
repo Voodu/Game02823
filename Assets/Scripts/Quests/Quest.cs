@@ -90,5 +90,10 @@ namespace Quests
         {
             return inkQuest.GetStateJson();
         }
+
+        private void OnDestroy()
+        {
+            QuestManager.Instance.SaveQuest(this);
+        }
     }
 }

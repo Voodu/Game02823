@@ -26,5 +26,10 @@ namespace Other
         {
             USceneManager.activeSceneChanged += callback;
         }
+
+        public void ReloadScene()
+        {
+            USceneManager.LoadScene(USceneManager.GetActiveScene().buildIndex);
+        }
     }
 }
