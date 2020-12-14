@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class Frog_movement : MonoBehaviour
 {
     // [SerializeField] private float leftCap;
@@ -12,6 +13,7 @@ public class Frog_movement : MonoBehaviour
     [SerializeField] private LayerMask ground;
     private Collider2D coll;
     private Rigidbody2D rb;
+    public Animator anim;
 
     // private bool facingLeft = true;
 
@@ -19,13 +21,25 @@ public class Frog_movement : MonoBehaviour
     {
         coll = GetComponent<Collider2D>();
         rb = GetComponent<Rigidbody2D>();
+        anim = GetComponent<Animator>();
     }
 
     private void Update()
     {
+        if(anim.GetInteger("State")==1)
+        {
+            if(rb.velocity.y < 0){
+                anim.SetInteger("State", 2);
+            }
+        }
         if(coll.IsTouchingLayers(ground))
         {
             rb.velocity = new Vector2(0, jumpHeight);
+            anim.SetInteger("State", 1);
+        }
+        if(anim.GetBool("Death")==true)
+        {
+            rb.velocity = new Vector2(0,0);
         }
     }
     // // Update is called once per frame

@@ -23,6 +23,7 @@ namespace HeroKnight
 
         public Character characterData = new Character("Player");
 
+        [SerializeField]
         private float speed = 4.0f;
 
         [SerializeField]
@@ -30,6 +31,7 @@ namespace HeroKnight
 
         [SerializeField]
         private float rollForce = 6.0f;
+
 
         [SerializeField]
         private int maxHearts = 5;
@@ -44,6 +46,7 @@ namespace HeroKnight
         private Sensor_HeroKnight groundSensor;
         private bool              grounded;
         private bool              rolling;
+        private bool              airJump;
         private int               facingDirection = 1;
         private int               currentAttack;
         private float             timeSinceAttack;
@@ -58,6 +61,7 @@ namespace HeroKnight
         // Use this for initialization
         private void Start()
         {
+            airJump = false;
             health = characterData.health.baseValue;
             characterData.health.ValueChanged += (sender, args) =>
                                                  {
@@ -77,38 +81,42 @@ namespace HeroKnight
         // Update is called once per frame
         private void Update()
         {
-            if (alive && !frozen)
+            
+            if (alive && !frozen && !rolling)
             {
                 // Increase timer that controls attack combo
                 timeSinceAttack += Time.deltaTime;
 
-                //Check if character just landed on the ground
+                // Check if character just landed on the ground
                 if (!grounded && groundSensor.State())
                 {
                     grounded = true;
+                    airJump = false;
                     animator.SetBool(GroundedHash, grounded);
                 }
 
-                //Check if character just started falling
+                // Check if character just started falling
                 if (grounded && !groundSensor.State())
                 {
                     grounded = false;
                     animator.SetBool(GroundedHash, grounded);
                 }
 
-                // -- Handle input and movement --
+                // Get user input left and right
                 var inputX = Input.GetAxis("Horizontal");
 
                 // Swap direction of sprite depending on walk direction
                 if (inputX > 0)
                 {
                     GetComponent<SpriteRenderer>().flipX = false;
+                    attackHitBox.transform.localScale = new Vector3(1,1,1);
                     facingDirection                      = 1;
                 }
 
                 else if (inputX < 0)
                 {
                     GetComponent<SpriteRenderer>().flipX = true;
+                    attackHitBox.transform.localScale = new Vector3(-1,1,1);
                     facingDirection                      = -1;
                 }
 
@@ -120,26 +128,44 @@ namespace HeroKnight
 
                 //Set AirSpeed in animator
                 animator.SetFloat(AirSpeedYHash, body2d.velocity.y);
-
-                if (Input.GetKeyDown(KeyCode.Q) && (timeSinceAttack > 0.25f))
+                if (characterData.inventory.accessory.Occupied == true)
+                {
+                    if (characterData.inventory.accessory.Item.itemName == "Feather")
+                    {
+                        body2d.gravityScale = 0.7f;
+                    }
+                    if (Input.GetKeyDown(KeyCode.E) && (characterData.inventory.accessory.Item.itemName == "Shield"))
+                    {
+                        Block();
+                    }
+                    else if (Input.GetKeyUp(KeyCode.E))
+                    {
+                        IdleBlock();
+                    }
+                    else if ((Input.GetKeyDown(KeyCode.LeftShift)) && (characterData.inventory.accessory.Item.itemName == "Beer") && !rolling)
+                    {
+                        Roll();
+                    }
+                }
+                else
+                {
+                    body2d.gravityScale = 1f;
+                }
+                if (Input.GetKeyDown(KeyCode.Space) && (airJump == false) && (characterData.inventory.boots.Occupied == true) && (characterData.inventory.boots.Item.itemName == "BouncyBoots"))
+                {
+                    Jump(jumpForce*0.95f);
+                }
+                else if (Input.GetKeyDown(KeyCode.Space) && grounded)
+                {
+                    Jump(jumpForce);
+                }
+                else if (Input.GetKeyDown(KeyCode.Q) && (timeSinceAttack > 0.5f/characterData.strength.Value) && (characterData.inventory.weapon.Occupied == true))
                 {
                     Attack();
-                }
-                else if (Input.GetKeyDown(KeyCode.E))
-                {
-                    Block();
                 }
                 else if (Input.GetKeyUp(KeyCode.E))
                 {
                     IdleBlock();
-                }
-                else if (Input.GetKeyDown(KeyCode.LeftShift) && !rolling)
-                {
-                    Roll();
-                }
-                else if (Input.GetKeyDown(KeyCode.Space) && grounded)
-                {
-                    Jump();
                 }
                 else if (Mathf.Abs(inputX) > Mathf.Epsilon)
                 {
@@ -195,13 +221,15 @@ namespace HeroKnight
             animator.SetInteger(AnimStateHash, 1);
         }
 
-        private void Jump()
+        private void Jump(float jumpForce)
         {
             animator.SetTrigger(JumpHash);
+            if (grounded == false)
+                airJump = true;
             grounded = false;
             animator.SetBool(GroundedHash, grounded);
             body2d.velocity = new Vector2(body2d.velocity.x, jumpForce);
-            groundSensor.Disable(0.2f);
+            groundSensor.Disable(0.4f);
         }
 
         private void Roll()
@@ -283,10 +311,12 @@ namespace HeroKnight
                 animator.SetTrigger(DeathHash);
                 alive           = false;
                 body2d.velocity = new Vector2(0, 0);
+                Freeze(true);
             }
             else
             {
                 animator.SetTrigger(HurtHash);
+                rolling = false;
             }
 
             UpdateHeartsUi();
