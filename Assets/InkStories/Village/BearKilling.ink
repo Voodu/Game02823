@@ -13,7 +13,7 @@ Hey, you look like a tough one!
   Indeed, I have a problem.
 * ME: <Raise your eyebrows>
 - <> I wanted to ask for help with a pesky bear out there.
-It killed three people from our village already and everone is afraid of going into the woods. Do you think you can help with that?
+- It killed three people from our village already and everone is afraid of going into the woods. Do you think you can help with that?
 * ME: Sure, no problem.
   - - (accept)
   ~ accepted = true
