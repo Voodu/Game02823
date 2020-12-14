@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace HeroKnight
 {
@@ -7,6 +9,11 @@ namespace HeroKnight
         private int m_ColCount;
 
         private float m_DisableTimer;
+
+        private void Awake()
+        {
+            SceneManager.sceneUnloaded += arg0 => m_ColCount = 0;
+        }
 
         private void OnEnable()
         {

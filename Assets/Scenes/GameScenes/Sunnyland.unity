@@ -1138,7 +1138,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2338618301195339813, guid: ca44616f51150f0439a8423cd7450ff2, type: 3}
       propertyPath: m_Name
-      value: SpawnPoint (1)
+      value: FromVillageHighSpawnPoint
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ca44616f51150f0439a8423cd7450ff2, type: 3}
@@ -127417,7 +127417,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2338618301195339813, guid: ca44616f51150f0439a8423cd7450ff2, type: 3}
       propertyPath: m_Name
-      value: SpawnPoint
+      value: FromTutorialSpawnPoint
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ca44616f51150f0439a8423cd7450ff2, type: 3}
@@ -127478,7 +127478,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2338618301195339813, guid: ca44616f51150f0439a8423cd7450ff2, type: 3}
       propertyPath: m_Name
-      value: SpawnPoint (2)
+      value: FromVillageLowSpawnPoint
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ca44616f51150f0439a8423cd7450ff2, type: 3}
