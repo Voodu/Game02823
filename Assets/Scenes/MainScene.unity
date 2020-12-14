@@ -101769,6 +101769,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Canvas
       objectReference: {fileID: 0}
+    - target: {fileID: 4400066151395857280, guid: 60d0701a1a0eb5249927b6f56ef84b0b, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4400066151395857308, guid: 60d0701a1a0eb5249927b6f56ef84b0b, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -117196,6 +117200,10 @@ PrefabInstance:
     - target: {fileID: 7342078537718671040, guid: f4d073e7e76762442858faf368d42ba3, type: 3}
       propertyPath: m_Name
       value: Managers
+      objectReference: {fileID: 0}
+    - target: {fileID: 7342078537718671040, guid: f4d073e7e76762442858faf368d42ba3, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7342078537718671041, guid: f4d073e7e76762442858faf368d42ba3, type: 3}
       propertyPath: journalPanel

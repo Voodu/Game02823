@@ -27,7 +27,7 @@ namespace Common
             }
         }
 
-        private void Awake()
+        private void Start()
         {
             if (!ready)
             {
