@@ -84,6 +84,11 @@ namespace HeroKnight
             }
         }
 
+        public int GetDirection()
+        {
+            return facingDirection;
+        }
+
         // Update is called once per frame
         private void Update()
         {

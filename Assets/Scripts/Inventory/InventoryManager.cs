@@ -35,9 +35,9 @@ namespace Inventory
                     slot.Item         = item;
                     slot.Occupied     = true;
 
-                    if (item is GearItem gear)
+                    if (slot.Item is GearItem gear)
                     {
-                        itemImage.GetComponent<Button>().onClick.AddListener(EquipGearItemUi(gear));
+                        itemImage.GetComponent<Button>().onClick.AddListener(EquipGearItemUi(gear, itemImage.sprite));
                     }
 
                     break;
@@ -48,28 +48,32 @@ namespace Inventory
         public void RemoveInventoryItemUi(GameObject uiSlot)
         {
             var itemSlot  = uiSlot.GetComponent<ItemSlot>();
-            var itemImage = itemSlot.gameObject.transform.Find("Slot").transform.Find("Item").GetComponent<Image>();
-            itemImage.enabled = false;
-            itemSlot.Occupied = false;
-            itemImage.GetComponent<Button>().onClick.RemoveAllListeners();
-            GameManager.Instance.Player.characterData.inventory.RemoveItem(itemSlot.Item);
-            SpawnDroppedItem(itemSlot.Item, itemImage);
-
-            if (itemSlot.Item is GearItem g)
+            if (itemSlot.Occupied)
             {
-                UnequipGearItemUi(g)();
+                var itemImage = itemSlot.gameObject.transform.Find("Slot").transform.Find("Item").GetComponent<Image>();
+                itemImage.enabled = false;
+                itemSlot.Occupied = false;
+                itemImage.GetComponent<Button>().onClick.RemoveAllListeners();
+                GameManager.Instance.Player.characterData.inventory.RemoveItem(itemSlot.Item);
+                SpawnDroppedItem(itemSlot.Item, itemImage);
+
+                if (itemSlot.Item is GearItem g)
+                {
+                    UnequipGearItemUi(g)();
+                }
             }
         }
 
         public void SpawnDroppedItem(Item item, Image itemImage)
         {
             var position  = GameManager.Instance.Player.transform.position;
-            var playerPos = new Vector2(position.x + 1, position.y + 0.5f);
+            var playerPos = new Vector2(position.x + GameManager.Instance.Player.GetDirection(), position.y + 0.5f);
             switch (item)
             {
                 case GearItem g:
                     var spawnedGearItem = Instantiate(gearItemPrefab, playerPos, Quaternion.identity);
                     spawnedGearItem.GetComponent<SpriteRenderer>().sprite = itemImage.sprite;
+                    spawnedGearItem.GetComponent<SpriteRenderer>().sortingLayerName = "Fore";
                     var gearItem = spawnedGearItem.GetComponent<GearItem>();
                     gearItem.type     = g.type;
                     gearItem.bonus    = g.bonus;
@@ -79,6 +83,7 @@ namespace Inventory
                 case Item i:
                     var spawnedItem = Instantiate(itemPrefab, playerPos, Quaternion.identity);
                     spawnedItem.GetComponent<SpriteRenderer>().sprite = itemImage.sprite;
+                    spawnedItem.GetComponent<SpriteRenderer>().sortingLayerName = "Fore";
                     var component = spawnedItem.GetComponent<Item>();
                     component.tier     = i.tier;
                     component.itemName = i.itemName;
@@ -86,7 +91,7 @@ namespace Inventory
             }
         }
 
-        private UnityAction EquipGearItemUi(GearItem item)
+        private UnityAction EquipGearItemUi(GearItem item, Sprite sprite)
         {
             return () =>
                    {
@@ -95,7 +100,7 @@ namespace Inventory
                            var slotName  = item.type + "Slot";
                            var slot      = equipmentBar.transform.Find(slotName);
                            var itemImage = slot.gameObject.transform.Find("Slot").transform.Find("Item").GetComponent<Image>();
-                           itemImage.sprite  = item.gameObject.GetComponent<SpriteRenderer>().sprite;
+                           itemImage.sprite  = sprite;
                            itemImage.enabled = true;
 
                            slot.transform.Find("Cross").GetComponent<Button>().onClick.AddListener(UnequipGearItemUi(item));

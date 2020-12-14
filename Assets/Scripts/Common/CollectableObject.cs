@@ -32,7 +32,7 @@ namespace Common
                     }
                 }
 
-                //Destroy(gameObject);
+                Destroy(gameObject);
             }
         }
     }
